@@ -8,13 +8,12 @@
 </template>
 
 <script>
-  import TopHeader from "@/components/TopHeader.vue";
-  export default {
-
-    components: {
-      "top-header": TopHeader
-    },
-  };
+import TopHeader from "@/components/TopHeader.vue";
+export default {
+  components: {
+    "top-header": TopHeader,
+  },
+};
 </script>
 
 <style>

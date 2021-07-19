@@ -2,18 +2,22 @@
   <div class="home">
     <b-container class="bv-example-row">
       <b-row align-v="center">
-        <job-card v-for="job in displayJobs" :key="job.id" :name="job.name"></job-card>
+        <job-card
+          v-for="job in displayJobs"
+          :key="job.id"
+          :name="job.name"
+        ></job-card>
       </b-row>
       <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      first-text="First"
-      prev-text="Prev"
-      next-text="Next"
-      last-text="Last"
-      @input="paginate(currentPage)"
-    ></b-pagination>
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        first-text="First"
+        prev-text="Prev"
+        next-text="Next"
+        last-text="Last"
+        @input="paginate"
+      ></b-pagination>
     </b-container>
   </div>
 </template>
@@ -34,7 +38,7 @@ export default {
       displayJobs: [],
       currentPage: 1,
       rows: 1,
-      perPage: 3
+      perPage: 3,
     };
   },
   methods: {
@@ -46,10 +50,10 @@ export default {
       this.rows = this.jobs.length;
       console.log(val);
     },
-    paginate(currentPage) {
+    paginate() {
       const start = (this.currentPage - 1) * this.perPage;
       this.displayJobs = this.jobs.slice(start, start + 3);
-    }
+    },
   },
 };
 </script>
