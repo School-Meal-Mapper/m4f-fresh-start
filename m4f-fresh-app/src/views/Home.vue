@@ -11,25 +11,31 @@
           </b-form-select>
           <br />
           <br />
-          <b-form-select v-model="selectedDistrict" :options="districtOptions" :disabled="this.selectedState !== 'nc'"
+          <b-form-select
+            v-model="selectedDistrict"
+            :options="districtOptions"
+            :disabled="this.selectedState !== 'nc'"
             >Select a sponsor in your county.
           </b-form-select>
           <br />
           <br />
-          <b-button class="genericSiteButton" :disabled="this.selectedDistrict === null" v-on:click="districtLink">Find Free Meals Near Me!</b-button>
+          <b-button
+            class="genericSiteButton"
+            :disabled="this.selectedDistrict === null"
+            v-on:click="districtLink"
+            >Find Free Meals Near Me!</b-button
+          >
           <br />
           <br />
           <p><strong>OR</strong></p>
           <div class="searchBarGroup">
             <mdb-form-inline>
-              <input  
-              type="text" 
-              placeholder="Enter the name of your local school." 
-              aria-label="Search"
+              <input
+                type="text"
+                placeholder="Enter the name of your local school."
+                aria-label="Search"
               />
-              <mdb-btn color="mdb-color" rounded size="sm"
-                >Search</mdb-btn
-              >
+              <mdb-btn color="mdb-color" rounded size="sm">Search</mdb-btn>
             </mdb-form-inline>
           </div>
           <br />
@@ -58,15 +64,15 @@ export default {
   },
   computed: {
     districtOptions() {
-      if (this.selectedState == 'nc') {
-        return districts[this.selectedState]
+      if (this.selectedState == "nc") {
+        return districts[this.selectedState];
       }
       if (this.selectedState == null) {
-        return [{ value: null, text: "You must select your state." }]
+        return [{ value: null, text: "You must select your state." }];
       } else {
-        return [{ value: null, text: "You must select your state." }]
+        return [{ value: null, text: "You must select your state." }];
       }
-    }
+    },
   },
 };
 </script>
