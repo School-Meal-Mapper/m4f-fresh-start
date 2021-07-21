@@ -64,7 +64,7 @@
             </span>
           </b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item :to="{ name: 'M4FLandingPage', params: {} }" right>
+        <b-nav-item :to="{ name: 'MFFLandingPage', params: {} }" right>
           <template>
             <i class="fas fa-home fa-lg" aria-hidden="true" />
             <span class="sr-only">Return to M4F</span>

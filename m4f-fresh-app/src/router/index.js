@@ -5,6 +5,8 @@ import MFFLandingPage from "@/views/MFFLandingPage.vue";
 import SponsorLandingPage from "@/views/SponsorLandingPage.vue";
 import ResultsPage from "@/views/ResultsPage.vue";
 import FAQPage from "@/views/FAQPage.vue";
+import MapPage from "@/views/MapPage.vue";
+import NotFoundPage from "@/views/NotFoundPage.vue"
 
 Vue.use(VueRouter);
 
@@ -46,6 +48,16 @@ const routes = [
     name: "FAQPage",
     component: FAQPage,
   },
+  {
+    path: "/:sponsor/map",
+    name: "MapPage",
+    component: MapPage
+  },
+  {
+    path: '*',
+    name: "NotFound",
+    component: NotFoundPage
+  }
 ];
 
 const router = new VueRouter({

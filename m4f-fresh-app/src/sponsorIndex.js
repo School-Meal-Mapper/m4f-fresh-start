@@ -27,9 +27,8 @@
  */
 
 export default function sponsorData(abbr) {
-  // abbr ??= 'mff'
-  abbr = abbr ?? "mff";
-  const sp = {
+  abbr = abbr ?? 'mff'
+  const sponsors = {
     chccs: {
       sponsorAbbr: "chccs",
       sponsorName: "Chapel Hill-Carrboro City Schools",
@@ -248,7 +247,13 @@ export default function sponsorData(abbr) {
       darkAttribution:
         '&copy; <a href: "https://carto.com/">Carto</a>, &copy; <a href: "https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href: "http://openstreetmap.org">OpenStreetMap</a> contributors',
     },
-  }[abbr];
+  };
+
+  const sp = sponsors[abbr];
+
+  if (sp === undefined) {
+    return sponsors['mff'] 
+  }
 
   // organize the list, could insert validation here using ternary operators
   return {
