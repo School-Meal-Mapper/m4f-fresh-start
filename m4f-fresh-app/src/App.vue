@@ -30,9 +30,6 @@ export default {
       language: { name: "English", iso: "en" },
     };
   },
-  created() {
-    // this.logoLink = m4flogo;
-  },
   methods: {
     // async fetchData() {
     //   const res = await fetch(districtData.data.spreadsheetUrl);
@@ -71,7 +68,7 @@ body {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans", Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

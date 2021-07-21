@@ -15,9 +15,8 @@
       aria-label="More options"
     ></b-navbar-toggle>
 
-    <b-collapse id="nav-collapse" is-nav>
+    <b-collapse id="nav-collapse" v-model="expanded" is-nav>
       <b-navbar-nav class="ml-auto">
-        <b-button @click="test"> </b-button>
         <!-- insert custom components -->
         <slot> </slot>
         <!-- route-based components -->
@@ -35,17 +34,24 @@
           <b-button
             v-else-if="this.$route.path.includes('/faq')"
             @click="goBackPage"
+            size="sm"
+            class="accentColor my-2 my-sm-0"
+            variant="buttons"
           >
-            Go Back
+            <b>Go Back</b>
           </b-button>
           <b-button
             v-else
+            size="sm"
+            class="accentColor my-2 my-sm-0"
+            variant="buttons"
+            @click="collapseNav"
             :to="{
               name: 'FAQPage',
               params: { sponsor: this.$route.params.sponsor },
             }"
           >
-            Questions and Contact Information
+            <b>Questions and Contact Information</b>
           </b-button>
         </b-nav-text>
         <!-- permabuttons (language dropdowns, home button to m4f, button to sponsor website) -->
@@ -95,6 +101,7 @@ export default {
         width: 0,
         height: 0,
       },
+      expanded: false,
     };
   },
   watch: {
@@ -146,18 +153,15 @@ export default {
   },
   methods: {
     goBackPage() {
+      this.collapseNav();
       this.$router.go(-1);
+    },
+    collapseNav() {
+      this.expanded = false;
     },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    },
-    test() {
-      console.log(this.$route);
-      document.documentElement.style.setProperty(
-        "--banner-light",
-        this.sponsor.colors.bannerColor
-      );
     },
     refreshCSSVariables() {
       document.documentElement.style.setProperty(

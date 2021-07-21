@@ -6,7 +6,7 @@ import SponsorLandingPage from "@/views/SponsorLandingPage.vue";
 import ResultsPage from "@/views/ResultsPage.vue";
 import FAQPage from "@/views/FAQPage.vue";
 import MapPage from "@/views/MapPage.vue";
-import NotFoundPage from "@/views/NotFoundPage.vue"
+import NotFoundPage from "@/views/NotFoundPage.vue";
 
 Vue.use(VueRouter);
 
@@ -39,7 +39,7 @@ const routes = [
     // ]
   },
   {
-    path: "/:sponsor/results",
+    path: "/:sponsor/results", // maybe I should make results and map into children so then one page can hold all of the meal site data without reloading
     name: "ResultsPage",
     component: ResultsPage,
   },
@@ -51,13 +51,13 @@ const routes = [
   {
     path: "/:sponsor/map",
     name: "MapPage",
-    component: MapPage
+    component: MapPage,
   },
   {
-    path: '*',
+    path: "*",
     name: "NotFound",
-    component: NotFoundPage
-  }
+    component: NotFoundPage,
+  },
 ];
 
 const router = new VueRouter({

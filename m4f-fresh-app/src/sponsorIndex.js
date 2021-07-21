@@ -8,6 +8,9 @@
  * Possible Improvement: define the return object as a class so we would not need a
  *  validaton of objects would be built-in.
  *
+ * Performance Improvement: define the sponsors object in the function as a script in `index.html`,
+ *   hence it acts like a global constant and would not need to be read in every import.
+ *
  * From sponsorIndex.js,
  *
  * Similar to districtData.js, this is still not the best way to do theming specific to a sponsor.
@@ -27,7 +30,7 @@
  */
 
 export default function sponsorData(abbr) {
-  abbr = abbr ?? 'mff'
+  abbr = abbr ?? "mff";
   const sponsors = {
     chccs: {
       sponsorAbbr: "chccs",
@@ -252,7 +255,7 @@ export default function sponsorData(abbr) {
   const sp = sponsors[abbr];
 
   if (sp === undefined) {
-    return sponsors['mff'] 
+    return sponsors["mff"];
   }
 
   // organize the list, could insert validation here using ternary operators
