@@ -55,55 +55,30 @@
 -->
 
 <script>
-import { districtData } from "@/districtData";
+import { districtData } from '../themes/MealsForFamilies/districtData'
 
-document.documentElement.style.setProperty(
-  "--primary-color",
-  districtData.colors.primaryColor
-);
-document.documentElement.style.setProperty(
-  "--banner-light",
-  districtData.colors.bannerColor
-);
-document.documentElement.style.setProperty(
-  "--banner-dark",
-  districtData.colors.bannerColorDark
-);
-document.documentElement.style.setProperty(
-  "--nav-link-light",
-  districtData.colors.navLink
-);
-document.documentElement.style.setProperty(
-  "--nav-link-dark",
-  districtData.colors.navLinkDark
-);
+document.documentElement.style.setProperty('--primary-color', districtData.colors.primaryColor)
+document.documentElement.style.setProperty('--banner-light', districtData.colors.bannerColor)
+document.documentElement.style.setProperty('--banner-dark', districtData.colors.bannerColorDark)
+document.documentElement.style.setProperty('--nav-link-light', districtData.colors.navLink)
+document.documentElement.style.setProperty('--nav-link-dark', districtData.colors.navLinkDark)
 
 export default {
   props: {
-    msg: String,
-  },
-  watch: {
-    currentPage: "fetchData",
+    msg: String
   },
   created() {
-    this.fetchData();
-    this.mapLink();
-  },
-  components: {
-    //AppHeader,
-    //ThemeHeader
+    this.mapLink()
   },
   data() {
-    const darkModeMediaQuery = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     return {
       entries: null,
-      need: "none",
-      language: { name: "English", iso: "en" },
+      need: 'none',
+      language: { name: 'English', iso: 'en' },
       darkModeMediaQuery: darkModeMediaQuery,
       darkMode: darkModeMediaQuery.matches,
-      mapUrl: "",
+      mapUrl: '',
       attribution: null,
       socialMediaico: districtData.socialMedia,
       hoverItem: null,
@@ -111,110 +86,96 @@ export default {
       logoFormat: districtData.logoFormat,
       districtName: districtData.districtName,
       logoLink: null,
-    };
-  },
-  mounted() {
-    this.setDarkMode(this.darkMode);
-    this.darkModeMediaQuery.addListener((e) => {
-      this.darkMode = e.matches;
-      this.setDarkMode(this.darkMode);
-    });
+      text: undefined
+    }
   },
   methods: {
     mapLink() {
-      location.href = location.href + "/map";
-      return true;
+      location.href = location.href + '/map'
+      return true
+    },
+    search(event) {
+      if (event.which === 13) {
+        event.preventDefault()
+        this.$emit('search', this.text)
+      }
     },
     changeLanguage: function (item) {
-      this.language = item;
-      this.$root.updateLang(item.iso);
+      this.language = item
+      this.$root.updateLang(item.iso)
     },
     passHover: function (item) {
-      this.hoverItem = item;
+      this.hoverItem = item
     },
     passNoHover: function () {
-      this.hoverItem = null;
+      this.hoverItem = null
     },
     searchLoc: function (location) {
       for (var index = 0; index < this.filteredMarkers.length; index++) {
-        const entry = this.filteredMarkers[index].marker;
+        const entry = this.filteredMarkers[index].marker
         if (
-          entry["gsx$mealsitename"].$t
-            .toLowerCase()
-            .includes(location.toLowerCase()) ||
-          location
-            .toLowerCase()
-            .includes(entry["gsx$mealsiteaddress1"].$t.toLowerCase()) ||
-          entry["gsx$mealsiteaddress1"].$t
-            .toLowerCase()
-            .includes(location.toLowerCase())
+          entry['gsx$mealsitename'].$t.toLowerCase().includes(location.toLowerCase()) ||
+          location.toLowerCase().includes(entry['gsx$mealsiteaddress1'].$t.toLowerCase()) ||
+          entry['gsx$mealsiteaddress1'].$t.toLowerCase().includes(location.toLowerCase())
         ) {
           const val = {
             locValue: index,
-            isSetbyMap: false,
-          };
-          this.passLocation(val);
-          return;
+            isSetbyMap: false
+          }
+          this.passLocation(val)
+          return
         }
       }
-      var fetchString =
-        "https://nominatim.openstreetmap.org/search?key=9Rl2TaZFQpBPsnQmQo6cq79sl3Rf9EfA&q=" +
-        location +
-        "&format=json";
+      var fetchString = 'https://nominatim.openstreetmap.org/search?key=9Rl2TaZFQpBPsnQmQo6cq79sl3Rf9EfA&q=' + location + '&format=json'
       fetch(fetchString)
         .then((response) => response.json())
         .then((data) => {
           if (data.length === 0) {
-            alert(this.$t("searchBar.noResults"));
-            return;
+            alert(this.$t('searchBar.noResults'))
+            return
           }
-          var location = null;
-          var i;
+          var location = null
+          var i
           for (i = 0; i < data.length; i++) {
-            if (
-              data[i].lat >= 34 &&
-              data[i].lat <= 36.21 &&
-              data[i].lon <= -75.3 &&
-              data[i].lon >= -84.15
-            ) {
+            if (data[i].lat >= 34 && data[i].lat <= 36.21 && data[i].lon <= -75.3 && data[i].lon >= -84.15) {
               //Making sure result is in NC
-              location = data[i];
-              break;
+              location = data[i]
+              break
             }
           }
           if (location == null) {
-            alert(this.$t("searchBar.noResults"));
-            return;
+            alert(this.$t('searchBar.noResults'))
+            return
           }
-        });
+        })
     },
     searchZip(event) {
       if (event.which === 13) {
-        event.preventDefault();
+        event.preventDefault()
         if (this.zip.length != 5) {
-          alert("Please enter a valid zipcode");
+          alert('Please enter a valid zipcode')
         } else {
-          console.log(this.zip);
+          console.log(this.zip)
         }
       }
-    },
+    }
   },
   computed: {
     showMap() {
-      var urlString = window.location.href;
-      return urlString.includes("/map");
-    },
-  },
-};
+      var urlString = window.location.href
+      return urlString.includes('/map')
+    }
+  }
+}
 </script>
 
 <style>
 .root {
   --primary-color: blue;
-  --banner-light: "#E9ECEF";
-  --banner-dark: "#212529";
-  --nav-link-light: "#F8F8F8";
-  --nav-link-dark: "#F8F8F8";
+  --banner-light: '#E9ECEF';
+  --banner-dark: '#212529';
+  --nav-link-light: '#F8F8F8';
+  --nav-link-dark: '#F8F8F8';
 }
 
 .top {
@@ -244,7 +205,6 @@ export default {
   padding: 10px;
 }
 
-/*find site button hover state*/
 .top > .find-site:hover {
   opacity: 0.5;
 }
