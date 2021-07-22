@@ -244,6 +244,7 @@ export default {
   padding: 10px;
 }
 
+/*find site button hover state*/
 .top > .find-site:hover {
   opacity: 0.5;
 }
