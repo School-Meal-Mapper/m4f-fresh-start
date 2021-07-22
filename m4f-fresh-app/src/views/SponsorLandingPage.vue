@@ -1,75 +1,50 @@
 <template>
   <div class="home">
-    <!-- +++++++++++++++ rename skippers --->
-    <!--
-    <a class="skip-to-main" href="#search-filter-wrapper" v-if="!checkParam">
-      Skip to results.
-    </a> --->
-    <!-- Above: meal site skipper; Below: landing page skipper -->
-    <!--
-    <a class="skip-to-main" href="#mealsite-info" v-if="checkParam">
-      Skip to main.
-    </a> --->
-    <!-- 
-    <app-header
-      :logoLink="logoLink"
-      :language="language.name"
-      @search="searchLoc"
-      @language-selected="changeLanguage"
-      :socialMedia="socialMediaico"
-      :hasFaqs="faqUrl != null"
-    >
-      <theme-header :districtAbbr="districtAbbr" :logoFormat="logoFormat" :districtName="districtName"></theme-header>
-    </app-header>  --->
-    <div class="d-flex">
-      <b-button class="find-site" v-on:click="mapLink">{{
-        this.$t("landingPage.findFreeMealsNearMe")
-      }}</b-button>
-      <div class="district-buttons">
-        <!-- +++++++++++++++ add icon and change the on:click --->
-        <!-- +++++++++++++++ statements need to become vars and 18 should be var based on meal site #'s--->
-        <p class="program-info" id="mealsite-info">
-          {{ "Join us this summer for free meals at one of our 18 locations!" }}
-        </p>
-        <p>
-          <b-button v-on:click="mapLink" class="prog-btns">{{
-            "Learn More About Free Meals"
-          }}</b-button>
-          <b-icon-question-circle-fill></b-icon-question-circle-fill>
-          <b-button v-on:click="mapLink" class="prog-btns">{{
-            "Menu & Special Events"
-          }}</b-button>
-          <b-icon-calendar3></b-icon-calendar3>
-          <b-button v-on:click="mapLink" class="prog-btns">{{
-            "Register for Free School-Year Meals"
-          }}</b-button>
-          <b-icon-check2-square></b-icon-check2-square>
-          <b-button v-on:click="mapLink" class="prog-btns">{{
-            "Get Money for Groceries"
-          }}</b-button>
-          <b-icon-cart4></b-icon-cart4>
-          <b-button v-on:click="mapLink" class="prog-btns">{{
-            "Not Your Local Meal Provider?"
-          }}</b-button>
-          <!-- +++++++++++++++ need button for find another sponsor --->
-          <b-button v-on:click="mapLink" class="prog-btns">{{
-            "Need Help? Connect With Us!"
-          }}</b-button>
-          <b-icon-chat-text></b-icon-chat-text>
-        </p>
-      </div>
+    <div class="top">
+      <p class="program-info" id="mealsite-info">
+        Join us this summer for free meals at one of our <span style="color: #ffec60;"> 18 </span> locations!
+      </p>
+      <!-- search bar is created with b-form-input --->
+      <b-form-input v-model="text" type="search" @keydown.native="search" :placeholder="$t('searchBar.searchPrompt')" id="searchPrompt"
+        ><i class="fas fa-search"></i
+      ></b-form-input>
+      <!-- this is the button that takes you to the results list (see "v-on:click") --->
+      <b-button class="find-site" v-on:click="mapLink">{{ this.$t('landingPage.findFreeMealsNearMe') }}</b-button>
     </div>
-    <!--
-    <div class="d-flex" id="wrapper" :class="{ toggled: isFilterOpen }" v-if="!!entries && showMap">
-      <results-list
-        :location="locationData"
-        @location-selected="passLocation"
-        @hover-over="passHover"
-        @hover-leave="passNoHover"
-        @search="searchLoc"
-      />
-    </div>
-    --->
+    <p class="announcement">Register <span style="font-weight: bolder;">here </span> to receive free meals during August 2021.</p>
+    <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
+    <b-row cols="2" id="twoCols">
+      <b-button v-on:click="mapLink" class="prog-btns">
+        <b-icon-question-circle-fill style="width: 30px; height: 30px;"></b-icon-question-circle-fill>
+        <br />
+        {{ this.$t('districtLandingPage.learnMore') }}</b-button
+      >
+      <b-button v-on:click="mapLink" class="prog-btns">
+        <b-icon-calendar3 style="width: 30px; height: 30px;"></b-icon-calendar3>
+        <br />
+        {{ this.$t('districtLandingPage.menuAndMore') }}</b-button
+      >
+      <b-button v-on:click="mapLink" class="prog-btns">
+        <b-icon-check2-square style="width: 30px; height: 30px;"></b-icon-check2-square>
+        <br />
+        {{ this.$t('districtLandingPage.schoolMeals') }}</b-button
+      >
+      <b-button v-on:click="mapLink" class="prog-btns">
+        <b-icon-cart4 style="width: 30px; height: 30px;"></b-icon-cart4>
+        <br />
+        {{ this.$t('districtLandingPage.groceries') }}</b-button
+      >
+      <b-button v-on:click="mapLink" class="prog-btns">
+        <br />
+        {{ this.$t('districtLandingPage.wrongProvider') }}</b-button
+      >
+      <!-- +++++++++++++++ need button for find another sponsor --->
+      <b-button v-on:click="mapLink" class="prog-btns">
+        <b-icon-chat-text style="width: 30px; height: 30px;"></b-icon-chat-text>
+        <br />
+        {{ this.$t('districtLandingPage.helpConnect') }}</b-button
+      >
+    </b-row>
     <router-view />
   </div>
 </template>
@@ -107,16 +82,8 @@ export default {
   props: {
     msg: String,
   },
-  watch: {
-    currentPage: "fetchData",
-  },
   created() {
-    this.fetchData();
     this.mapLink();
-  },
-  components: {
-    //AppHeader,
-    //ThemeHeader
   },
   data() {
     const darkModeMediaQuery = window.matchMedia(
@@ -150,18 +117,6 @@ export default {
       location.href = location.href + "/map";
       return true;
     },
-    /*
-    setDarkMode(darkMode) {
-      this.mapUrl = darkMode ? districtData.maps.dark.url : districtData.maps.normal.url
-      this.attribution = darkMode ? districtData.maps.dark.attribution : districtData.maps.normal.attribution
-    },
-    boxSelected: function (content) {
-      this.highlightFilters = addOrRemove(this.highlightFilters, content.need)
-    },
-    needSelected: function (val) {
-      this.need = val
-      this.highlightFilters = []
-    }, */
     changeLanguage: function (item) {
       this.language = item;
       this.$root.updateLang(item.iso);
@@ -223,17 +178,6 @@ export default {
             alert(this.$t("searchBar.noResults"));
             return;
           }
-          /*this.searchLocData = latLng(location.lat, location.lon)
-          const distances = this.filteredMarkers.map((entry) =>
-            haversineDistance([location.lat, location.lon], [entry.marker.gsx$lat.$t, entry.marker.gsx$lon.$t], true)
-          )
-          const index = distances.indexOf(Math.min(...distances))
-          const val = {
-            locValue: index,
-            isSetbyMap: false
-          }
-          this.passLocation(val)
-          */
         });
     },
     searchZip(event) {
@@ -248,28 +192,6 @@ export default {
     },
   },
   computed: {
-    /*
-    districtOptions() {
-      if (this.selectedState == 'nc') {
-        return districts[this.selectedState]
-      }
-      if (this.selectedState == null) {
-        return [{ value: null, text: this.$t('landingPage.youMustSelectState') }]
-      } else {
-        return [{ value: null, text: this.$t('landingPage.youMustSelectState') }]
-      }
-    }, */
-    /**
-     * Checks to see if the URL is for the landing page or for a meal site.
-     * @returns {Boolean} True --> landing page; False --> meal site
-     */
-    checkParam() {
-      //var urlString = window.location.href
-      //var url = new URL(urlString)
-      //console.log(url.searchParams.has('d'))
-      console.log(this.$route.path);
-      return this.$route.path == "/" && this.districtAbbr == "mff";
-    },
     showMap() {
       var urlString = window.location.href;
       return urlString.includes("/map");
@@ -286,38 +208,61 @@ export default {
   --nav-link-light: "#F8F8F8";
   --nav-link-dark: "#F8F8F8";
 }
-/*
-body {
-  color: #808080 !important;
-  background-color: #ffffff !important;
-} */
-/*styles the find site button*/
-.find-site {
-  /* padding and margin if not pretty*/
-  /* font-family: Noto Sans; */
+
+.top {
+  background-color: #0051ba;
+  padding: 50px;
+}
+
+/*"join us" message*/
+.top > .program-info {
+  color: #ffffff;
+  text-align: center;
+}
+
+/* search bar*/
+.top > .searchPrompt {
+  margin: 20px 5px;
+  padding: 20px 5px;
+  width: 294px;
+}
+
+/*styles the button that takes you to results list*/
+.top > .find-site {
   text-align: center;
   color: #000000;
   background-color: #79b80a;
+  margin: 2vh 20vh 2vh;
+  padding: 10px;
 }
-/*styles the background for bottom half of page*/
-.district-buttons {
-  /* margin: 20vh auto;*/
+
+/*styles the announcement across landing page*/
+.announcement {
+  margin: 20px 0px auto;
+  padding: 15px;
   text-align: center;
-  background-color: #ffffff;
+  background-color: #ffec60;
+  color: #000000;
+  display: block;
 }
-/*styles the message at top*/
-.program-info {
-  /* font-family: Noto Sans;*/
-  text-align: center;
-  color: #ffffff;
+
+/*styles the 6 buttons on landing page*/
+.home > .twoCols > .prog-btns {
   background-color: #0051ba;
-}
-/*styles the 6 buttons on figma*/
-.prog-btns {
-  text-align: center;
   color: #ffffff;
-  background-color: #0051ba;
+  width: 250px;
+  height: 100px;
+  text-align: center;
+  display: inline-block;
+  margin: 20px 40px;
+  border-radius: 1em;
 }
+
+/*hover state for the 6 buttons*/
+.home > .twoCols > .prog-btns:hover {
+  opacity: 0.5;
+}
+
 .btn-secondary:disabled {
   background-color: #e9ecef !important;
   border-color: #a9a9a9 !important;
@@ -335,21 +280,5 @@ body {
   select:disabled {
     color: #000000 !important;
   }
-}
-
-.skip-to-main {
-  background: #ffec60;
-  color: black;
-  left: 50%;
-  padding: 7px;
-  position: absolute;
-  top: 0;
-  transform: translateY(-100%);
-  transition: transform 0.3s;
-  z-index: 1000000000;
-  border-radius: 50px;
-}
-.skip-to-main:focus {
-  transform: translateY(0%);
 }
 </style>
