@@ -6,25 +6,18 @@
       <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
       <b-container>
         <div class="district-buttons">
-          <b-form-select v-model="selectedState" :options="nc"
-            >Select your state.
-          </b-form-select>
-          <br />
-          <br />
-          <b-form-select
-            v-model="selectedDistrict"
-            :options="districtOptions"
-            :disabled="this.selectedState !== 'nc'"
-            >Select a sponsor in your county.
-          </b-form-select>
-          <br />
-          <br />
-          <b-button
-            class="genericSiteButton"
-            :disabled="this.selectedDistrict === null"
-            v-on:click="districtLink"
-            >Find Free Meals Near Me!</b-button
-          >
+          <p>
+            <b-form-select v-model="selectedState" :options="states">Please select your state.</b-form-select>
+            <br />
+            <br />
+            <b-form-select v-model="selectedDistrict" :options="districtOptions" :disabled="this.selectedState !== 'nc'">{{
+              Please select your district.
+            </b-form-select>
+          </p>
+          <b-button :disabled="this.selectedDistrict === null" v-on:click="districtLink">{{
+            Find free meals near me!
+          </b-button>
+        </div>
           <br />
           <br />
           <p><strong>OR</strong></p>
@@ -52,10 +45,10 @@
 
 <script>
 // @ is an alias to /src
-// import JobCard from "@/components/JobCard.vue";
 import { nc, districts } from "../constants";
 export default {
-  name: "Home",
+  name: "MFFLandingPage",
+  components: {},
   data() {
     return {
       nc: nc,
