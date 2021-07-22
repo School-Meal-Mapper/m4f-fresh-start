@@ -29,7 +29,7 @@
             variant="buttons"
             type="link"
           >
-            <b>About Us</b>
+            <b>{{ language != 'en' ? 'sobre nosotros' : 'About Us' }}</b>
           </b-button>
           <b-button
             v-else-if="this.$route.path.includes('/faq')"
@@ -63,6 +63,7 @@
           <b-dropdown-item
             v-for="langOption in languages"
             v-bind:key="langOption.iso"
+            @click="$router.replace({ params: { lang: langOption.iso } })"
           >
             <!-- <span :title="$t('languages.' + langOption.iso)"> -->
             <span :title="'languages.' + langOption.iso">
@@ -70,7 +71,7 @@
             </span>
           </b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item :to="{ name: 'MFFLandingPage', params: {} }" right>
+        <b-nav-item :to="{ name: 'MFFLandingPage', params: {}, params: { lang: $route.params.lang } }" right>
           <template>
             <i class="fas fa-home fa-lg" aria-hidden="true" />
             <span class="sr-only">Return to M4F</span>
@@ -96,6 +97,7 @@ export default {
   data() {
     return {
       sponsor: sponsorData(this.$route.params.sponsor),
+      language: this.$route.params.lang ?? 'en',
       text: "",
       window: {
         width: 0,
@@ -111,6 +113,14 @@ export default {
         this.refreshCSSVariables();
       }
     },
+    "$route.params.lang"(to, from) {
+      to ??= 'en';
+      from ??= 'en';
+      console.log(to, from)
+      if (to != from) {
+        this.language = this.$route.params.lang ?? 'en';
+      }
+    }
   },
   computed: {
     filteredLangs: function () {

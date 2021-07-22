@@ -4,7 +4,8 @@
       <b-button
         :to="{
           name: 'SponsorLandingPage',
-          params: { sponsor: this.$route.params.sponsor },
+          params: { sponsor: $route.params.sponsor },
+          query: { lang: $route.query.lang }
         }"
         ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
       >

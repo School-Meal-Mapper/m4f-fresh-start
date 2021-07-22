@@ -9,7 +9,7 @@
       }}
     </h3>
     <router-link
-      :to="{ name: 'SponsorLandingPage', params: { sponsor: 'chccs' } }"
+      :to="{ name: 'SponsorLandingPage', params: { lang: $route.params.lang , sponsor: 'chccs' } }"
       >Go to CHCCS</router-link
     >
   </div>
