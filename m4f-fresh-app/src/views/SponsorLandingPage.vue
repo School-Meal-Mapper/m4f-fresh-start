@@ -55,30 +55,47 @@
 -->
 
 <script>
-import { districtData } from '../themes/MealsForFamilies/districtData'
+import { districtData } from "@/districtData";
 
-document.documentElement.style.setProperty('--primary-color', districtData.colors.primaryColor)
-document.documentElement.style.setProperty('--banner-light', districtData.colors.bannerColor)
-document.documentElement.style.setProperty('--banner-dark', districtData.colors.bannerColorDark)
-document.documentElement.style.setProperty('--nav-link-light', districtData.colors.navLink)
-document.documentElement.style.setProperty('--nav-link-dark', districtData.colors.navLinkDark)
+document.documentElement.style.setProperty(
+  "--primary-color",
+  districtData.colors.primaryColor
+);
+document.documentElement.style.setProperty(
+  "--banner-light",
+  districtData.colors.bannerColor
+);
+document.documentElement.style.setProperty(
+  "--banner-dark",
+  districtData.colors.bannerColorDark
+);
+document.documentElement.style.setProperty(
+  "--nav-link-light",
+  districtData.colors.navLink
+);
+document.documentElement.style.setProperty(
+  "--nav-link-dark",
+  districtData.colors.navLinkDark
+);
 
 export default {
   props: {
-    msg: String
+    msg: String,
   },
   created() {
-    this.mapLink()
+    this.mapLink();
   },
   data() {
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
     return {
       entries: null,
-      need: 'none',
-      language: { name: 'English', iso: 'en' },
+      need: "none",
+      language: { name: "English", iso: "en" },
       darkModeMediaQuery: darkModeMediaQuery,
       darkMode: darkModeMediaQuery.matches,
-      mapUrl: '',
+      mapUrl: "",
       attribution: null,
       socialMediaico: districtData.socialMedia,
       hoverItem: null,
@@ -86,96 +103,110 @@ export default {
       logoFormat: districtData.logoFormat,
       districtName: districtData.districtName,
       logoLink: null,
-      text: undefined
-    }
+    };
+  },
+  mounted() {
+    this.setDarkMode(this.darkMode);
+    this.darkModeMediaQuery.addListener((e) => {
+      this.darkMode = e.matches;
+      this.setDarkMode(this.darkMode);
+    });
   },
   methods: {
     mapLink() {
-      location.href = location.href + '/map'
-      return true
-    },
-    search(event) {
-      if (event.which === 13) {
-        event.preventDefault()
-        this.$emit('search', this.text)
-      }
+      location.href = location.href + "/map";
+      return true;
     },
     changeLanguage: function (item) {
-      this.language = item
-      this.$root.updateLang(item.iso)
+      this.language = item;
+      this.$root.updateLang(item.iso);
     },
     passHover: function (item) {
-      this.hoverItem = item
+      this.hoverItem = item;
     },
     passNoHover: function () {
-      this.hoverItem = null
+      this.hoverItem = null;
     },
     searchLoc: function (location) {
       for (var index = 0; index < this.filteredMarkers.length; index++) {
-        const entry = this.filteredMarkers[index].marker
+        const entry = this.filteredMarkers[index].marker;
         if (
-          entry['gsx$mealsitename'].$t.toLowerCase().includes(location.toLowerCase()) ||
-          location.toLowerCase().includes(entry['gsx$mealsiteaddress1'].$t.toLowerCase()) ||
-          entry['gsx$mealsiteaddress1'].$t.toLowerCase().includes(location.toLowerCase())
+          entry["gsx$mealsitename"].$t
+            .toLowerCase()
+            .includes(location.toLowerCase()) ||
+          location
+            .toLowerCase()
+            .includes(entry["gsx$mealsiteaddress1"].$t.toLowerCase()) ||
+          entry["gsx$mealsiteaddress1"].$t
+            .toLowerCase()
+            .includes(location.toLowerCase())
         ) {
           const val = {
             locValue: index,
-            isSetbyMap: false
-          }
-          this.passLocation(val)
-          return
+            isSetbyMap: false,
+          };
+          this.passLocation(val);
+          return;
         }
       }
-      var fetchString = 'https://nominatim.openstreetmap.org/search?key=9Rl2TaZFQpBPsnQmQo6cq79sl3Rf9EfA&q=' + location + '&format=json'
+      var fetchString =
+        "https://nominatim.openstreetmap.org/search?key=9Rl2TaZFQpBPsnQmQo6cq79sl3Rf9EfA&q=" +
+        location +
+        "&format=json";
       fetch(fetchString)
         .then((response) => response.json())
         .then((data) => {
           if (data.length === 0) {
-            alert(this.$t('searchBar.noResults'))
-            return
+            alert(this.$t("searchBar.noResults"));
+            return;
           }
-          var location = null
-          var i
+          var location = null;
+          var i;
           for (i = 0; i < data.length; i++) {
-            if (data[i].lat >= 34 && data[i].lat <= 36.21 && data[i].lon <= -75.3 && data[i].lon >= -84.15) {
+            if (
+              data[i].lat >= 34 &&
+              data[i].lat <= 36.21 &&
+              data[i].lon <= -75.3 &&
+              data[i].lon >= -84.15
+            ) {
               //Making sure result is in NC
-              location = data[i]
-              break
+              location = data[i];
+              break;
             }
           }
           if (location == null) {
-            alert(this.$t('searchBar.noResults'))
-            return
+            alert(this.$t("searchBar.noResults"));
+            return;
           }
-        })
+        });
     },
     searchZip(event) {
       if (event.which === 13) {
-        event.preventDefault()
+        event.preventDefault();
         if (this.zip.length != 5) {
-          alert('Please enter a valid zipcode')
+          alert("Please enter a valid zipcode");
         } else {
-          console.log(this.zip)
+          console.log(this.zip);
         }
       }
-    }
+    },
   },
   computed: {
     showMap() {
-      var urlString = window.location.href
-      return urlString.includes('/map')
-    }
-  }
-}
+      var urlString = window.location.href;
+      return urlString.includes("/map");
+    },
+  },
+};
 </script>
 
 <style>
 .root {
   --primary-color: blue;
-  --banner-light: '#E9ECEF';
-  --banner-dark: '#212529';
-  --nav-link-light: '#F8F8F8';
-  --nav-link-dark: '#F8F8F8';
+  --banner-light: "#E9ECEF";
+  --banner-dark: "#212529";
+  --nav-link-light: "#F8F8F8";
+  --nav-link-dark: "#F8F8F8";
 }
 
 .top {
@@ -190,10 +221,10 @@ export default {
 }
 
 /* search bar*/
-.top > #searchPrompt {
-  margin: auto;
+.top > .searchPrompt {
+  margin: 20px 5px;
   padding: 20px 5px;
-  width: 70%;
+  width: 294px;
 }
 
 /*styles the button that takes you to results list*/
@@ -201,12 +232,8 @@ export default {
   text-align: center;
   color: #000000;
   background-color: #79b80a;
-  margin: 2vh auto;
+  margin: 2vh 20vh 2vh;
   padding: 10px;
-}
-
-.top > .find-site:hover {
-  opacity: 0.5;
 }
 
 /*styles the announcement across landing page*/
@@ -219,31 +246,39 @@ export default {
   display: block;
 }
 
-/*changes border style of button columns*/
-.home > #twoCols {
-  margin: auto 20px;
-}
-
 /*styles the 6 buttons on landing page*/
-.home > #twoCols > .prog-btns {
+.home > .twoCols > .prog-btns {
   background-color: #0051ba;
   color: #ffffff;
-  width: 50px;
+  width: 250px;
   height: 100px;
   text-align: center;
   display: inline-block;
-  margin: 20px auto 0px;
+  margin: 20px 40px;
   border-radius: 1em;
 }
 
 /*hover state for the 6 buttons*/
-.home > #twoCols > .prog-btns:hover {
+.home > .twoCols > .prog-btns:hover {
   opacity: 0.5;
 }
 
+.btn-secondary:disabled {
+  background-color: #e9ecef !important;
+  border-color: #a9a9a9 !important;
+}
 @media (prefers-color-scheme: dark) {
-  .home {
+  body {
     background-color: #000000 !important;
+  }
+  .district-buttons {
+    color: #f5f5f5;
+  }
+  .custom-select {
+    color: #f5f5f5 !important;
+  }
+  select:disabled {
+    color: #000000 !important;
   }
 }
 </style>
