@@ -70,7 +70,7 @@ body {
 }
 
 .skip-to-main {
-  background: #ffec60;
+  background:"fff4a3";
   color: black;
   left: 50%;
   padding: 7px;
