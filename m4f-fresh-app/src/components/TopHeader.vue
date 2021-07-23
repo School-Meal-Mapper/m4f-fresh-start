@@ -48,7 +48,7 @@
             @click="collapseNav"
             :to="{
               name: 'FAQPage',
-              params: { sponsor: this.$route.params.sponsor },
+              params: { lang: $route.params.lang, sponsor: $route.params.sponsor},
             }"
           >
             <b>Questions and Contact Information</b>

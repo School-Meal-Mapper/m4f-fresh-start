@@ -4,8 +4,7 @@
       <b-button
         :to="{
           name: 'SponsorLandingPage',
-          params: { sponsor: $route.params.sponsor },
-          query: { lang: $route.query.lang },
+          params: { lang: $route.params.lang, sponsor: $route.params.sponsor },
         }"
         ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
       >
@@ -90,13 +89,19 @@ export default {
       this.filteredResults = this.updateTagsSelected();
     },
   },
+  async mounted() {
+    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter(site => site.open_status)
+  }
 };
 </script>
 
 <style>
 #result-page {
+  display: flex;
+  flex-direction: column;
   background-color: #eee;
   width: 100%;
+  height: 100%;
   overflow: auto;
 }
 
@@ -105,6 +110,6 @@ export default {
   justify-content: space-between;
   width: 100%;
   background-color: white;
-  height: 50px;
+  /* height: 50px; */
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     Welcome to the faq! Here we have info for {{ this.$route.params.sponsor }}.
-    <p>{{ this.$route.query.lang == "es" ? "COSAS" : "THINGS" }}</p>
+    <p>{{ this.$route.params.lang == "es" ? "COSAS" : "THINGS" }}</p>
   </div>
 </template>
 

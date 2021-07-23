@@ -7,14 +7,8 @@
     <a class="skip-to-main" href="#mealsite-selector" v-if="checkParam">
       Skip to main.
     </a>   -->
-    <div class="content">
-      <!-- Header: -->
-      <top-header></top-header>
-      <div id="wrapper">
-        <!-- Route pages will be inserted into here: -->
-        <router-view />
-      </div>
-    </div>
+    <top-header></top-header>
+    <router-view />
   </div>
 </template>
 
@@ -31,21 +25,6 @@ export default {
     };
   },
   methods: {
-    // async fetchData() {
-    //   const res = await fetch(districtData.data.spreadsheetUrl);
-    //   if (districtData.data.faqUrl != null) {
-    //     this.faqUrl = districtData.data.faqUrl;
-    //   }
-    //   if (districtData.data.providerinfoUrl != null) {
-    //     const res3 = await fetch(districtData.data.providerinfoUrl);
-    //     const info = await res3.json();
-    //     this.info = info.feed.entry;
-    //   }
-    //   const entries = await res.json();
-
-    //   this.entries = entries.feed.entry;
-    //   this.logoLink = this.entries[0]["gsx$redirectlink"].$t;
-    // },
     changeLanguage(item) {
       this.language = item;
       this.$root.updateLang(item.iso);
@@ -55,8 +34,10 @@ export default {
 </script>
 
 <style>
-body {
+html, body {
   height: 100%;
+}
+body {
   color: #808080;
   background-color: #ffffff;
   font-family: "Noto Sans", Arial, Helvetica, sans-serif;
@@ -104,10 +85,10 @@ body {
   transform: translateY(0%);
 }
 
-.content {
+.home {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
 }
 
 #wrapper {
