@@ -2,13 +2,17 @@
 // with blank properties that components can import and use before assets are loaded in.
 
 /**
- * @param {String} abbr Unique abbreviation for the meal sponsorer.
+ * @param {String} abbr Unique abbreviation for the meal sponsor.
  * @returns {Object} Object with many theming properties of each of the meal sponsors.
  *
  * Possible Improvement: define the return object as a class so we would not need a
  *  validaton of objects would be built-in.
  *
- * From sponsorIndex.js,
+ * Performance Improvement: define the sponsors object in the function as a script in `index.html`,
+ *   hence it acts like a global constant and would not need to be read in every import. I think if
+ *   you make this into a Vue Plugin it'll have the same effect and be more "Vue-friendly".
+ *
+ * ### Concerns
  *
  * Similar to districtData.js, this is still not the best way to do theming specific to a sponsor.
  * The best way would be to include this information along with the meal site data as all that
@@ -16,7 +20,7 @@
  * best to have an "index" page that'll lookup where a sponsor is located.
  *
  * However, organized like this, you can easily put this on a backend and have this function
- * this async-ly, return a pointer to the sponsor-specific theming.
+ * async-ly return a pointer to the sponsor-specific theming. 
  *
  * Fig 1:
  * ```plain
@@ -27,9 +31,8 @@
  */
 
 export default function sponsorData(abbr) {
-  // abbr ??= 'mff'
   abbr = abbr ?? "mff";
-  const sp = {
+  const sponsors = {
     chccs: {
       sponsorAbbr: "chccs",
       sponsorName: "Chapel Hill-Carrboro City Schools",
@@ -248,7 +251,13 @@ export default function sponsorData(abbr) {
       darkAttribution:
         '&copy; <a href: "https://carto.com/">Carto</a>, &copy; <a href: "https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href: "http://openstreetmap.org">OpenStreetMap</a> contributors',
     },
-  }[abbr];
+  };
+
+  const sp = sponsors[abbr];
+
+  if (sp === undefined) {
+    return sponsors["mff"];
+  }
 
   // organize the list, could insert validation here using ternary operators
   return {
