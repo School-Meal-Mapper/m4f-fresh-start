@@ -1,12 +1,12 @@
 <template>
-  <b-card class="result-card" :title="result.marker.gsx$mealsitename.$t">
+  <b-card class="result-card w-65" :title="result.name">
     <hr />
     <b-card-text class="result-card-text"
       ><i class="fas fa-directions" />
-      {{ icon_spacing + result.marker.gsx$mealsiteaddress1.$t }}
-      <template v-if="result.marker.gsx$mealsiteaddress2.$t == ''">
+      {{ icon_spacing + result.location.address }}
+      <template v-if="result.location.address_2 == ''">
         <br />
-        {{ icon_spacing + result.marker.gsx$mealsiteaddress2.$t }}
+        {{ icon_spacing + result.location.address_2 }}
       </template>
     </b-card-text>
     <hr />
@@ -27,20 +27,20 @@
     <hr />
     <b-card-text class="result-card-text">
       <i class="fas fa-phone" />{{
-        icon_spacing + result.marker.gsx$contactphone.$t
+        icon_spacing + result.contact.phone
       }}
     </b-card-text>
     <b-card-text class="result-card-text">
       <i class="fas fa-comments" />{{ icon_spacing + "English, Spanish" }}
     </b-card-text>
     <hr />
-    <b-card-text class="result-card-text" v-if="result.marker.gsx$weblink.$t">
+    <b-card-text class="result-card-text" v-if="result.web_link">
       <i class="fas fa-globe" />{{
-        icon_spacing + result.marker.gsx$weblink.$t
+        icon_spacing + result.weblink
       }}
     </b-card-text>
-    <b-card-text class="result-card-text" v-if="result.marker.gsx$notes.$t"
-      >{{ result.marker.gsx$notes.$t.slice(0, 100) + "..." }}
+    <b-card-text class="result-card-text" v-if="result.notes"
+      >{{ result.notes.slice(0, 100) + "..." }}
     </b-card-text>
   </b-card>
 </template>
@@ -75,6 +75,7 @@ export default {
 <style>
 .result-card-text {
   margin: 10px 0 10px 0;
+  text-align: left;
 }
 
 .result-card hr {
