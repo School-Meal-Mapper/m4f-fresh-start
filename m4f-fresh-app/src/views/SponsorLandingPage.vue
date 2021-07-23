@@ -2,8 +2,8 @@
   <div class="home">
     <div class="top">
       <p class="program-info" id="mealsite-info">
-        Join us this summer for free meals at one of our
-        <span style="color: #ffec60"> 18 </span> locations!
+        Join us this summer for free meals at one of our 
+        <span style="color: #fff4a3;"> 18 </span> locations!
       </p>
       <!-- search bar is created with b-form-input --->
       <b-form-input
@@ -182,7 +182,7 @@ export default {
   margin: 20px 0px auto;
   padding: 15px;
   text-align: center;
-  background-color: #ffec60;
+  background-color:"fff4a3";
   color: #000000;
   display: block;
 }

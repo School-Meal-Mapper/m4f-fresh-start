@@ -468,7 +468,7 @@ if (url.searchParams.has("chccs") || hash == "chccs") {
   primaryColor = "#1D6363";
   bannerColor = "#1D6363";
   bannerColorDark = "#1B3C65";
-  accentColor = "#ffec60";
+  accentColor = "fff4a3";
   navLink = "#f8f8ff";
   navLinkDark = "#f8f8ff";
   logoFormat = "png";
