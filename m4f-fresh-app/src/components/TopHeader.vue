@@ -15,9 +15,8 @@
       aria-label="More options"
     ></b-navbar-toggle>
 
-    <b-collapse id="nav-collapse" is-nav>
+    <b-collapse id="nav-collapse" v-model="expanded" is-nav>
       <b-navbar-nav class="ml-auto">
-        <b-button @click="test"> </b-button>
         <!-- insert custom components -->
         <slot> </slot>
         <!-- route-based components -->
@@ -30,22 +29,29 @@
             variant="buttons"
             type="link"
           >
-            <b>About Us</b>
+            <b>{{ language != 'en' ? 'sobre nosotros' : 'About Us' }}</b>
           </b-button>
           <b-button
             v-else-if="this.$route.path.includes('/faq')"
             @click="goBackPage"
+            size="sm"
+            class="accentColor my-2 my-sm-0"
+            variant="buttons"
           >
-            Go Back
+            <b>Go Back</b>
           </b-button>
           <b-button
             v-else
+            size="sm"
+            class="accentColor my-2 my-sm-0"
+            variant="buttons"
+            @click="collapseNav"
             :to="{
               name: 'FAQPage',
-              params: { sponsor: this.$route.params.sponsor },
+              params: { lang: $route.params.lang, sponsor: $route.params.sponsor},
             }"
           >
-            Questions and Contact Information
+            <b>Questions and Contact Information</b>
           </b-button>
         </b-nav-text>
         <!-- permabuttons (language dropdowns, home button to m4f, button to sponsor website) -->
@@ -57,6 +63,7 @@
           <b-dropdown-item
             v-for="langOption in languages"
             v-bind:key="langOption.iso"
+            @click="$router.replace({ params: { lang: langOption.iso } })"
           >
             <!-- <span :title="$t('languages.' + langOption.iso)"> -->
             <span :title="'languages.' + langOption.iso">
@@ -64,7 +71,7 @@
             </span>
           </b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item :to="{ name: 'M4FLandingPage', params: {} }" right>
+        <b-nav-item :to="{ name: 'MFFLandingPage', params: {}, params: { lang: $route.params.lang } }" right>
           <template>
             <i class="fas fa-home fa-lg" aria-hidden="true" />
             <span class="sr-only">Return to M4F</span>
@@ -90,11 +97,13 @@ export default {
   data() {
     return {
       sponsor: sponsorData(this.$route.params.sponsor),
+      language: this.$route.params.lang ?? 'en',
       text: "",
       window: {
         width: 0,
         height: 0,
       },
+      expanded: false,
     };
   },
   watch: {
@@ -104,6 +113,14 @@ export default {
         this.refreshCSSVariables();
       }
     },
+    "$route.params.lang"(to, from) {
+      to ??= 'en';
+      from ??= 'en';
+      console.log(to, from)
+      if (to != from) {
+        this.language = this.$route.params.lang ?? 'en';
+      }
+    }
   },
   computed: {
     filteredLangs: function () {
@@ -146,18 +163,15 @@ export default {
   },
   methods: {
     goBackPage() {
+      this.collapseNav();
       this.$router.go(-1);
+    },
+    collapseNav() {
+      this.expanded = false;
     },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    },
-    test() {
-      console.log(this.$route);
-      document.documentElement.style.setProperty(
-        "--banner-light",
-        this.sponsor.colors.bannerColor
-      );
     },
     refreshCSSVariables() {
       document.documentElement.style.setProperty(

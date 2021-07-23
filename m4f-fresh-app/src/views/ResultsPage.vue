@@ -1,9 +1,14 @@
 <template>
   <div id="result-page">
     <nav id="page-header">
-      <b-button @click="test"
+      <b-button
+        :to="{
+          name: 'SponsorLandingPage',
+          params: { lang: $route.params.lang, sponsor: $route.params.sponsor },
+        }"
         ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
       >
+      <b-button @click="test"> Test </b-button>
       <div><results-filter @select="updateTagsSelected" /></div>
     </nav>
     <main>
@@ -20,6 +25,9 @@
 </template>
 
 <script>
+import sponsorData from "@/sponsorIndex.js";
+import Backend from "@/backend.js";
+
 import ResultCard from "@/components/ResultCard.vue";
 import ResultsFilter from "@/components/ResultsFilter.vue";
 // import Tag from './Tag.vue'
@@ -29,21 +37,21 @@ import ResultsFilter from "@/components/ResultsFilter.vue";
 export default {
   components: { ResultCard, ResultsFilter },
   // components: { Tag },
-  props: {
-    results: Array,
-    location: Object,
-  },
   created() {
     this.filteredResults = this.results;
   },
   data() {
     return {
-      tagsSelected: [],
+      sponsor: sponsorData(this.$route.params.sponsor),
+      results: [], // original results from the spreadsheet
       filteredResults: [],
+      tagsSelected: [],
     };
   },
   methods: {
-    test() {
+    async test() {
+      console.log(this.sponsor.sponsorAbbr);
+      console.log(await Backend.getMealSites(this.$route.params.sponsor));
       console.log(this.results, "results passed in");
       console.log(this.filteredResults, "self-filtered results");
     },
@@ -78,19 +86,22 @@ export default {
   },
   watch: {
     tagsSelected: function () {
-      this.$emit("select", this.tagsSelected); // push tags up
-      // App.vue does not have a watch operation on tagsSelected so it will not react to the state change
-      // however, we still pass the value up as App.vue might need this data if the user wants to switch
-      // to map view.
+      this.filteredResults = this.updateTagsSelected();
     },
   },
+  async mounted() {
+    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter(site => site.open_status)
+  }
 };
 </script>
 
 <style>
 #result-page {
+  display: flex;
+  flex-direction: column;
   background-color: #eee;
   width: 100%;
+  height: 100%;
   overflow: auto;
 }
 
@@ -99,6 +110,6 @@ export default {
   justify-content: space-between;
   width: 100%;
   background-color: white;
-  height: 50px;
+  /* height: 50px; */
 }
 </style>
