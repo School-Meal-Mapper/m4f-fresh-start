@@ -5,7 +5,7 @@
         :to="{
           name: 'SponsorLandingPage',
           params: { sponsor: $route.params.sponsor },
-          query: { lang: $route.query.lang }
+          query: { lang: $route.query.lang },
         }"
         ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
       >

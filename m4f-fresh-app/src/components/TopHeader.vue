@@ -29,7 +29,7 @@
             variant="buttons"
             type="link"
           >
-            <b>{{ language != 'en' ? 'sobre nosotros' : 'About Us' }}</b>
+            <b>{{ language != "en" ? "sobre nosotros" : "About Us" }}</b>
           </b-button>
           <b-button
             v-else-if="this.$route.path.includes('/faq')"
@@ -71,7 +71,14 @@
             </span>
           </b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-nav-item :to="{ name: 'MFFLandingPage', params: {}, params: { lang: $route.params.lang } }" right>
+        <b-nav-item
+          :to="{
+            name: 'MFFLandingPage',
+            params: {},
+            params: { lang: $route.params.lang },
+          }"
+          right
+        >
           <template>
             <i class="fas fa-home fa-lg" aria-hidden="true" />
             <span class="sr-only">Return to M4F</span>
@@ -97,7 +104,7 @@ export default {
   data() {
     return {
       sponsor: sponsorData(this.$route.params.sponsor),
-      language: this.$route.params.lang ?? 'en',
+      language: this.$route.params.lang ?? "en",
       text: "",
       window: {
         width: 0,
@@ -114,13 +121,13 @@ export default {
       }
     },
     "$route.params.lang"(to, from) {
-      to ??= 'en';
-      from ??= 'en';
-      console.log(to, from)
+      to ??= "en";
+      from ??= "en";
+      console.log(to, from);
       if (to != from) {
-        this.language = this.$route.params.lang ?? 'en';
+        this.language = this.$route.params.lang ?? "en";
       }
-    }
+    },
   },
   computed: {
     filteredLangs: function () {
