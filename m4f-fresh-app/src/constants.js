@@ -66,3 +66,12 @@ export const districts = {
     // { value: 'wake', text: 'Wake County Public Schools' }
   ],
 };
+
+export const allSchools = [
+  {school: "Northside Elementary"},
+  {school: "McDougle Elementary"},
+  {school: "Rashkis Elementary"},
+  {school: "Smith Middle"},
+];
+   
+
