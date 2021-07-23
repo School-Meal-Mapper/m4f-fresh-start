@@ -44,24 +44,27 @@
     </div>
     <div class="whiteDiv">
       <div class="container">
+      <b-link>
         <p>
           Don't see a free meal sponsor in your county?
           <b-button class="triangleButton">
-            <b-icon icon="triangle-fill" rotate="90"></b-icon>
+            <b-icon aria-label="arrow" icon="triangle-fill" rotate="90"></b-icon>
           </b-button>
         </p>
+      </b-link>
       </div>
     </div>
     <div class="greyDiv">
       <div class="container">
+      <b-link href="https://www.meals4families.community">
         <p>
           Learn more about our mission to connect families with free meals.
           <b-button 
-            class="triangleButton"
-            href="https://www.meals4families.community">
+            class="triangleButton">
             <b-icon icon="triangle-fill" rotate="90"></b-icon>
           </b-button>
         </p>
+      </b-link>
       </div>
     </div>
   </div>
