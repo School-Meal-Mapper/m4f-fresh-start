@@ -15,6 +15,7 @@ const routes = [
     path: '/:lang([a-z][a-z])?', // currently, any first param that is two characters is treated as a language, you could change this from a 2-char regex into a list
     name: 'LanguageWrapper',
     component: {
+      name: 'LanguageWrapper',
       render: h => h('router-view')
     },
     children: [
@@ -24,7 +25,7 @@ const routes = [
         component: MFFLandingPage,
       },
       {
-        path: ":sponsor",
+        path: ":sponsor/",
         name: "SponsorLandingPage",
         component: SponsorLandingPage,
         // children: [ // children are for parts of a page that change based on URL

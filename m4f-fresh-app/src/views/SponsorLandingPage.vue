@@ -113,10 +113,6 @@ export default {
     });
   },
   methods: {
-    mapLink() {
-      location.href = location.href + "/map";
-      return true;
-    },
     changeLanguage: function (item) {
       this.language = item;
       this.$root.updateLang(item.iso);
