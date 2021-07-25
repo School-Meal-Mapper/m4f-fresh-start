@@ -2,13 +2,13 @@
   <div>
     Welcome to the the Free Meals Info! Here we have info for
     {{ this.$route.params.sponsor }}.
-    <p>Learn free meals page.</p>
+    <p>Menu and info page!</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LearnFreeMealsPage",
+  name: "MenuAndInfoPage",
   components: {},
 };
 </script>
