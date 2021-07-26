@@ -63,7 +63,7 @@
           <b-dropdown-item
             v-for="langOption in languages"
             v-bind:key="langOption.iso"
-            @click="$router.replace({ params: { lang: langOption.iso } })"
+            @click="$router.push({ params: { lang: langOption.iso } })"
           >
             <!-- <span :title="$t('languages.' + langOption.iso)"> -->
             <span :title="'languages.' + langOption.iso">
@@ -74,7 +74,6 @@
         <b-nav-item
           :to="{
             name: 'MFFLandingPage',
-            params: {},
             params: { lang: $route.params.lang },
           }"
           right
@@ -125,6 +124,7 @@ export default {
       from ??= "en";
       console.log(to, from);
       if (to != from) {
+        this.$root.$i18n.locale = to ?? "en"; // changes a global variable in i18n plugin
         this.language = this.$route.params.lang ?? "en";
       }
     },

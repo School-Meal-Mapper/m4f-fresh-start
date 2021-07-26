@@ -20,16 +20,9 @@ export default {
   },
   data() {
     return {
-      logoLink: null,
-      language: { name: "English", iso: "en" },
+      logoLink: null
     };
-  },
-  methods: {
-    changeLanguage(item) {
-      this.language = item;
-      this.$root.updateLang(item.iso);
-    },
-  },
+  }
 };
 </script>
 

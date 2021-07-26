@@ -28,7 +28,7 @@
           query: {searchText: text}
         }"
       >
-
+        This is search button.
       </b-button>
     </div>
     <p class="announcement">
@@ -105,6 +105,7 @@
 
 <script>
 import { districtData } from "@/districtData";
+import sponsorData from "@/sponsorIndex.js";
 
 document.documentElement.style.setProperty(
   "--primary-color",
@@ -136,6 +137,7 @@ export default {
       "(prefers-color-scheme: dark)"
     );
     return {
+      sponsorTheme: sponsorData(this.$route.params.sponsor),
       entries: null,
       need: "none",
       language: { name: "English", iso: "en" },
@@ -179,7 +181,40 @@ export default {
         this.$emit("search", this.text);
       }
     },
+    refreshCSSVariables() {
+      document.documentElement.style.setProperty(
+        "--banner-light",
+        this.sponsorTheme.colors.bannerColor
+      );
+      document.documentElement.style.setProperty(
+        "--banner-dark",
+        this.sponsorTheme.colors.bannerColorDark
+      );
+      document.documentElement.style.setProperty(
+        "--nav-link-light",
+        this.sponsorTheme.colors.navLink
+      );
+      document.documentElement.style.setProperty(
+        "--nav-link-dark",
+        this.sponsorTheme.colors.navLinkDark
+      );
+      document.documentElement.style.setProperty(
+        "--accentColor",
+        this.sponsorTheme.colors.accentColor
+      );
+    }
   },
+  mounted() {
+    this.refreshCSSVariables();
+  },
+  watch: {
+    "$route.params.sponsor"(to, from) {
+      if (to != from) {
+        this.sponsorTheme = sponsorData(this.$route.params.sponsor);
+        this.refreshCSSVariables();
+      }
+    }
+  }
 };
 </script>
 
@@ -235,7 +270,7 @@ export default {
 
 /*styles the 6 buttons on landing page*/
 .home > #twoCols > .prog-btns {
-  background-color: #0051ba;
+  background-color: var(--banner-light);
   color: #ffffff;
   width: 50px;
   height: 100px;
