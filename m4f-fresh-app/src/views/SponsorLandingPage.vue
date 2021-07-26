@@ -6,13 +6,19 @@
         <span style="color: #fff4a3"> 18 </span> locations!
       </p>
       <!-- search bar is created with b-form-input --->
-      <b-form-input
-        v-model="text"
-        type="search"
-        @keydown.native="search"
-        id="searchPrompt"
-        ><i class="fas fa-search"></i
-      ></b-form-input>
+      <b-form id="search" @submit="search">
+        <b-list-group horizontal class="need-location-group">
+          <b-form-input
+            v-model="text"
+            type="search"
+            @keydown.native="search"
+            id="searchPrompt"
+          ></b-form-input>
+          <b-button type="submit" variant="primary" class="search-btn"
+            ><i class="fas fa-search"></i
+          ></b-button>
+        </b-list-group>
+      </b-form>
       <!-- this is the button that takes you to the results list (see "v-on:click") --->
       <b-button 
         class="find-site"
@@ -30,12 +36,12 @@
       meals during August 2021.
     </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
-    <b-row cols="2" id="twoCols">
+    <b-row cols="2" align-h="around" id="twoCols">
       <b-button
         class="prog-btns"
         :to="{
           name: 'LearnFreeMealsPage',
-          params: { sponsor: 'chcss', lang: $route.params.lang },
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
         }"
       >
         <b-icon-question-circle-fill
@@ -47,7 +53,7 @@
         class="prog-btns"
         :to="{
           name: 'MenuAndInfoPage',
-          params: { sponsor: 'chcss', lang: $route.params.lang },
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
         }"
       >
         <b-icon-calendar3 style="width: 30px; height: 30px"></b-icon-calendar3>
@@ -57,7 +63,7 @@
         class="prog-btns"
         :to="{
           name: 'SchoolMealsPage',
-          params: { sponsor: 'chcss', lang: $route.params.lang },
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
         }"
       >
         <b-icon-check2-square
@@ -69,7 +75,7 @@
         class="prog-btns"
         :to="{
           name: 'GroceriesPage',
-          params: { sponsor: 'chcss', lang: $route.params.lang },
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
         }"
       >
         <b-icon-cart4 style="width: 30px; height: 30px"></b-icon-cart4>
@@ -81,7 +87,7 @@
         class="prog-btns"
         :to="{
           name: 'HelpAndConnectPage',
-          params: { sponsor: 'chcss', lang: $route.params.lang },
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
         }"
       >
         <b-icon-chat-text style="width: 30px; height: 30px"></b-icon-chat-text>
@@ -167,6 +173,12 @@ export default {
         }
       }
     },
+    search(event) {
+      if (event.which === 13) {
+        event.preventDefault();
+        this.$emit("search", this.text);
+      }
+    },
   },
 };
 </script>
@@ -192,7 +204,7 @@ export default {
 }
 
 /* search bar*/
-.top > #searchPrompt {
+.top > #search > .need-location-group {
   margin: auto;
   padding: 20px 5px;
   width: 70%;
