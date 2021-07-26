@@ -14,7 +14,16 @@
         ><i class="fas fa-search"></i
       ></b-form-input>
       <!-- this is the button that takes you to the results list (see "v-on:click") --->
-      <b-button class="find-site"></b-button>
+      <b-button 
+        class="find-site"
+        :to="{
+          name: 'ResultsPage',
+          params: {sponsor: $route.params.sponsor, lang: $route.params.lang},
+          query: {searchText: text}
+        }"
+      >
+
+      </b-button>
     </div>
     <p class="announcement">
       Register <span style="font-weight: bolder">here </span> to receive free
@@ -134,6 +143,7 @@ export default {
       logoFormat: districtData.logoFormat,
       districtName: districtData.districtName,
       logoLink: null,
+      text: ""
     };
   },
   methods: {

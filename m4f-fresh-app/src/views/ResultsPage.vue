@@ -52,6 +52,9 @@ import ResultsFilter from "@/components/results/ResultsFilter.vue";
 export default {
   components: { ResultCard, ResultsFilter },
   // components: { Tag },
+  props: {
+    initialSearch: String
+  },
   created() {
     this.filteredResults = this.results;
   },
@@ -110,6 +113,8 @@ export default {
     this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter(site => site.open_status)
     this.isLoading = false;
     this.filteredResults = this.results;
+    
+    this.searchText = this.initialSearch ?? ""
   }
 };
 </script>
