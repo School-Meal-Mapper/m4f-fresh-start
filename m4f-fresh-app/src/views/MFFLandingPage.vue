@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="blueDiv">
+    <div class="tealDiv">
       <br />
       <b-container>
         <h1>Welcome to M4F!</h1>
@@ -34,7 +34,6 @@
             ></b-form-input>
             <b-button type="submit" class="mffGenButton">
                 <b-icon icon="search"></b-icon>
-                <i class="fas fa-search"></i>
               </b-button>
             
           </div>
@@ -44,24 +43,27 @@
     </div>
     <div class="whiteDiv">
       <div class="container">
+      <b-link>
         <p>
           Don't see a free meal sponsor in your county?
           <b-button class="triangleButton">
-            <b-icon icon="triangle-fill" rotate="90"></b-icon>
+            <b-icon aria-label="arrow" icon="triangle-fill" rotate="90"></b-icon>
           </b-button>
         </p>
+      </b-link>
       </div>
     </div>
     <div class="greyDiv">
       <div class="container">
+      <b-link href="https://www.meals4families.community">
         <p>
           Learn more about our mission to connect families with free meals.
           <b-button 
-            class="triangleButton"
-            href="https://www.meals4families.community">
+            class="triangleButton">
             <b-icon icon="triangle-fill" rotate="90"></b-icon>
           </b-button>
         </p>
+      </b-link>
       </div>
     </div>
   </div>
@@ -107,15 +109,16 @@ export default {
 </script>
 <style>
 .root {
-  --primary-color: blue;
-  --banner-light: "#E9ECEF";
-  --banner-dark: "#212529";
+  --primary-color: "#1D6363";
+  --banner-light: "#1D6363";
+  --banner-dark: "#1B3C65";
   --nav-link-light: "#F8F8F8";
   --nav-link-dark: "#F8F8F8";
+  --accentColor: "#ff4a3";
 }
-.blueDiv {
-  color: #ffffff;
-  background-color: #0956bc;
+.tealDiv {
+  color: var(--accentColor);
+  background-color: var(--banner-light);
   @media (prefers-color-scheme-dark) {
     color: #ffffff !important;
     background-color: #000000 !important;
@@ -134,7 +137,7 @@ h1, h2, p {
 }
 #mffGenDiv {
   color: #ffffff;
-  background-color: #0956bc;
+  background-color: var(--banner-light);
   @media (prefers-color-scheme-dark) {
     color: #ffffff !important;
     background-color: #000000 !important;
@@ -142,11 +145,11 @@ h1, h2, p {
 }
 .mffGenButton {
   color: #000000;
-  background-color: #79b80a;
+  background-color: var(--accentColor);
   box-shadow: 0px 2px 2px;
 }
 .triangleButton {
-  color: #79b80a;
+  color: var(--accentColor);
   background-color: #ffffff00;
   border: 0px;
 }

@@ -73,5 +73,14 @@ export const allSchools = [
   {school: "Rashkis Elementary"},
   {school: "Smith Middle"},
 ];
+
+export const allSchoolsByDistrict = {
+  chccs: [
+    {school: "Northside Elementary"},
+    {school: "McDougle Elementary"},
+    {school: "Rashkis Elementary"},
+    {school: "Smith Middle"},
+  ],
+};
    
 

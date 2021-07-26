@@ -3,7 +3,7 @@
     <div class="top">
       <p class="program-info" id="mealsite-info">
         Join us this summer for free meals at one of our
-        <span style="color: #ffec60"> 18 </span> locations!
+        <span style="color: #fff4a3"> 18 </span> locations!
       </p>
       <!-- search bar is created with b-form-input --->
       <b-form-input
@@ -22,7 +22,7 @@
     </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
     <b-row cols="2" id="twoCols">
-      <router-link
+      <b-button
         class="prog-btns"
         :to="{
           name: 'LearnFreeMealsPage',
@@ -33,24 +33,48 @@
           style="width: 30px; height: 30px"
         ></b-icon-question-circle-fill>
         <br
-      /></router-link>
-      <b-button class="prog-btns">
+      /></b-button>
+      <b-button
+        class="prog-btns"
+        :to="{
+          name: 'MenuAndInfoPage',
+          params: { sponsor: 'chcss', lang: $route.params.lang },
+        }"
+      >
         <b-icon-calendar3 style="width: 30px; height: 30px"></b-icon-calendar3>
         <br
       /></b-button>
-      <b-button class="prog-btns">
+      <b-button
+        class="prog-btns"
+        :to="{
+          name: 'SchoolMealsPage',
+          params: { sponsor: 'chcss', lang: $route.params.lang },
+        }"
+      >
         <b-icon-check2-square
           style="width: 30px; height: 30px"
         ></b-icon-check2-square>
         <br
       /></b-button>
-      <b-button class="prog-btns">
+      <b-button
+        class="prog-btns"
+        :to="{
+          name: 'GroceriesPage',
+          params: { sponsor: 'chcss', lang: $route.params.lang },
+        }"
+      >
         <b-icon-cart4 style="width: 30px; height: 30px"></b-icon-cart4>
         <br
       /></b-button>
       <b-button class="prog-btns"> <br /></b-button>
       <!-- +++++++++++++++ need button for find another sponsor --->
-      <b-button class="prog-btns">
+      <b-button
+        class="prog-btns"
+        :to="{
+          name: 'HelpAndConnectPage',
+          params: { sponsor: 'chcss', lang: $route.params.lang },
+        }"
+      >
         <b-icon-chat-text style="width: 30px; height: 30px"></b-icon-chat-text>
         <br
       /></b-button>
@@ -182,7 +206,7 @@ export default {
   margin: 20px 0px auto;
   padding: 15px;
   text-align: center;
-  background-color: #ffec60;
+  background-color: #fff4a3;
   color: #000000;
   display: block;
 }
