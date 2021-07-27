@@ -20,7 +20,7 @@
  * best to have an "index" page that'll lookup where a sponsor is located.
  *
  * However, organized like this, you can easily put this on a backend and have this function
- * async-ly return a pointer to the sponsor-specific theming. 
+ * async-ly return a pointer to the sponsor-specific theming.
  *
  * Fig 1:
  * ```plain

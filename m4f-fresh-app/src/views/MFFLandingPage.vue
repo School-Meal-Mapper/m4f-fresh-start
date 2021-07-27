@@ -8,62 +8,75 @@
         <div class="district-buttons" id="mffGenDiv">
           <p>
             <b-form-select v-model="selectedState" :options="nc" class="mb-3">
-              <b-form-select-option :value="null">Please select your state.</b-form-select-option>
+              <b-form-select-option :value="null"
+                >Please select your state.</b-form-select-option
+              >
             </b-form-select>
-            <b-form-select v-model="selectedDistrict" :options="districtOptions" :disabled="this.selectedState !== 'nc'" class="mb-3">
-              <b-form-select-option :value="null">Please select your district.</b-form-select-option>
+            <b-form-select
+              v-model="selectedDistrict"
+              :options="districtOptions"
+              :disabled="this.selectedState !== 'nc'"
+              class="mb-3"
+            >
+              <b-form-select-option :value="null"
+                >Please select your district.</b-form-select-option
+              >
             </b-form-select>
-            <b-button 
-              class="mffGenButton" 
+            <b-button
+              class="mffGenButton"
               :to="{
                 name: 'SponsorLandingPage',
                 params: { sponsor: selectedDistrict, lang: $route.params.lang },
-                }"
-              :disabled="this.selectedDistrict === null">Find free meals near me!</b-button>
+              }"
+              :disabled="this.selectedDistrict === null"
+              >Find free meals near me!</b-button
+            >
           </p>
         </div>
-          <p><strong>OR</strong></p>
-          <div class="input-group rounded">
-            <b-form-input 
-              type="search" 
-              id="searchDistrictBySchoolInput"
-              class="form-control rounded" 
-              placeholder="Search by the name of your local school. " 
-              aria-label="Search"
-              aria-describedby="search-addon" 
-            ></b-form-input>
-            <b-button type="submit" class="mffGenButton">
-                <b-icon icon="search"></b-icon>
-              </b-button>
-            
-          </div>
-          <br />
-          <br />
+        <p><strong>OR</strong></p>
+        <div class="input-group rounded">
+          <b-form-input
+            type="search"
+            id="searchDistrictBySchoolInput"
+            class="form-control rounded"
+            placeholder="Search by the name of your local school. "
+            aria-label="Search"
+            aria-describedby="search-addon"
+          ></b-form-input>
+          <b-button type="submit" class="mffGenButton">
+            <b-icon icon="search"></b-icon>
+          </b-button>
+        </div>
+        <br />
+        <br />
       </b-container>
     </div>
     <div class="whiteDiv">
       <div class="container">
-      <b-link>
-        <p>
-          Don't see a free meal sponsor in your county?
-          <b-button class="triangleButton">
-            <b-icon aria-label="arrow" icon="triangle-fill" rotate="90"></b-icon>
-          </b-button>
-        </p>
-      </b-link>
+        <b-link>
+          <p>
+            Don't see a free meal sponsor in your county?
+            <b-button class="triangleButton">
+              <b-icon
+                aria-label="arrow"
+                icon="triangle-fill"
+                rotate="90"
+              ></b-icon>
+            </b-button>
+          </p>
+        </b-link>
       </div>
     </div>
     <div class="greyDiv">
       <div class="container">
-      <b-link href="https://www.meals4families.community">
-        <p>
-          Learn more about our mission to connect families with free meals.
-          <b-button 
-            class="triangleButton">
-            <b-icon icon="triangle-fill" rotate="90"></b-icon>
-          </b-button>
-        </p>
-      </b-link>
+        <b-link href="https://www.meals4families.community">
+          <p>
+            Learn more about our mission to connect families with free meals.
+            <b-button class="triangleButton">
+              <b-icon icon="triangle-fill" rotate="90"></b-icon>
+            </b-button>
+          </p>
+        </b-link>
       </div>
     </div>
   </div>
@@ -132,7 +145,9 @@ export default {
   background-color: #e9eaeb;
   color: #000000;
 }
-h1, h2, p {
+h1,
+h2,
+p {
   text-align: center;
 }
 #mffGenDiv {
