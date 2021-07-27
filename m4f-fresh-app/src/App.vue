@@ -34,7 +34,8 @@ export default {
 </script>
 
 <style>
-html, body {
+html,
+body {
   height: 100%;
 }
 body {
@@ -70,7 +71,7 @@ body {
 }
 
 .skip-to-main {
-  background:"fff4a3";
+  background: "fff4a3";
   color: black;
   left: 50%;
   padding: 7px;

@@ -13,22 +13,22 @@
             type="search"
             @keydown.native="search"
             id="searchPrompt"
+            :placeholder="$t('SponsorLanding.search')"
           ></b-form-input>
-          <b-button type="submit" variant="primary" class="search-btn"
+          <b-button variant="primary" class="search-btn"
             ><i class="fas fa-search"></i
           ></b-button>
         </b-list-group>
       </b-form>
       <!-- this is the button that takes you to the results list (see "v-on:click") --->
-      <b-button 
+      <b-button
         class="find-site"
         :to="{
           name: 'ResultsPage',
-          params: {sponsor: $route.params.sponsor, lang: $route.params.lang},
-          query: {searchText: text}
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
+          query: { searchText: text },
         }"
-      >
-
+        >{{ this.$t("SponsorLanding.findSite") }}
       </b-button>
     </div>
     <p class="announcement">
@@ -36,63 +36,80 @@
       meals during August 2021.
     </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
-    <b-row cols="2" align-h="around" id="twoCols">
-      <b-button
-        class="prog-btns"
-        :to="{
-          name: 'LearnFreeMealsPage',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
-        }"
-      >
-        <b-icon-question-circle-fill
-          style="width: 30px; height: 30px"
-        ></b-icon-question-circle-fill>
-        <br
-      /></b-button>
-      <b-button
-        class="prog-btns"
-        :to="{
-          name: 'MenuAndInfoPage',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
-        }"
-      >
-        <b-icon-calendar3 style="width: 30px; height: 30px"></b-icon-calendar3>
-        <br
-      /></b-button>
-      <b-button
-        class="prog-btns"
-        :to="{
-          name: 'SchoolMealsPage',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
-        }"
-      >
-        <b-icon-check2-square
-          style="width: 30px; height: 30px"
-        ></b-icon-check2-square>
-        <br
-      /></b-button>
-      <b-button
-        class="prog-btns"
-        :to="{
-          name: 'GroceriesPage',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
-        }"
-      >
-        <b-icon-cart4 style="width: 30px; height: 30px"></b-icon-cart4>
-        <br
-      /></b-button>
-      <b-button class="prog-btns"> <br /></b-button>
-      <!-- +++++++++++++++ need button for find another sponsor --->
-      <b-button
-        class="prog-btns"
-        :to="{
-          name: 'HelpAndConnectPage',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
-        }"
-      >
-        <b-icon-chat-text style="width: 30px; height: 30px"></b-icon-chat-text>
-        <br
-      /></b-button>
+    <b-row cols="2" id="rowCol">
+      <b-col class="col">
+        <b-button
+          class="prog-btns"
+          :to="{
+            name: 'LearnFreeMealsPage',
+            params: {
+              sponsor: $route.params.sponsor,
+              lang: $route.params.lang,
+            },
+          }"
+        >
+          <b-icon-question-circle-fill
+            class="btnIcon"
+          ></b-icon-question-circle-fill>
+          <br />{{ this.$t("SponsorLanding.learnMore") }}</b-button
+        >
+        <b-button
+          class="prog-btns"
+          :to="{
+            name: 'MenuAndInfoPage',
+            params: {
+              sponsor: $route.params.sponsor,
+              lang: $route.params.lang,
+            },
+          }"
+        >
+          <b-icon-calendar3 class="btnIcon"></b-icon-calendar3>
+          <br />{{ this.$t("SponsorLanding.menuAndInfo") }}</b-button
+        >
+        <b-button
+          class="prog-btns"
+          :to="{
+            name: 'SchoolMealsPage',
+            params: {
+              sponsor: $route.params.sponsor,
+              lang: $route.params.lang,
+            },
+          }"
+        >
+          <b-icon-check2-square class="btnIcon"></b-icon-check2-square>
+          <br />{{ this.$t("SponsorLanding.schoolMeals") }}</b-button
+        >
+      </b-col>
+      <b-col class="col">
+        <b-button
+          class="prog-btns"
+          :to="{
+            name: 'GroceriesPage',
+            params: {
+              sponsor: $route.params.sponsor,
+              lang: $route.params.lang,
+            },
+          }"
+        >
+          <b-icon-cart4 class="btnIcon"></b-icon-cart4>
+          <br />{{ this.$t("SponsorLanding.groceries") }}</b-button
+        >
+        <b-button class="prog-btns"> <br /></b-button>
+        <!-- +++++++++++++++ need button for find another sponsor --->
+        <b-button
+          class="prog-btns"
+          :to="{
+            name: 'HelpAndConnectPage',
+            params: {
+              sponsor: $route.params.sponsor,
+              lang: $route.params.lang,
+            },
+          }"
+        >
+          <b-icon-chat-text class="btnIcon"></b-icon-chat-text>
+          <br />{{ this.$t("SponsorLanding.helpConnect") }}</b-button
+        >
+      </b-col>
     </b-row>
     <router-view />
   </div>
@@ -149,7 +166,7 @@ export default {
       logoFormat: districtData.logoFormat,
       districtName: districtData.districtName,
       logoLink: null,
-      text: ""
+      text: "",
     };
   },
   methods: {
@@ -217,6 +234,8 @@ export default {
   background-color: #79b80a;
   margin: auto;
   padding: 10px;
+  position: absolute;
+  left: 50%;
 }
 
 .top > .find-site:hover {
@@ -234,19 +253,24 @@ export default {
 }
 
 /*styles the 6 buttons on landing page*/
-.home > #twoCols > .prog-btns {
+.home > #rowCol > .col > .prog-btns {
   background-color: #0051ba;
   color: #ffffff;
-  width: 50px;
-  height: 100px;
+  width: 90%;
+  height: 50%;
   text-align: center;
   display: inline-block;
   margin: 20px auto 0px;
   border-radius: 1em;
 }
 
+.home > #rowCol > .col > .prog-btns > .btnIcon {
+  width: 20%;
+  height: 20%;
+}
+
 /*hover state for the 6 buttons*/
-.home > #twoCols > .prog-btns:hover {
+.home > #rowCol > .col > .prog-btns:hover {
   opacity: 0.5;
 }
 
