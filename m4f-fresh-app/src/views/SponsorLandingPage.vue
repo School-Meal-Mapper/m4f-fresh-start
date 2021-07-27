@@ -95,7 +95,7 @@
           <br />{{ this.$t("SponsorLanding.groceries") }}</b-button
         >
         <b-button class="prog-btns"> <br /></b-button>
-        <!-- +++++++++++++++ need button for find another sponsor --->
+        <!-- need button for find another sponsor --->
         <b-button
           class="prog-btns"
           :to="{
@@ -123,7 +123,6 @@
 <script>
 import { districtData } from "@/districtData";
 import sponsorData from "@/sponsorIndex.js";
-
 document.documentElement.style.setProperty(
   "--primary-color",
   districtData.colors.primaryColor
@@ -144,7 +143,6 @@ document.documentElement.style.setProperty(
   "--nav-link-dark",
   districtData.colors.navLinkDark
 );
-
 export default {
   props: {
     msg: String,
@@ -243,25 +241,21 @@ export default {
   --nav-link-light: "#F8F8F8";
   --nav-link-dark: "#F8F8F8";
 }
-
 .top {
   background-color: #0051ba;
   padding: 50px;
 }
-
 /*"join us" message*/
 .top > .program-info {
   color: #ffffff;
   text-align: center;
 }
-
 /* search bar*/
 .top > #search > .need-location-group {
   margin: auto;
   padding: 20px 5px;
   width: 70%;
 }
-
 /*styles the button that takes you to results list*/
 .top > .find-site {
   text-align: center;
@@ -272,11 +266,9 @@ export default {
   position: absolute;
   left: 50%;
 }
-
 .top > .find-site:hover {
   opacity: 0.5;
 }
-
 /*styles the announcement across landing page*/
 .announcement {
   margin: 20px 0px auto;
@@ -286,7 +278,6 @@ export default {
   color: #000000;
   display: block;
 }
-
 /*styles the 6 buttons on landing page*/
 .home > #rowCol > .col > .prog-btns {
   background-color: #0051ba;
@@ -298,17 +289,14 @@ export default {
   margin: 20px auto 0px;
   border-radius: 1em;
 }
-
 .home > #rowCol > .col > .prog-btns > .btnIcon {
   width: 20%;
   height: 20%;
 }
-
 /*hover state for the 6 buttons*/
 .home > #rowCol > .col > .prog-btns:hover {
   opacity: 0.5;
 }
-
 @media (prefers-color-scheme: dark) {
   .home {
     background-color: #000000 !important;
