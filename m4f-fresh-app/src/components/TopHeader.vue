@@ -25,7 +25,7 @@
             v-if="this.$route.params.sponsor === undefined"
             href="https://www.meals4families.community"
             size="sm"
-            class="accentColor my-2 my-sm-0"
+            class="accentButton my-2 my-sm-0"
             variant="buttons"
             type="link"
           >
@@ -35,7 +35,7 @@
             v-else-if="this.$route.path.includes('/faq')"
             @click="goBackPage"
             size="sm"
-            class="accentColor my-2 my-sm-0"
+            class="accentButton my-2 my-sm-0"
             variant="buttons"
           >
             <b>Go Back</b>
@@ -43,7 +43,7 @@
           <b-button
             v-else
             size="sm"
-            class="accentColor my-2 my-sm-0"
+            class="accentButton my-2 my-sm-0"
             variant="buttons"
             @click="collapseNav"
             :to="{
@@ -338,6 +338,7 @@ export default {
 }
 .banner {
   background-color: var(--banner-light);
+  // box-shadow: 0px 2px 3px rgb(0 0 0 / 40%);
   @media (prefers-color-scheme: dark) {
     background-color: var(--banner-dark);
   }
@@ -350,7 +351,8 @@ export default {
   }
 }
 
-.accentColor {
+.accentButton {
   background-color: var(--accentColor) !important;
+  box-shadow: 2px 2px 3px rgb(0 0 0 / 60%);
 }
 </style>

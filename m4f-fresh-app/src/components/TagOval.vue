@@ -126,9 +126,9 @@ export default {
 .tag-icon {
   display: inline-block;
   padding: 0 15px;
-  height: 1.3em; /* or ~ 20px */
-  border-radius: 1.3em; /* must be same as height */
-  line-height: 1.3em; /* must be same as height */
+  height: 1.4em; /* or ~ 20px */
+  border-radius: 1.4em; /* must be same as height */
+  line-height: 1.4em; /* must be same as height */
   text-align: center;
   vertical-align: middle;
 }

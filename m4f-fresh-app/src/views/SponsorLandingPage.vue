@@ -36,7 +36,7 @@
       meals during August 2021.
     </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
-    <b-row cols="2" id="rowCol">
+    <b-row cols="2" id="rowCol" style="background-color: #ffffff;">
       <b-col class="col">
         <b-button
           class="prog-btns"
@@ -125,7 +125,6 @@
 <script>
 import { districtData } from "@/districtData";
 import sponsorData from "@/sponsorIndex.js";
-
 document.documentElement.style.setProperty(
   "--primary-color",
   districtData.colors.primaryColor
@@ -150,6 +149,7 @@ document.documentElement.style.setProperty(
   "--accentColor",
   districtData.colors.accentColor
 );
+
 
 export default {
   props: {
@@ -250,25 +250,21 @@ export default {
   --nav-link-dark: "#F8F8F8";
   --accentColor: #79b80a;
 }
-
 .top {
   background-color: var(--banner-light);
   padding: 50px;
 }
-
 /*"join us" message*/
 .top > .program-info {
   color: #ffffff;
   text-align: center;
 }
-
 /* search bar*/
 .top > #search > .need-location-group {
   margin: auto;
   padding: 20px 5px;
   width: 70%;
 }
-
 /*styles the button that takes you to results list*/
 .top > .find-site {
   text-align: center;
@@ -279,11 +275,9 @@ export default {
   position: absolute;
   left: 40%;
 }
-
 .top > .find-site:hover {
   opacity: 0.5;
 }
-
 /*styles the announcement across landing page*/
 .announcement {
   margin: 20px 0px auto;
@@ -293,7 +287,6 @@ export default {
   color: #000000;
   display: block;
 }
-
 /*styles the 6 buttons on landing page*/
 .home > #rowCol > .col > .prog-btns {
   background-color: var(--banner-light);
@@ -305,17 +298,14 @@ export default {
   margin: 20px 20px 0px;
   border-radius: 1em;
 }
-
 .home > #rowCol > .col > .prog-btns > .btnIcon {
   width: 20%;
   height: 20%;
 }
-
 /*hover state for the 6 buttons*/
 .home > #rowCol > .col > .prog-btns:hover {
   opacity: 0.5;
 }
-
 @media (prefers-color-scheme: dark) {
   .home {
     background-color: #000000 !important;

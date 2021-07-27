@@ -1,5 +1,5 @@
 <template>
-  <b-dropdown id="dropdown-tags" text="Filter by Tags">
+  <b-dropdown id="dropdown-tags" text="Filter by Tags" :class="propClass" right>
     <!-- <div>wowowowow</div> -->
     <b-form-checkbox-group
       v-model="tagsSelected"
@@ -35,6 +35,8 @@ export default {
   },
   props: {
     value: Array,
+    right: Boolean,
+    propClass: Object // CSS Object
   },
   data() {
     return {
@@ -50,9 +52,6 @@ export default {
 </script>
 
 <style>
-#dropdown-tags {
-  width: 100%;
-}
 #checkboxes-tags {
   padding-left: 10px;
 }

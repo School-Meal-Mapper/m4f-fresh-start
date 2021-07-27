@@ -6,6 +6,7 @@ import SponsorLandingPage from "@/views/SponsorLandingPage.vue";
 import ResultsPage from "@/views/ResultsPage.vue";
 import FAQPage from "@/views/FAQPage.vue";
 import MapPage from "@/views/MapPage.vue";
+import SponsorNotFoundPage from "@/views/SponsorNotFoundPage.vue";
 import NotFoundPage from "@/views/NotFoundPage.vue";
 import LearnFreeMealsPage from "@/views/LearnFreeMealsPage.vue";
 import MenuAndInfoPage from "@/views/MenuAndInfoPage.vue";
@@ -60,6 +61,11 @@ const routes = [
         path: ":sponsor/faq",
         name: "FAQPage",
         component: FAQPage,
+      },
+      {
+        path: ":sponsornotfound",
+        name: "SponsorNotFoundPage",
+        component: SponsorNotFoundPage,
       },
       {
         path: ":sponsor/map",
