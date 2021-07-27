@@ -9,6 +9,10 @@ import MapPage from "@/views/MapPage.vue";
 import SponsorNotFoundPage from "@/views/SponsorNotFoundPage.vue";
 import NotFoundPage from "@/views/NotFoundPage.vue";
 import LearnFreeMealsPage from "@/views/LearnFreeMealsPage.vue";
+import MenuAndInfoPage from "@/views/MenuAndInfoPage.vue";
+import SchoolMealsPage from "@/views/SchoolMealsPage.vue";
+import GroceriesPage from "@/views/GroceriesPage.vue";
+import HelpAndConnectPage from "@/views/HelpAndConnectPage.vue";
 
 Vue.use(VueRouter);
 
@@ -75,8 +79,28 @@ const routes = [
       },
       {
         path: ":sponsor/freeMeals",
-        name: "LearnFreeMeals",
+        name: "LearnFreeMealsPage",
         component: LearnFreeMealsPage,
+      },
+      {
+        path: ":sponsor/menuInfo",
+        name: "MenuAndInfoPage",
+        component: MenuAndInfoPage,
+      },
+      {
+        path: ":sponsor/schoolMeals",
+        name: "SchoolMealsPage",
+        component: SchoolMealsPage,
+      },
+      {
+        path: ":sponsor/groceries",
+        name: "GroceriesPage",
+        component: GroceriesPage,
+      },
+      {
+        path: ":sponsor/helpAndConnect",
+        name: "HelpAndConnectPage",
+        component: HelpAndConnectPage,
       },
     ],
   },

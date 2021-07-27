@@ -1,5 +1,5 @@
 <template>
-  <b-card class="result-card w-65" :title="result.name">
+  <b-card class="result-card w-65" :title="result.name" @click="emitTap">
     <hr />
     <b-card-text class="result-card-text"
       ><i class="fas fa-directions" />
@@ -26,22 +26,20 @@
     </b-card-text>
     <hr />
     <b-card-text class="result-card-text">
-      <i class="fas fa-phone" />{{
-        icon_spacing + result.contact.phone
-      }}
+      <i class="fas fa-phone" />{{ icon_spacing + result.contact.phone }}
     </b-card-text>
     <b-card-text class="result-card-text">
       <i class="fas fa-comments" />{{ icon_spacing + "English, Spanish" }}
     </b-card-text>
     <hr />
     <b-card-text class="result-card-text" v-if="result.web_link">
-      <i class="fas fa-globe" />{{
-        icon_spacing + result.weblink
-      }}
+      <i class="fas fa-globe" />{{ icon_spacing + result.weblink }}
     </b-card-text>
     <b-card-text class="result-card-text" v-if="result.notes"
       >{{ result.notes.slice(0, 100) + "..." }}
     </b-card-text>
+    <div class="accent-bar" />
+    <!-- Not used now, but could make it look better, like on Zillow. -->
   </b-card>
 </template>
 
@@ -67,6 +65,9 @@ export default {
     lookupTags() {
       // should make an overall ResultCard component that allows includes these functions
       // the ResultCard should have condensed, preview, and full
+    },
+    emitTap() {
+      this.$emit("tap", this.result); // sends the result object back to the parent
     },
   },
 };
