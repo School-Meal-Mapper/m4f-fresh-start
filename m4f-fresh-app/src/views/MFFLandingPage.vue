@@ -1,191 +1,212 @@
 <template>
   <div class="home">
-    <br />
-    <b-container>
-      <h1>Welcome to M4F!</h1>
-      <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
-      <br />
-      <div class="input-group rounded">
-        <b-form-input
-          type="search"
-          id="searchDistrictBySchoolInput"
-          class="form-control rounded"
-          placeholder="Search by the name of your local school. "
-          aria-label="Search"
-          aria-describedby="search-addon"
-        ></b-form-input>
-        <b-button type="submit" class="mffGenButton">
-          <b-icon icon="search"></b-icon>
-        </b-button>
-      </div>
-      <br />
-      <p><strong>OR</strong></p>
-      <div class="district-buttons" id="mffGenDiv">
-        <p>
-          <b-form-select v-model="selectedState" :options="nc" class="mb-3">
-            <b-form-select-option :value="null"
-              >Please select your state.</b-form-select-option
-            >
-          </b-form-select>
-          <b-form-select
-            v-model="selectedDistrict"
-            :options="districtOptions"
-            :disabled="this.selectedState !== 'nc'"
-            class="mb-3"
-          >
-            <b-form-select-option :value="null"
-              >Please select your district.</b-form-select-option
-            >
-          </b-form-select>
-          <b-button
-            class="mffGenButton"
-            :to="{
-              name: 'SponsorLandingPage',
-              params: { sponsor: selectedDistrict, lang: $route.params.lang },
-            }"
-            :disabled="this.selectedDistrict === null"
-            >Find free meals near me!</b-button
-          >
-        </p>
-      </div>
-      <br />
-      <br />
-      <b-card class="homeLinkCard">
-        <b-link class="homeLink" href="https://www.meals4families.community">
-          <p>
-            Learn more about our mission to connect families with free meals.
-            <b-button class="triangleButton">
-              <b-icon
-                icon="triangle-fill"
-                rotate="90"
-                aria-label="arrow"
-              ></b-icon>
-            </b-button>
-          </p>
-        </b-link>
-      </b-card>
-      <br />
-      <b-card class="homeLinkCard">
-        <b-link class="homeLink">
-          <p>
-            Don't see a free meal sponsor in your county?
-            <b-button
-              class="triangleButton"
-              :to="{
-                name: 'SponsorNotFoundPage',
-                params: { lang: $route.params.lang },
-              }"
-            >
-              <b-icon
-                aria-label="arrow"
-                icon="triangle-fill"
-                rotate="90"
-              ></b-icon>
-            </b-button>
-          </p>
-        </b-link>
-      </b-card>
-    </b-container>
+    <div class="top">
+      <p class="program-info" id="mealsite-info">
+        Join us this summer for free meals at one of our 
+        <span style="color: #fff4a3;"> 18 </span> locations!
+      </p>
+      <!-- search bar is created with b-form-input --->
+      <b-form-input
+        v-model="text"
+        type="search"
+        @keydown.native="search"
+        id="searchPrompt"
+        ><i class="fas fa-search"></i
+      ></b-form-input>
+      <!-- this is the button that takes you to the results list (see "v-on:click") --->
+      <b-button class="find-site"></b-button>
+    </div>
+    <p class="announcement">
+      Register <span style="font-weight: bolder">here </span> to receive free
+      meals during August 2021.
+    </p>
+    <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
+    <b-row cols="2" id="twoCols">
+      <router-link
+        class="prog-btns"
+        :to="{
+          name: 'LearnFreeMealsPage',
+          params: { sponsor: 'chcss', lang: $route.params.lang },
+        }"
+      >
+        <b-icon-question-circle-fill
+          style="width: 30px; height: 30px"
+        ></b-icon-question-circle-fill>
+        <br
+      /></router-link>
+      <b-button class="prog-btns">
+        <b-icon-calendar3 style="width: 30px; height: 30px"></b-icon-calendar3>
+        <br
+      /></b-button>
+      <b-button class="prog-btns">
+        <b-icon-check2-square
+          style="width: 30px; height: 30px"
+        ></b-icon-check2-square>
+        <br
+      /></b-button>
+      <b-button class="prog-btns">
+        <b-icon-cart4 style="width: 30px; height: 30px"></b-icon-cart4>
+        <br
+      /></b-button>
+      <b-button class="prog-btns"> <br /></b-button>
+      <!-- +++++++++++++++ need button for find another sponsor --->
+      <b-button class="prog-btns">
+        <b-icon-chat-text style="width: 30px; height: 30px"></b-icon-chat-text>
+        <br
+      /></b-button>
+    </b-row>
+    <router-view />
   </div>
 </template>
+<!-- 
+<style lang="scss">
+// @import './themes/DurhamMeal/SCSS/custom.scss';
+// </style>
+-->
 
 <script>
-// @ is an alias to /src
-import { nc, districts } from "../constants";
-import sponsorData from "@/sponsorIndex";
+import { districtData } from "@/districtData";
+
+document.documentElement.style.setProperty(
+  "--primary-color",
+  districtData.colors.primaryColor
+);
+document.documentElement.style.setProperty(
+  "--banner-light",
+  districtData.colors.bannerColor
+);
+document.documentElement.style.setProperty(
+  "--banner-dark",
+  districtData.colors.bannerColorDark
+);
+document.documentElement.style.setProperty(
+  "--nav-link-light",
+  districtData.colors.navLink
+);
+document.documentElement.style.setProperty(
+  "--nav-link-dark",
+  districtData.colors.navLinkDark
+);
+
 export default {
-  name: "MFFLandingPage",
-  components: {},
+  props: {
+    msg: String,
+  },
   data() {
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
     return {
-      nc: nc,
-      districts: districts,
-      selectedState: null,
-      selectedDistrict: null,
-      sponsor: sponsorData(this.$route.params.sponsor),
+      entries: null,
+      need: "none",
+      language: { name: "English", iso: "en" },
+      darkModeMediaQuery: darkModeMediaQuery,
+      darkMode: darkModeMediaQuery.matches,
+      mapUrl: "",
+      attribution: null,
+      socialMediaico: districtData.socialMedia,
+      hoverItem: null,
+      districtAbbr: districtData.districtAbbr,
+      logoFormat: districtData.logoFormat,
+      districtName: districtData.districtName,
+      logoLink: null,
     };
   },
-  watch: {
-    "$route.params.sponsor"(to, from) {
-      if (to != from) {
-        this.sponsor = sponsorData(this.$route.params.sponsor);
-        this.refreshCSSVariables();
-      }
+  methods: {
+    changeLanguage: function (item) {
+      this.language = item;
+      this.$root.updateLang(item.iso);
     },
-  },
-  computed: {
-    districtOptions() {
-      if (this.selectedState == "nc") {
-        return districts[this.selectedState];
-      }
-      if (this.selectedState == null) {
-        return [{ value: null, text: "You must select your state." }];
-      } else {
-        return [{ value: null, text: "You must select your state." }];
+    passHover: function (item) {
+      this.hoverItem = item;
+    },
+    passNoHover: function () {
+      this.hoverItem = null;
+    },
+    searchZip(event) {
+      if (event.which === 13) {
+        event.preventDefault();
+        if (this.zip.length != 5) {
+          alert("Please enter a valid zipcode");
+        } else {
+          console.log(this.zip);
+        }
       }
     },
   },
 };
 </script>
+
 <style>
 .root {
-  --primary-color: "#1D6363";
-  --banner-light: "#1D6363";
-  --banner-dark: "#1B3C65";
+  --primary-color: blue;
+  --banner-light: "#E9ECEF";
+  --banner-dark: "#212529";
   --nav-link-light: "#F8F8F8";
   --nav-link-dark: "#F8F8F8";
-  --accentColor: "#ff4a3";
-}
-.home {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-  color: var(--accentColor);
-  background-color: var(--banner-light);
-  @media (prefers-color-scheme-dark) {
-    color: #ffffff !important;
-    background-color: #000000 !important;
-  }
 }
 
-h1,
-h2,
-p {
+.top {
+  background-color: #0051ba;
+  padding: 50px;
+}
+
+/*"join us" message*/
+.top > .program-info {
+  color: #ffffff;
   text-align: center;
 }
-#mffGenDiv {
-  color: #ffffff;
-  background-color: var(--banner-light);
-  @media (prefers-color-scheme-dark) {
-    color: #ffffff !important;
-    background-color: #000000 !important;
-  }
-}
-.mffGenButton {
-  color: #000000;
-  background-color: var(--accentColor);
-  box-shadow: 0px 2px 2px;
-}
-.triangleButton {
-  color: #ffffff;
-  background-color: #ffffff00;
-  border: 0px;
-}
-.triangleButton:hover {
-  color: var(--accentColor);
-  background-color: #ffffff00;
-  border: 0px;
-}
-.homeLinkCard {
-  background-color: var(--banner-light);
-  color: #ffffff;
-  border-color: #ffffff;
-}
-.homeLink {
-  color: #ffffff;
+
+/* search bar*/
+.top > #searchPrompt {
+  margin: auto;
+  padding: 20px 5px;
+  width: 70%;
 }
 
-.homeLink:hover {
-  color: var(--accentColor);
+/*styles the button that takes you to results list*/
+.top > .find-site {
+  text-align: center;
+  color: #000000;
+  background-color: #79b80a;
+  margin: auto;
+  padding: 10px;
+}
+
+.top > .find-site:hover {
+  opacity: 0.5;
+}
+
+/*styles the announcement across landing page*/
+.announcement {
+  margin: 20px 0px auto;
+  padding: 15px;
+  text-align: center;
+  background-color: "fff4a3";
+  color: #000000;
+  display: block;
+}
+
+/*styles the 6 buttons on landing page*/
+.home > #twoCols > .prog-btns {
+  background-color: #0051ba;
+  color: #ffffff;
+  width: 50px;
+  height: 100px;
+  text-align: center;
+  display: inline-block;
+  margin: 20px auto 0px;
+  border-radius: 1em;
+}
+
+/*hover state for the 6 buttons*/
+.home > #twoCols > .prog-btns:hover {
+  opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .home {
+    background-color: #000000 !important;
+  }
 }
 </style>

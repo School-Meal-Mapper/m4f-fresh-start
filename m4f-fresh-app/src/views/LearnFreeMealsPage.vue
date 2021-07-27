@@ -2,16 +2,54 @@
   <div>
     Welcome to the the Free Meals Info! Here we have info for
     {{ this.$route.params.sponsor }}.
-    <p>
-      Mauris tincidunt augue sem. Duis eleifend pharetra condimentum. Curabitur
-      lacinia sapien tincidunt risus faucibus fermentum. Interdum et malesuada
-      fames ac ante ipsum primis in faucibus. Sed efficitur in magna non
-      iaculis. Integer sit amet sagittis est, maximus viverra nisl. Pellentesque
-      pretium arcu sapien, vel mollis mi rhoncus vel. Mauris et mollis risus, in
-      molestie augue. Morbi egestas nisi eros, malesuada finibus mi porta ac.
-      Proin tincidunt, enim sed mattis molestie, nisl elit elementum nunc, non
-      tristique metus orci non nisl.
-    </p>
+    <h1>Learn free meals page.</h1>
+    <b-list-group>
+      <b-list-group-item href="#" active class="flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Learn more about free meals</h5>
+          <small>3 days ago</small>
+        </div>
+
+        <p class="mb-1">
+          Donec id elit non mi porta gravida at eget metus. Maecenas sed diam
+          eget risus varius blandit.
+        </p>
+
+        <small>Donec id elit non mi porta.</small>
+      </b-list-group-item>
+
+      <b-list-group-item href="#" class="flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Learn more about free meals</h5>
+          <small class="text-muted">3 days ago</small>
+        </div>
+
+        <p class="mb-1">
+          Donec id elit non mi porta gravida at eget metus. Maecenas sed diam
+          eget risus varius blandit.
+        </p>
+
+        <small class="text-muted">Donec id elit non mi porta.</small>
+      </b-list-group-item>
+
+      <b-list-group-item
+        href="#"
+        disabled
+        class="flex-column align-items-start"
+      >
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">Disabled List group item</h5>
+          <small class="text-muted">3 days ago</small>
+        </div>
+
+        <p class="mb-1">
+          Donec id elit non mi porta gravida at eget metus. Maecenas sed diam
+          eget risus varius blandit.
+        </p>
+
+        <small class="text-muted">Donec id elit non mi porta.</small>
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 

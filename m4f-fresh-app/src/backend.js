@@ -69,9 +69,10 @@ MealSite Example Structure: {
    */
   static async getMealSites(abbr) {
     const spreadsheetUrl = sponsorData(abbr).data.spreadsheetUrl;
-    console.log(spreadsheetUrl);
     const res = await fetch(spreadsheetUrl);
     const raw = await res.json();
+    console.log(raw);
+    const missing = { $t: "N/A" };
     const processed = raw.feed.entry
       .filter((site) => site.gsx$mealsitename.$t)
       .map((site) => {
@@ -89,10 +90,10 @@ MealSite Example Structure: {
             lat: site.gsx$lat.$t, // will be a string
             lng: site.gsx$lon.$t, // will be a string
           },
-          additional_directions: site.gsx$additionaldirections.$t,
+          additional_directions: (site.gsx$additionaldirections ?? missing).$t,
           contact: {
-            name: site.gsx$contactname.$t,
-            phone: site.gsx$contactphone.$t,
+            name: (site.gsx$contactname ?? missing).$t,
+            phone: (site.gsx$contactphone ?? missing).$t,
           },
           notes: site.gsx$notes.$t,
           web_link: site.gsx$weblink.$t,
@@ -115,17 +116,28 @@ MealSite Example Structure: {
             date: site.gsx$lastupdate.$t,
           },
           tags: {
-            transitfriendly: site.gsx$transitfriendly.$t == "TRUE",
-            foodpantry: site.gsx$foodpantry.$t == "TRUE",
+            transitfriendly: (site.gsx$transitfriendly ?? missing).$t == "TRUE",
+            foodpantry: (site.gsx$foodpantry ?? missing).$t == "TRUE",
             prepackagedmealsavailable:
-              site.gsx$prepackagedmealsavailable.$t == "TRUE",
-            dietaryoptionsoffered: site.gsx$dietaryoptionsoffered.$t
+              (site.gsx$prepackagedmealsavailable ?? missing).$t == "TRUE",
+            dietaryoptionsoffered: (
+              site.gsx$dietaryoptionsoffered ?? missing
+            ).$t
               .toLowerCase()
               .split(", "),
-            hotmealsavailable: false,
+            hotmealsavailable:
+              (site.gsx$hotmealsavailable ?? missing).$t == "TRUE",
           },
         };
       });
     return processed;
+  }
+
+  static async getFaq(abbr) {
+    const faqUrl = sponsorData(abbr).data.faqUrl;
+    const res = await fetch(faqUrl);
+    const raw = await res.json();
+    console.log(raw);
+    return;
   }
 }

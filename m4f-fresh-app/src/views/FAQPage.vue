@@ -1,12 +1,17 @@
 <template>
   <div>
     Welcome to the faq! Here we have info for {{ this.$route.params.sponsor }}.
-    <p>{{ this.$route.params.lang == "es" ? "COSAS" : "THINGS" }}</p>
+    <p>{{ $t('test.test') }}</p>
   </div>
 </template>
 
 <script>
-export default {};
+import Backend from "@/backend.js";
+export default {
+  async mounted() {
+    console.log(await Backend.getFaq(this.$route.params.sponsor));
+  },
+};
 </script>
 
 <style></style>

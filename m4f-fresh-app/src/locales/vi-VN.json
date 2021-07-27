@@ -1,0 +1,41 @@
+{
+	"Languages": {
+		"am": "Amharic",
+		"ar": "tiếng Ả Rập",
+		"bn": "Tiếng Bengal",
+		"en": "Anh",
+		"es": "người Tây Ban Nha",
+		"fil": "Tiếng Philipin",
+		"fr": "người Pháp",
+		"hi": "Tiếng Hindi",
+		"hmn": "Hmong",
+		"ja": "tiếng Nhật",
+		"ko": "Hàn Quốc",
+		"mh": "Marshallese"
+	},
+	"MFFLanding": {
+		"findMeals": "Tìm bữa ăn miễn phí gần tôi!",
+		"learnMore": "Tìm hiểu thêm về sứ mệnh của chúng tôi là kết nối các gia đình với những bữa ăn miễn phí.",
+		"localSponsor": "Kết nối với nhà tài trợ địa phương để tìm trang web ăn uống miễn phí!",
+		"moreSponsors": "Không thấy nhà tài trợ bữa ăn miễn phí trong quận của bạn?",
+		"search": "Tìm kiếm theo tên trường học địa phương của bạn.",
+		"selectDistrict": "Vui lòng chọn quận của bạn.",
+		"selectState": "Vui lòng chọn tiểu bang của bạn.",
+		"welcome": "Chào mừng bạn đến với M4F!"
+	},
+	"Results": {
+		"enterLoc": "Nhập một vị trí để tìm các trang web gần nhất.",
+		"goBack": "Quay lại Trang chủ của Nhà cung cấp",
+		"noResults": " Rất tiếc, không có kết quả với các thẻ đã chọn."
+	},
+	"SponsorLanding": {
+		"announcementMsg": "Đăng ký tại đây để nhận suất ăn miễn phí trong tháng 8/2021.",
+		"groceries": "Nhận tiền cho hàng tạp hóa",
+		"helpConnect": "Cần giúp đỡ? Kết nối với chúng tôi!",
+		"joinUs": "Hãy tham gia với chúng tôi vào mùa hè này để nhận các bữa ăn miễn phí tại một trong những địa điểm của chúng tôi!",
+		"learnMore": "Tìm hiểu thêm về Bữa ăn miễn phí",
+		"menuAndInfo": "Thực đơn và sự kiện đặc biệt",
+		"schoolMeals": "Đăng ký Bữa ăn Năm học Miễn phí",
+		"wrongProvider": "Không phải nhà cung cấp bữa ăn địa phương của bạn?"
+	}
+}

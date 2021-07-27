@@ -1,24 +1,41 @@
 <template>
   <div id="result-page">
     <nav id="page-header">
-      <b-button
-        :to="{
-          name: 'SponsorLandingPage',
-          params: { lang: $route.params.lang, sponsor: $route.params.sponsor },
-        }"
-        ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
-      >
-      <b-button @click="test"> Test </b-button>
-      <p>{{ `Showing ${filteredResults.length} results.`}}</p>
-      <div><results-filter v-model="tagsSelected" /></div>
+      <div class="page-header-row">
+        <b-button
+          :to="{
+            name: 'SponsorLandingPage',
+            params: {
+              lang: $route.params.lang,
+              sponsor: $route.params.sponsor,
+            },
+          }"
+          ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
+        >
+        <b-button @click="test"> Test </b-button>
+        <p>{{ `Showing ${filteredResults.length} results.` }}</p>
+        <div><results-filter v-model="tagsSelected" /></div>
+      </div>
+      <div class="page-header-row">
+        <form>
+          <b-form-input
+            v-model="searchText"
+            id="searchbar"
+            type="search"
+            placeholder="Enter a location to find closest sites."
+          />
+        </form>
+      </div>
     </nav>
     <main>
       <result-card
         v-for="(item, index) in filteredResults"
         v-bind:key="index"
         :result="item"
+        @tap="showResultDetails"
       />
-      <p v-if="filteredResults.length == 0">
+      <b-spinner v-if="isLoading" label="primary" />
+      <p v-if="filteredResults.length == 0 && !isLoading">
         So sorry, there are no results with the selected tags.
       </p>
     </main>
@@ -29,8 +46,8 @@
 import sponsorData from "@/sponsorIndex.js";
 import Backend from "@/backend.js";
 
-import ResultCard from "@/components/ResultCard.vue";
-import ResultsFilter from "@/components/ResultsFilter.vue";
+import ResultCard from "@/components/results/ResultCard.vue";
+import ResultsFilter from "@/components/results/ResultsFilter.vue";
 // import Tag from './Tag.vue'
 /**
  * ResultsPage.vue replaces ResultsList.vue
@@ -38,6 +55,9 @@ import ResultsFilter from "@/components/ResultsFilter.vue";
 export default {
   components: { ResultCard, ResultsFilter },
   // components: { Tag },
+  props: {
+    initialSearch: String,
+  },
   created() {
     this.filteredResults = this.results;
   },
@@ -47,6 +67,8 @@ export default {
       results: [], // original results from the spreadsheet
       filteredResults: [],
       tagsSelected: [],
+      isLoading: true,
+      searchText: "",
     };
   },
   methods: {
@@ -81,6 +103,7 @@ export default {
       });
       return tempRes; // this sends the data to be reacted upon
     },
+    showResultDetails() {},
   },
   watch: {
     tagsSelected: function () {
@@ -88,9 +111,14 @@ export default {
     },
   },
   async mounted() {
-    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter(site => site.open_status)
+    this.results = (
+      await Backend.getMealSites(this.$route.params.sponsor)
+    ).filter((site) => site.open_status);
+    this.isLoading = false;
     this.filteredResults = this.results;
-  }
+
+    this.searchText = this.initialSearch ?? "";
+  },
 };
 </script>
 
@@ -111,11 +139,16 @@ export default {
 }
 
 #page-header {
+  width: 100%;
+  background-color: white;
+  /* height: 50px; */
+}
+
+.page-header-row {
   display: flex;
+  align-content: center;
   justify-content: space-between;
   width: 100%;
   height: 50px;
-  background-color: white;
-  /* height: 50px; */
 }
 </style>
