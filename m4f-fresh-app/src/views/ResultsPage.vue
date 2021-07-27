@@ -9,7 +9,8 @@
         ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
       >
       <b-button @click="test"> Test </b-button>
-      <div><results-filter @select="updateTagsSelected" /></div>
+      <p>{{ `Showing ${filteredResults.length} results.`}}</p>
+      <div><results-filter v-model="tagsSelected" /></div>
     </nav>
     <main>
       <result-card
@@ -55,20 +56,18 @@ export default {
       console.log(this.results, "results passed in");
       console.log(this.filteredResults, "self-filtered results");
     },
-    updateTagsSelected: function (tagsSelected) {
-      this.tagsSelected = tagsSelected;
-
-      let unreactiveResults = this.results;
+    updateTagsSelected() {
+      let tempRes = this.results;
       this.tagsSelected.forEach((tag) => {
-        unreactiveResults = unreactiveResults.filter((m) => {
+        tempRes = tempRes.filter((site) => {
           try {
             const splittedTag = tag.split(".");
             if (splittedTag[0] == "dietaryoptionsoffered") {
-              return m.marker["gsx$dietaryoptionsoffered"].$t
+              return site.tags["dietaryoptionsoffered"]
                 .toLowerCase()
                 .includes(splittedTag[1]);
             }
-            return m.marker["gsx$" + tag].$t == "TRUE";
+            return site.tags[tag];
           } catch (e) {
             /* I used try-catch because for some reason if the column doesn't exist, it stops function execution rather 
                than returning undefined.
@@ -80,8 +79,7 @@ export default {
           }
         });
       });
-
-      this.filteredResults = unreactiveResults; // this sends the data to be reacted upon
+      return tempRes; // this sends the data to be reacted upon
     },
   },
   watch: {
@@ -90,10 +88,9 @@ export default {
     },
   },
   async mounted() {
-    this.results = (
-      await Backend.getMealSites(this.$route.params.sponsor)
-    ).filter((site) => site.open_status);
-  },
+    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter(site => site.open_status)
+    this.filteredResults = this.results;
+  }
 };
 </script>
 
@@ -107,10 +104,17 @@ export default {
   overflow: auto;
 }
 
+#result-page main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #page-header {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  height: 50px;
   background-color: white;
   /* height: 50px; */
 }

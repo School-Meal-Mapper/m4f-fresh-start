@@ -33,6 +33,9 @@ export default {
       { text: "Gluten-Free", value: "dietaryoptionsoffered.gluten-free" },
     ];
   },
+  props: {
+    value: Array
+  },
   data() {
     return {
       tagsSelected: [],
@@ -40,7 +43,7 @@ export default {
   },
   watch: {
     tagsSelected: function () {
-      this.$emit("select", this.tagsSelected); // maybe has this., if it does, remove the param
+      this.$emit("input", this.tagsSelected); // maybe has this., if it does, remove the param
     },
   },
 };

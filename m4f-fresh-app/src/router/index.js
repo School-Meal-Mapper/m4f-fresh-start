@@ -8,6 +8,7 @@ import FAQPage from "@/views/FAQPage.vue";
 import MapPage from "@/views/MapPage.vue";
 import SponsorNotFoundPage from "@/views/SponsorNotFoundPage.vue";
 import NotFoundPage from "@/views/NotFoundPage.vue";
+import LearnFreeMealsPage from "@/views/LearnFreeMealsPage.vue";
 
 Vue.use(VueRouter);
 
@@ -71,6 +72,11 @@ const routes = [
         path: "*",
         name: "NotFound",
         component: NotFoundPage,
+      },
+      {
+        path: ":sponsor/freeMeals",
+        name: "LearnFreeMeals",
+        component: LearnFreeMealsPage,
       },
     ],
   },
