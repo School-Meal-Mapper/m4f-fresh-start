@@ -20,9 +20,9 @@ export default {
   },
   data() {
     return {
-      logoLink: null
+      logoLink: null,
     };
-  }
+  },
 };
 </script>
 
