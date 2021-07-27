@@ -1,71 +1,91 @@
 <template>
   <div class="home">
-    <div class="tealDiv">
+    <br />
+    <b-container>
+      <h1>Welcome to M4F!</h1>
+      <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
       <br />
-      <b-container>
-        <h1>Welcome to M4F!</h1>
-        <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
-        <div class="district-buttons" id="mffGenDiv">
+      <div class="input-group rounded">
+        <b-form-input
+          type="search"
+          id="searchDistrictBySchoolInput"
+          class="form-control rounded"
+          placeholder="Search by the name of your local school. "
+          aria-label="Search"
+          aria-describedby="search-addon"
+        ></b-form-input>
+        <b-button type="submit" class="mffGenButton">
+          <b-icon icon="search"></b-icon>
+        </b-button>
+      </div>
+      <br />
+      <p><strong>OR</strong></p>
+      <div class="district-buttons" id="mffGenDiv">
+        <p>
+          <b-form-select v-model="selectedState" :options="nc" class="mb-3">
+            <b-form-select-option :value="null"
+              >Please select your state.</b-form-select-option
+            >
+          </b-form-select>
+          <b-form-select
+            v-model="selectedDistrict"
+            :options="districtOptions"
+            :disabled="this.selectedState !== 'nc'"
+            class="mb-3"
+          >
+            <b-form-select-option :value="null"
+              >Please select your district.</b-form-select-option
+            >
+          </b-form-select>
+          <b-button
+            class="mffGenButton"
+            :to="{
+              name: 'SponsorLandingPage',
+              params: { sponsor: selectedDistrict, lang: $route.params.lang },
+            }"
+            :disabled="this.selectedDistrict === null"
+            >Find free meals near me!</b-button
+          >
+        </p>
+      </div>
+      <br />
+      <br />
+      <b-card class="homeLinkCard">
+        <b-link class="homeLink" href="https://www.meals4families.community">
           <p>
-            <b-form-select v-model="selectedState" :options="nc" class="mb-3">
-              <b-form-select-option :value="null">Please select your state.</b-form-select-option>
-            </b-form-select>
-            <b-form-select v-model="selectedDistrict" :options="districtOptions" :disabled="this.selectedState !== 'nc'" class="mb-3">
-              <b-form-select-option :value="null">Please select your district.</b-form-select-option>
-            </b-form-select>
-            <b-button 
-              class="mffGenButton" 
-              :to="{
-                name: 'SponsorLandingPage',
-                params: { sponsor: selectedDistrict, lang: $route.params.lang },
-                }"
-              :disabled="this.selectedDistrict === null">Find free meals near me!</b-button>
+            Learn more about our mission to connect families with free meals.
+            <b-button class="triangleButton">
+              <b-icon
+                icon="triangle-fill"
+                rotate="90"
+                aria-label="arrow"
+              ></b-icon>
+            </b-button>
           </p>
-        </div>
-          <p><strong>OR</strong></p>
-          <div class="input-group rounded">
-            <b-form-input 
-              type="search" 
-              id="searchDistrictBySchoolInput"
-              class="form-control rounded" 
-              placeholder="Search by the name of your local school. " 
-              aria-label="Search"
-              aria-describedby="search-addon" 
-            ></b-form-input>
-            <b-button type="submit" class="mffGenButton">
-                <b-icon icon="search"></b-icon>
-              </b-button>
-            
-          </div>
-          <br />
-          <br />
-      </b-container>
-    </div>
-    <div class="whiteDiv">
-      <div class="container">
-      <b-link>
-        <p>
-          Don't see a free meal sponsor in your county?
-          <b-button class="triangleButton">
-            <b-icon aria-label="arrow" icon="triangle-fill" rotate="90"></b-icon>
-          </b-button>
-        </p>
-      </b-link>
-      </div>
-    </div>
-    <div class="greyDiv">
-      <div class="container">
-      <b-link href="https://www.meals4families.community">
-        <p>
-          Learn more about our mission to connect families with free meals.
-          <b-button 
-            class="triangleButton">
-            <b-icon icon="triangle-fill" rotate="90"></b-icon>
-          </b-button>
-        </p>
-      </b-link>
-      </div>
-    </div>
+        </b-link>
+      </b-card>
+      <br />
+      <b-card class="homeLinkCard">
+        <b-link class="homeLink">
+          <p>
+            Don't see a free meal sponsor in your county?
+            <b-button
+              class="triangleButton"
+              :to="{
+                name: 'SponsorNotFoundPage',
+                params: { lang: $route.params.lang },
+              }"
+            >
+              <b-icon
+                aria-label="arrow"
+                icon="triangle-fill"
+                rotate="90"
+              ></b-icon>
+            </b-button>
+          </p>
+        </b-link>
+      </b-card>
+    </b-container>
   </div>
 </template>
 
@@ -116,7 +136,10 @@ export default {
   --nav-link-dark: "#F8F8F8";
   --accentColor: "#ff4a3";
 }
-.tealDiv {
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
   color: var(--accentColor);
   background-color: var(--banner-light);
   @media (prefers-color-scheme-dark) {
@@ -124,15 +147,10 @@ export default {
     background-color: #000000 !important;
   }
 }
-.whiteDiv {
-  background-color: #ffffff;
-  color: #000000;
-}
-.greyDiv {
-  background-color: #e9eaeb;
-  color: #000000;
-}
-h1, h2, p {
+
+h1,
+h2,
+p {
   text-align: center;
 }
 #mffGenDiv {
@@ -149,8 +167,25 @@ h1, h2, p {
   box-shadow: 0px 2px 2px;
 }
 .triangleButton {
+  color: #ffffff;
+  background-color: #ffffff00;
+  border: 0px;
+}
+.triangleButton:hover {
   color: var(--accentColor);
   background-color: #ffffff00;
   border: 0px;
+}
+.homeLinkCard {
+  background-color: var(--banner-light);
+  color: #ffffff;
+  border-color: #ffffff;
+}
+.homeLink {
+  color: #ffffff;
+}
+
+.homeLink:hover {
+  color: var(--accentColor);
 }
 </style>

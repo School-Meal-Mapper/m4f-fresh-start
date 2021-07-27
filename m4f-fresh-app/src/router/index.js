@@ -6,17 +6,18 @@ import SponsorLandingPage from "@/views/SponsorLandingPage.vue";
 import ResultsPage from "@/views/ResultsPage.vue";
 import FAQPage from "@/views/FAQPage.vue";
 import MapPage from "@/views/MapPage.vue";
+import SponsorNotFoundPage from "@/views/SponsorNotFoundPage.vue";
 import NotFoundPage from "@/views/NotFoundPage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/:lang([a-z][a-z])?', // currently, any first param that is two characters is treated as a language, you could change this from a 2-char regex into a list
-    name: 'LanguageWrapper',
+    path: "/:lang([a-z][a-z])?", // currently, any first param that is two characters is treated as a language, you could change this from a 2-char regex into a list
+    name: "LanguageWrapper",
     component: {
-      name: 'LanguageWrapper',
-      render: h => h('router-view')
+      name: "LanguageWrapper",
+      render: (h) => h("router-view"),
     },
     children: [
       {
@@ -57,6 +58,11 @@ const routes = [
         component: FAQPage,
       },
       {
+        path: ":sponsornotfound",
+        name: "SponsorNotFoundPage",
+        component: SponsorNotFoundPage,
+      },
+      {
         path: ":sponsor/map",
         name: "MapPage",
         component: MapPage,
@@ -66,8 +72,8 @@ const routes = [
         name: "NotFound",
         component: NotFoundPage,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 const router = new VueRouter({

@@ -2,47 +2,62 @@
   <div class="home">
     <div class="top">
       <p class="program-info" id="mealsite-info">
-        Join us this summer for free meals at one of our <span style="color: #fff4a3;"> 18 </span> locations!
+        Join us this summer for free meals at one of our
+        <span style="color: #fff4a3"> 18 </span> locations!
       </p>
       <!-- search bar is created with b-form-input --->
-      <b-form-input v-model="text" type="search" @keydown.native="search" :placeholder="$t('searchBar.searchPrompt')" id="searchPrompt"
+      <b-form-input
+        v-model="text"
+        type="search"
+        @keydown.native="search"
+        :placeholder="$t('searchBar.searchPrompt')"
+        id="searchPrompt"
         ><i class="fas fa-search"></i
       ></b-form-input>
       <!-- this is the button that takes you to the results list (see "v-on:click") --->
-      <b-button class="find-site" v-on:click="mapLink">{{ this.$t('landingPage.findFreeMealsNearMe') }}</b-button>
+      <b-button class="find-site" v-on:click="mapLink">{{
+        this.$t("landingPage.findFreeMealsNearMe")
+      }}</b-button>
     </div>
-    <p class="announcement">Register <span style="font-weight: bolder;">here </span> to receive free meals during August 2021.</p>
+    <p class="announcement">
+      Register <span style="font-weight: bolder">here </span> to receive free
+      meals during August 2021.
+    </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
     <b-row cols="2" id="twoCols">
       <b-button v-on:click="mapLink" class="prog-btns">
-        <b-icon-question-circle-fill style="width: 30px; height: 30px;"></b-icon-question-circle-fill>
+        <b-icon-question-circle-fill
+          style="width: 30px; height: 30px"
+        ></b-icon-question-circle-fill>
         <br />
-        {{ this.$t('districtLandingPage.learnMore') }}</b-button
+        {{ this.$t("districtLandingPage.learnMore") }}</b-button
       >
       <b-button v-on:click="mapLink" class="prog-btns">
-        <b-icon-calendar3 style="width: 30px; height: 30px;"></b-icon-calendar3>
+        <b-icon-calendar3 style="width: 30px; height: 30px"></b-icon-calendar3>
         <br />
-        {{ this.$t('districtLandingPage.menuAndMore') }}</b-button
+        {{ this.$t("districtLandingPage.menuAndMore") }}</b-button
       >
       <b-button v-on:click="mapLink" class="prog-btns">
-        <b-icon-check2-square style="width: 30px; height: 30px;"></b-icon-check2-square>
+        <b-icon-check2-square
+          style="width: 30px; height: 30px"
+        ></b-icon-check2-square>
         <br />
-        {{ this.$t('districtLandingPage.schoolMeals') }}</b-button
+        {{ this.$t("districtLandingPage.schoolMeals") }}</b-button
       >
       <b-button v-on:click="mapLink" class="prog-btns">
-        <b-icon-cart4 style="width: 30px; height: 30px;"></b-icon-cart4>
+        <b-icon-cart4 style="width: 30px; height: 30px"></b-icon-cart4>
         <br />
-        {{ this.$t('districtLandingPage.groceries') }}</b-button
+        {{ this.$t("districtLandingPage.groceries") }}</b-button
       >
       <b-button v-on:click="mapLink" class="prog-btns">
         <br />
-        {{ this.$t('districtLandingPage.wrongProvider') }}</b-button
+        {{ this.$t("districtLandingPage.wrongProvider") }}</b-button
       >
       <!-- +++++++++++++++ need button for find another sponsor --->
       <b-button v-on:click="mapLink" class="prog-btns">
-        <b-icon-chat-text style="width: 30px; height: 30px;"></b-icon-chat-text>
+        <b-icon-chat-text style="width: 30px; height: 30px"></b-icon-chat-text>
         <br />
-        {{ this.$t('districtLandingPage.helpConnect') }}</b-button
+        {{ this.$t("districtLandingPage.helpConnect") }}</b-button
       >
     </b-row>
     <router-view />
@@ -237,7 +252,7 @@ export default {
   margin: 20px 0px auto;
   padding: 15px;
   text-align: center;
-  background-color:"fff4a3";
+  background-color: "fff4a3";
   color: #000000;
   display: block;
 }

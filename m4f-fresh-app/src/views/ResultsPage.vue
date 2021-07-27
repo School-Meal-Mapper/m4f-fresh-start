@@ -90,8 +90,10 @@ export default {
     },
   },
   async mounted() {
-    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter(site => site.open_status)
-  }
+    this.results = (
+      await Backend.getMealSites(this.$route.params.sponsor)
+    ).filter((site) => site.open_status);
+  },
 };
 </script>
 
