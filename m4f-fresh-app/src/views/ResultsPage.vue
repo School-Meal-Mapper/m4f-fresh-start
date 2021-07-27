@@ -5,12 +5,15 @@
         <b-button
           :to="{
             name: 'SponsorLandingPage',
-            params: { lang: $route.params.lang, sponsor: $route.params.sponsor },
+            params: {
+              lang: $route.params.lang,
+              sponsor: $route.params.sponsor,
+            },
           }"
           ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
         >
         <b-button @click="test"> Test </b-button>
-        <p>{{ `Showing ${filteredResults.length} results.`}}</p>
+        <p>{{ `Showing ${filteredResults.length} results.` }}</p>
         <div><results-filter v-model="tagsSelected" /></div>
       </div>
       <div class="page-header-row">
@@ -53,7 +56,7 @@ export default {
   components: { ResultCard, ResultsFilter },
   // components: { Tag },
   props: {
-    initialSearch: String
+    initialSearch: String,
   },
   created() {
     this.filteredResults = this.results;
@@ -65,7 +68,7 @@ export default {
       filteredResults: [],
       tagsSelected: [],
       isLoading: true,
-      searchText: ""
+      searchText: "",
     };
   },
   methods: {
@@ -100,9 +103,7 @@ export default {
       });
       return tempRes; // this sends the data to be reacted upon
     },
-    showResultDetails() {
-
-    }
+    showResultDetails() {},
   },
   watch: {
     tagsSelected: function () {
@@ -110,12 +111,14 @@ export default {
     },
   },
   async mounted() {
-    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter(site => site.open_status)
+    this.results = (
+      await Backend.getMealSites(this.$route.params.sponsor)
+    ).filter((site) => site.open_status);
     this.isLoading = false;
     this.filteredResults = this.results;
-    
-    this.searchText = this.initialSearch ?? ""
-  }
+
+    this.searchText = this.initialSearch ?? "";
+  },
 };
 </script>
 

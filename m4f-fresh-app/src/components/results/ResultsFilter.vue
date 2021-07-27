@@ -34,7 +34,7 @@ export default {
     ];
   },
   props: {
-    value: Array
+    value: Array,
   },
   data() {
     return {

@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import Backend from "@/backend.js"
+import Backend from "@/backend.js";
 export default {
   async mounted() {
-    console.log(await Backend.getFaq(this.$route.params.sponsor))
-  }
+    console.log(await Backend.getFaq(this.$route.params.sponsor));
+  },
 };
 </script>
 

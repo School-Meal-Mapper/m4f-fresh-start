@@ -10,7 +10,7 @@ import sponsorData from "@/sponsorIndex.js";
  */
 
 export default class Backend {
-/*
+  /*
 MealSite Example Structure: {
   name: "Main St. Elementary School",
   school_district: "Chapel Hill-Carrboro Schools",
@@ -65,63 +65,71 @@ MealSite Example Structure: {
   /**
    * @param {String} abbr Abbreviation of the meal sponsor.
    * @returns {Array<MealSite>} A list of meal site objects.
-   * 
+   *
    */
   static async getMealSites(abbr) {
     const spreadsheetUrl = sponsorData(abbr).data.spreadsheetUrl;
     const res = await fetch(spreadsheetUrl);
     const raw = await res.json();
-    console.log(raw)
-    const missing = {$t: 'N/A'}
-    const processed = raw.feed.entry.filter(site => site.gsx$mealsitename.$t).map((site) => {
-      return {
-        name: site.gsx$mealsitename.$t,
-        school_district: site.gsx$schooldistrict.$t,
-        open_status: site.gsx$mealsitestatus.$t.toLowerCase() == "open",
-        location: {
-          address: site.gsx$mealsiteaddress1.$t,
-          address_2: site.gsx$mealsiteaddress2.$t,
-          city: site.gsx$city.$t,
-          state: site.gsx$state.$t,
-          zip: site.gsx$zip.$t, // will be a string
-          county: site.gsx$county.$t,
-          lat: site.gsx$lat.$t, // will be a string
-          lng: site.gsx$lon.$t // will be a string
-        },
-        additional_directions: (site.gsx$additionaldirections ?? missing).$t,
-        contact: {
-          name: (site.gsx$contactname ?? missing).$t,
-          phone: (site.gsx$contactphone ?? missing).$t
-        },
-        notes: site.gsx$notes.$t,
-        web_link: site.gsx$weblink.$t,
-        redirect_link: site.gsx$redirectlink.$t,
-        hours: {
-          sun: site.gsx$sun.$t,
-          mon: site.gsx$mon.$t,
-          tue: site.gsx$tues.$t,
-          wed: site.gsx$wed.$t,
-          thu: site.gsx$thr.$t,
-          fri: site.gsx$fri.$t,
-          sat: site.gsx$sat.$t
-        },
-        dates: {
-          start: site.gsx$startdate.$t,
-          end: site.gsx$enddate.$t
-        },
-        update_info: {
-          person: site.gsx$updatedby.$t,
-          date: site.gsx$lastupdate.$t
-        },
-        tags: {
-          transitfriendly: (site.gsx$transitfriendly ?? missing).$t == "TRUE",
-          foodpantry: (site.gsx$foodpantry ?? missing).$t == "TRUE",
-          prepackagedmealsavailable: (site.gsx$prepackagedmealsavailable ?? missing).$t == "TRUE",
-          dietaryoptionsoffered: (site.gsx$dietaryoptionsoffered ?? missing).$t.toLowerCase().split(', '),
-          hotmealsavailable: (site.gsx$hotmealsavailable ?? missing).$t == "TRUE"
-        }
-      }
-    });
+    console.log(raw);
+    const missing = { $t: "N/A" };
+    const processed = raw.feed.entry
+      .filter((site) => site.gsx$mealsitename.$t)
+      .map((site) => {
+        return {
+          name: site.gsx$mealsitename.$t,
+          school_district: site.gsx$schooldistrict.$t,
+          open_status: site.gsx$mealsitestatus.$t.toLowerCase() == "open",
+          location: {
+            address: site.gsx$mealsiteaddress1.$t,
+            address_2: site.gsx$mealsiteaddress2.$t,
+            city: site.gsx$city.$t,
+            state: site.gsx$state.$t,
+            zip: site.gsx$zip.$t, // will be a string
+            county: site.gsx$county.$t,
+            lat: site.gsx$lat.$t, // will be a string
+            lng: site.gsx$lon.$t, // will be a string
+          },
+          additional_directions: (site.gsx$additionaldirections ?? missing).$t,
+          contact: {
+            name: (site.gsx$contactname ?? missing).$t,
+            phone: (site.gsx$contactphone ?? missing).$t,
+          },
+          notes: site.gsx$notes.$t,
+          web_link: site.gsx$weblink.$t,
+          redirect_link: site.gsx$redirectlink.$t,
+          hours: {
+            sun: site.gsx$sun.$t,
+            mon: site.gsx$mon.$t,
+            tue: site.gsx$tues.$t,
+            wed: site.gsx$wed.$t,
+            thu: site.gsx$thr.$t,
+            fri: site.gsx$fri.$t,
+            sat: site.gsx$sat.$t,
+          },
+          dates: {
+            start: site.gsx$startdate.$t,
+            end: site.gsx$enddate.$t,
+          },
+          update_info: {
+            person: site.gsx$updatedby.$t,
+            date: site.gsx$lastupdate.$t,
+          },
+          tags: {
+            transitfriendly: (site.gsx$transitfriendly ?? missing).$t == "TRUE",
+            foodpantry: (site.gsx$foodpantry ?? missing).$t == "TRUE",
+            prepackagedmealsavailable:
+              (site.gsx$prepackagedmealsavailable ?? missing).$t == "TRUE",
+            dietaryoptionsoffered: (
+              site.gsx$dietaryoptionsoffered ?? missing
+            ).$t
+              .toLowerCase()
+              .split(", "),
+            hotmealsavailable:
+              (site.gsx$hotmealsavailable ?? missing).$t == "TRUE",
+          },
+        };
+      });
     return processed;
   }
 
@@ -129,7 +137,7 @@ MealSite Example Structure: {
     const faqUrl = sponsorData(abbr).data.faqUrl;
     const res = await fetch(faqUrl);
     const raw = await res.json();
-    console.log(raw)
+    console.log(raw);
     return;
   }
 }

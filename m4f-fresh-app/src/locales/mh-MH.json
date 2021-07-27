@@ -1,0 +1,41 @@
+{
+	"Languages": {
+		"am": "",
+		"ar": "",
+		"bn": "",
+		"en": "",
+		"es": "",
+		"fil": "",
+		"fr": "",
+		"hi": "",
+		"hmn": "",
+		"ja": "",
+		"ko": "",
+		"mh": ""
+	},
+	"MFFLanding": {
+		"findMeals": "",
+		"learnMore": "",
+		"localSponsor": "",
+		"moreSponsors": "",
+		"search": "",
+		"selectDistrict": "",
+		"selectState": "",
+		"welcome": ""
+	},
+	"Results": {
+		"enterLoc": "",
+		"goBack": "",
+		"noResults": ""
+	},
+	"SponsorLanding": {
+		"announcementMsg": "",
+		"groceries": "",
+		"helpConnect": "",
+		"joinUs": "",
+		"learnMore": "",
+		"menuAndInfo": "",
+		"schoolMeals": "",
+		"wrongProvider": ""
+	}
+}

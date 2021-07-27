@@ -68,19 +68,17 @@ export const districts = {
 };
 
 export const allSchools = [
-  {school: "Northside Elementary"},
-  {school: "McDougle Elementary"},
-  {school: "Rashkis Elementary"},
-  {school: "Smith Middle"},
+  { school: "Northside Elementary" },
+  { school: "McDougle Elementary" },
+  { school: "Rashkis Elementary" },
+  { school: "Smith Middle" },
 ];
 
 export const allSchoolsByDistrict = {
   chccs: [
-    {school: "Northside Elementary"},
-    {school: "McDougle Elementary"},
-    {school: "Rashkis Elementary"},
-    {school: "Smith Middle"},
+    { school: "Northside Elementary" },
+    { school: "McDougle Elementary" },
+    { school: "Rashkis Elementary" },
+    { school: "Smith Middle" },
   ],
 };
-   
-
