@@ -36,7 +36,7 @@
       meals during August 2021.
     </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
-    <b-row cols="2" id="rowCol">
+    <b-row cols="2" id="rowCol" style="background-color: #ffffff;">
       <b-col class="col">
         <b-button
           class="prog-btns"
@@ -95,7 +95,7 @@
           <br />{{ this.$t("SponsorLanding.groceries") }}</b-button
         >
         <b-button class="prog-btns"> <br /></b-button>
-        <!-- need button for find another sponsor --->
+        <!-- +++++++++++++++ need button for find another sponsor --->
         <b-button
           class="prog-btns"
           :to="{
