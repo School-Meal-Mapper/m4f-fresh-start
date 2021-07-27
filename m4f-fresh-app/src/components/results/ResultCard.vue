@@ -1,5 +1,6 @@
 <template>
-  <b-card class="result-card w-65" :title="result.name" @click="emitTap">
+  <b-card class="result-card" :title="result.name" @click="emitTap">
+    <tags-list :result="result" />
     <hr />
     <b-card-text class="result-card-text"
       ><i class="fas fa-directions" />
@@ -47,7 +48,9 @@
 </template>
 
 <script>
+import TagsList from '../TagsList.vue';
 export default {
+  components: { TagsList },
   props: {
     display: String,
     result: Object,
@@ -103,6 +106,7 @@ export default {
   color: black;
   padding: 25px 40px;
   margin: 20px 0 0 0;
+  max-width: 850px;
 }
 
 .open-indicator {

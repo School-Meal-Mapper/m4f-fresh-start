@@ -2,18 +2,22 @@
   <div id="result-page">
     <nav id="page-header">
       <div class="page-header-row">
-        <b-button
-          :to="{
-            name: 'SponsorLandingPage',
-            params: { lang: $route.params.lang, sponsor: $route.params.sponsor },
-          }"
-          ><i class="fas fa-chevron-left" /> Back to Provider Home</b-button
-        >
-        <b-button @click="test"> Test </b-button>
-        <p>{{ `Showing ${filteredResults.length} results.`}}</p>
-        <div><results-filter v-model="tagsSelected" /></div>
+        <div class="page-header-flex">
+          <b-link
+            :to="{
+              name: 'SponsorLandingPage',
+              params: { lang: $route.params.lang, sponsor: $route.params.sponsor },
+            }"
+            class="back-link"
+          >
+            <i class="fas fa-chevron-left" /> Return to Provider Home
+          </b-link>
+          <!-- <b-button @click="test"> Test </b-button>
+          <p>{{ `Showing ${filteredResults.length} results.`}}</p> -->
+          <results-filter v-model="tagsSelected" />
+        </div>
       </div>
-      <div class="page-header-row">
+      <div class="search-row">
         <form>
           <b-form-input
             v-model="searchText"
@@ -21,8 +25,8 @@
             type="search"
             placeholder="Enter a location to find closest sites."
           />
-        </form>
-      </div>
+          </form>
+        </div>
     </nav>
     <main>
       <result-card
@@ -142,10 +146,41 @@ export default {
 }
 
 .page-header-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page-header-flex {
   display: flex;
   align-content: center;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 50px;
+  max-width: 850px;
+  flex-wrap: wrap;
+  margin: 10px 0 5px 0;
+}
+
+.search-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-row form {
+  width: 100%;
+  max-width: 850px;
+  margin: 10px 10px 20px 10px;
+
+  display: inline-block;
+}
+
+#searchbar {
+}
+
+.back-link {
+  display: inline-block;
 }
 </style>
