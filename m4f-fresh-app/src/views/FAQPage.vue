@@ -1,7 +1,9 @@
 <template>
-  <div>
-    Welcome to the faq! Here we have info for {{ this.$route.params.sponsor }}.
-    <p>{{ $t("test.test") }}</p>
+  <div id="faqs">
+    <h3>About Free Meals</h3>
+    <p>Connect with your local meal provider for more information on free meals.</p>
+    <ul>
+    </ul>
   </div>
 </template>
 

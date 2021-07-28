@@ -1,4 +1,5 @@
 import sponsorData from "@/sponsorIndex.js";
+import {supported_languages} from "@/constants.js";
 
 /**
  * Backend class - an object containing a whole bunch of functions
@@ -71,7 +72,6 @@ MealSite Example Structure: {
     const spreadsheetUrl = sponsorData(abbr).data.spreadsheetUrl;
     const res = await fetch(spreadsheetUrl);
     const raw = await res.json();
-    console.log(raw);
     const missing = { $t: "N/A" };
     const processed = raw.feed.entry
       .filter((site) => site.gsx$mealsitename.$t)
@@ -133,11 +133,31 @@ MealSite Example Structure: {
     return processed;
   }
 
-  static async getFaq(abbr) {
+  static async getFaq(abbr) { // currently only works with chapel hill, please change spreadsheet headers to "full-language-name_question/answer"
     const faqUrl = sponsorData(abbr).data.faqUrl;
     const res = await fetch(faqUrl);
     const raw = await res.json();
-    console.log(raw);
-    return;
+
+    const langsInSheet = supported_languages.filter(lang => raw.feed.entry[0][`${lang.english_name}question`]); // filters what language headers are in the sheet
+    const processed = raw.feed.entry
+    .filter(question => question.gsx$enquestion.$t) // check to make sure only rows with at least an english question are present
+    .map(row => {
+      const qna = {}
+      langsInSheet.forEach(lang => {
+        qna[`${lang.iso}_question`] = row[`${lang.english_name}_question`];
+        qna[`${lang.iso}_answer`] = row[`${lang.english_name}_answer`];
+      })
+      return qna;
+    })
+    return processed;
+  }
+
+  static async getProviderInfo(abbr) {
+    const metaUrl = sponsorData(abbr).data.providerinfoUrl;
+    const res = await fetch(metaUrl);
+    const raw = await res.json();
+
+    return raw;
   }
 }
+

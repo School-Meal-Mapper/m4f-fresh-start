@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="base">
     <!-- Tab-skip buttons -->
     <!-- <a class="skip-to-main" href="#search-filter-wrapper" v-if="!checkParam">
       Skip to results.
@@ -82,7 +82,7 @@ body {
   transform: translateY(0%);
 }
 
-.home {
+.base {
   display: flex;
   flex-direction: column;
   min-height: 100%;

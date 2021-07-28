@@ -1,3 +1,26 @@
+export const supported_languages = [
+  { iso: "en", name: "English", english_name: "English"},
+  { iso: "es", name: "Español", english_name: "Spanish" },
+  { iso: "fr", name: "Français", english_name: "French" },
+  { iso: "ko", name: "한국어", english_name: "Korean" },
+  { iso: "ar", name: "عربى", english_name: "Arabic" },
+  { iso: "ja", name: "日本語", english_name: "Japanese" },
+  { iso: "zh", name: "中文", english_name: "Chinese" },
+  { iso: "ms", name: "Melayu", english_name: "Malay" },
+  { iso: "hi", name: "हिंदी", english_name: "Hindi" },
+  { iso: "vi", name: "tiếng việt", english_name: "Vietnamese" },
+  { iso: "bn", name: "বাংলা", english_name: "Bengali" },
+  { iso: "hmn", name: "Hmong", english_name: "Hmong" },
+  { iso: "am", name: "አማርኛ", english_name: "Amharic" },
+  { iso: "my", name: "ဗမာ", english_name: "Burmese" },
+  { iso: "ne", name: "नेपाली", english_name: "Nepali" },
+  { iso: "pl", name: "Polskie", english_name: "Polish" },
+  { iso: "pt", name: "português", english_name: "Portuguese" },
+  { iso: "ru", name: "русский", english_name: "Russian" },
+  { iso: "so", name: "Soomaali", english_name: "Somali" },
+  { iso: "ur", name: "اردو", english_name: "Urdu" }
+]
+
 // Below constant allows NC to be the only state shown on the landing page
 export const nc = [{ value: "nc", text: "North Carolina" }];
 

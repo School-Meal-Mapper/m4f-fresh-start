@@ -92,7 +92,8 @@
 </template>
 
 <script>
-import sponsorData from "@/sponsorIndex";
+import sponsorData from "@/sponsorIndex.js";
+import {supported_languages} from "@/constants.js";
 import SponsorLogo from "@/components/SponsorLogo.vue";
 
 /**
@@ -145,28 +146,7 @@ export default {
     },
   },
   created() {
-    this.languages = [
-      { iso: "en", name: "English" },
-      { iso: "es", name: "Español" },
-      { iso: "fr", name: "Français" },
-      { iso: "ko", name: "한국어" },
-      { iso: "ar", name: "عربى" },
-      { iso: "ja", name: "日本語" },
-      { iso: "zh", name: "中文" },
-      { iso: "ms", name: "Melayu" },
-      { iso: "hi", name: "हिंदी" },
-      { iso: "vi", name: "tiếng việt" },
-      { iso: "bn", name: "বাংলা" },
-      { iso: "hmn", name: "Hmong" },
-      { iso: "am", name: "አማርኛ" },
-      { iso: "my", name: "ဗမာ" },
-      { iso: "ne", name: "नेपाली" },
-      { iso: "pl", name: "Polskie" },
-      { iso: "pt", name: "português" },
-      { iso: "ru", name: "русский" },
-      { iso: "so", name: "Soomaali" },
-      { iso: "ur", name: "اردو" },
-    ];
+    this.languages = supported_languages;
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     console.log(this.$route);
