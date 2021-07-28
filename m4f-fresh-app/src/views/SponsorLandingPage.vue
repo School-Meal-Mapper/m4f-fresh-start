@@ -36,7 +36,7 @@
       meals during August 2021.
     </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
-    <b-row cols="2" id="rowCol">
+    <b-row cols="2" id="rowCol" style="background-color: #ffffff;">
       <b-col class="col">
         <b-button
           class="prog-btns"
@@ -56,6 +56,24 @@
         <b-button
           class="prog-btns"
           :to="{
+            name: 'SchoolMealsPage',
+            params: {
+              sponsor: $route.params.sponsor,
+              lang: $route.params.lang,
+            },
+          }"
+        >
+          <b-icon-check2-square class="btnIcon"></b-icon-check2-square>
+          <br />{{ this.$t("SponsorLanding.schoolMeals") }}</b-button
+        >
+        <b-button class="prog-btns">{{
+          this.$t("SponsorLanding.wrongProvider")
+        }}</b-button>
+      </b-col>
+      <b-col class="col">
+        <b-button
+          class="prog-btns"
+          :to="{
             name: 'MenuAndInfoPage',
             params: {
               sponsor: $route.params.sponsor,
@@ -69,21 +87,6 @@
         <b-button
           class="prog-btns"
           :to="{
-            name: 'SchoolMealsPage',
-            params: {
-              sponsor: $route.params.sponsor,
-              lang: $route.params.lang,
-            },
-          }"
-        >
-          <b-icon-check2-square class="btnIcon"></b-icon-check2-square>
-          <br />{{ this.$t("SponsorLanding.schoolMeals") }}</b-button
-        >
-      </b-col>
-      <b-col class="col">
-        <b-button
-          class="prog-btns"
-          :to="{
             name: 'GroceriesPage',
             params: {
               sponsor: $route.params.sponsor,
@@ -94,7 +97,6 @@
           <b-icon-cart4 class="btnIcon"></b-icon-cart4>
           <br />{{ this.$t("SponsorLanding.groceries") }}</b-button
         >
-        <b-button class="prog-btns"> <br /></b-button>
         <!-- +++++++++++++++ need button for find another sponsor --->
         <b-button
           class="prog-btns"
@@ -123,7 +125,6 @@
 <script>
 import { districtData } from "@/districtData";
 import sponsorData from "@/sponsorIndex.js";
-
 document.documentElement.style.setProperty(
   "--primary-color",
   districtData.colors.primaryColor
@@ -144,6 +145,11 @@ document.documentElement.style.setProperty(
   "--nav-link-dark",
   districtData.colors.navLinkDark
 );
+document.documentElement.style.setProperty(
+  "--accentColor",
+  districtData.colors.accentColor
+);
+
 
 export default {
   props: {
@@ -219,7 +225,7 @@ export default {
         "--accentColor",
         this.sponsorTheme.colors.accentColor
       );
-    }
+    },
   },
   mounted() {
     this.refreshCSSVariables();
@@ -230,8 +236,8 @@ export default {
         this.sponsorTheme = sponsorData(this.$route.params.sponsor);
         this.refreshCSSVariables();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -242,41 +248,36 @@ export default {
   --banner-dark: "#212529";
   --nav-link-light: "#F8F8F8";
   --nav-link-dark: "#F8F8F8";
+  --accentColor: #79b80a;
 }
-
 .top {
-  background-color: #0051ba;
+  background-color: var(--banner-light);
   padding: 50px;
 }
-
 /*"join us" message*/
 .top > .program-info {
   color: #ffffff;
   text-align: center;
 }
-
 /* search bar*/
 .top > #search > .need-location-group {
   margin: auto;
   padding: 20px 5px;
   width: 70%;
 }
-
 /*styles the button that takes you to results list*/
 .top > .find-site {
   text-align: center;
   color: #000000;
-  background-color: #79b80a;
+  background-color: var(--accentColor);
   margin: auto;
   padding: 10px;
   position: absolute;
-  left: 50%;
+  left: 40%;
 }
-
 .top > .find-site:hover {
   opacity: 0.5;
 }
-
 /*styles the announcement across landing page*/
 .announcement {
   margin: 20px 0px auto;
@@ -286,32 +287,34 @@ export default {
   color: #000000;
   display: block;
 }
-
 /*styles the 6 buttons on landing page*/
 .home > #rowCol > .col > .prog-btns {
-  background-color: #0051ba;
+  background-color: var(--banner-light);
   color: #ffffff;
   width: 90%;
   height: 50%;
   text-align: center;
   display: inline-block;
-  margin: 20px auto 0px;
+  margin: 20px 20px 0px;
   border-radius: 1em;
 }
-
 .home > #rowCol > .col > .prog-btns > .btnIcon {
   width: 20%;
   height: 20%;
 }
-
 /*hover state for the 6 buttons*/
 .home > #rowCol > .col > .prog-btns:hover {
   opacity: 0.5;
 }
-
 @media (prefers-color-scheme: dark) {
   .home {
     background-color: #000000 !important;
+  }
+  .top {
+    background-color: var(--banner-dark);
+  }
+  .home > #rowCol > .col > .prog-btns {
+    background-color: var(--banner-dark);
   }
 }
 </style>

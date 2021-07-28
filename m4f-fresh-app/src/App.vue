@@ -20,12 +20,12 @@ export default {
   },
   data() {
     return {
-      logoLink: null
+      logoLink: null,
     };
   },
   mounted() {
     this.$root.$i18n.locale = this.$route.params.lang ?? "en";
-  }
+  },
 };
 </script>
 
