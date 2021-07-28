@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-  <br />
+    <br />
     <b-container>
       <h1>Welcome to M4F!</h1>
       <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
@@ -22,7 +22,7 @@
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
         <p>
-        <b-form-select v-model="selectedState" :options="nc" class="mb-3">
+          <b-form-select v-model="selectedState" :options="nc" class="mb-3">
             <b-form-select-option :value="null"
               >Please select your state.</b-form-select-option
             >
@@ -47,7 +47,7 @@
             >Find free meals near me!</b-button
           >
         </p>
-        </div>
+      </div>
       <br />
       <br />
       <b-card class="homeLinkCard">
