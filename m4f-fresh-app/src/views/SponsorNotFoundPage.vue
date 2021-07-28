@@ -3,6 +3,7 @@
     <h1>Looks like [this sponsor] isn't on our site yet.</h1>
     <h2>Want to see them on Meals for Families?</h2>
     <br />
+    <!-- white rounded container for email text, Your Name input, and Send Email button -->
     <b-container class="emailContainer">
       <h2 style="color: #000000; padding-top: 10px">Let them know by sending them the email below!</h2>
       <div class="row">
@@ -22,12 +23,24 @@
         [Your Name] 
       </p>
       <div style="text-align: center;">
-        <b-button class="mffGenButton">Send Email</b-button>
+        <!-- href to emailLink() enclosed in <a> since it would not work in button href -->
+        <b-button class="mffGenButton">
+        <a :href="emailLink()" style="color: black;">Send Email</a>
+        </b-button>
       </div>
     </b-container>
   </div>
 </template>
-<script></script>
+<script>
+import { emailLink } from '../utilities'
+export default {
+  name: 'sponsor-not-found-page',
+  components: {},
+  methods: {
+    emailLink: emailLink
+  }
+}
+</script>
 <style>
 <style lang="scss" > .root {
   --primary-color: "#1D6363";
