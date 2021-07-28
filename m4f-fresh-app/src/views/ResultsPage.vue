@@ -6,7 +6,10 @@
           <b-link
             :to="{
               name: 'SponsorLandingPage',
-              params: { lang: $route.params.lang, sponsor: $route.params.sponsor },
+              params: {
+                lang: $route.params.lang,
+                sponsor: $route.params.sponsor,
+              },
             }"
             class="back-link"
           >
@@ -25,8 +28,8 @@
             type="search"
             placeholder="Enter a location to find closest sites."
           />
-          </form>
-        </div>
+        </form>
+      </div>
     </nav>
     <main>
       <result-card

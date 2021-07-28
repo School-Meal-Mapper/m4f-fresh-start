@@ -36,7 +36,7 @@
       meals during August 2021.
     </p>
     <!-- creates 2x3 buttons list, each button takes you to district-specific information --->
-    <b-row cols="2" id="rowCol" style="background-color: #ffffff;">
+    <b-row cols="2" id="rowCol" style="background-color: #ffffff">
       <b-col class="col">
         <b-button
           class="prog-btns"
@@ -149,7 +149,6 @@ document.documentElement.style.setProperty(
   "--accentColor",
   districtData.colors.accentColor
 );
-
 
 export default {
   props: {
