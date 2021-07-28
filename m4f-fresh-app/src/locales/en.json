@@ -1,5 +1,43 @@
 {
-    "test": {
-        "test": "Hello everyone."
-    }
+	"Languages": {
+		"am": "Amharic",
+		"ar": "Arabic",
+		"bn": "Bengali",
+		"en": "English",
+		"es": "Spanish",
+		"fil": "Filipino",
+		"fr": "French",
+		"hi": "Hindi",
+		"hmn": "Hmong",
+		"ja": "Japanese",
+		"ko": "Korean",
+		"mh": "Marshallese"
+	},
+	"MFFLanding": {
+		"findMeals": "Find free meals near me!",
+		"learnMore": "Learn more about our mission to connect families with free meals.",
+		"localSponsor": "Connect with a Local Sponsor to Find Free Meal Sites!",
+		"moreSponsors": "Don't see a free meal sponsor in your county?",
+		"search": "Search by the name of your local school.",
+		"selectDistrict": "Please select your district.",
+		"selectState": "Please select your state.",
+		"welcome": "Welcome to M4F!"
+	},
+	"Results": {
+		"enterLoc": "Enter a location to find closest sites.",
+		"goBack": "Back to Provider Home",
+		"noResults": " So sorry, there are no results with the selected tags."
+	},
+	"SponsorLanding": {
+		"announcementMsg": "Register here to receive free meals during August 2021.",
+		"groceries": "Get Money For Groceries",
+		"helpConnect": "Need Help? Connect With Us!",
+		"joinUs": "Join us this summer for free meals at one of our locations!",
+		"learnMore": "Learn More About Free Meals",
+		"menuAndInfo": "Menu And Special Events",
+		"schoolMeals": "Register For Free School-Year Meals",
+		"wrongProvider": "Not Your Local Meal Provider?",
+		"findSite": "Find meal site near me!",
+		"search": "Search by site or address"
+	}
 }

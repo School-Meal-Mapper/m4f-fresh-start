@@ -315,5 +315,8 @@ export default {
   .home > #rowCol > .col > .prog-btns {
     background-color: var(--banner-dark);
   }
+  .col {
+    background-color: #000000;
+  }
 }
 </style>

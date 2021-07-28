@@ -14,4 +14,9 @@ new Vue({
   i18n,
   store,
   render: (h) => h(App),
+  methods: {
+    updateLang(iso) {
+      i18n.locale = iso;
+    },
+  },
 }).$mount("#app");
