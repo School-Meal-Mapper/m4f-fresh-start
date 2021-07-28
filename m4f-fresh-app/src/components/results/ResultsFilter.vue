@@ -36,7 +36,7 @@ export default {
   props: {
     value: Array,
     right: Boolean,
-    propClass: Object // CSS Object
+    propClass: Object, // CSS Object
   },
   data() {
     return {
