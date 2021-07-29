@@ -1,5 +1,5 @@
 <template>
-  <div id="result-page">
+  <div id="result-page" class="page"> 
     <nav id="page-header">
       <div class="page-header-row">
         <div class="page-header-flex">
@@ -134,6 +134,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
+  flex-grow: 1;
 }
 
 #result-page main {

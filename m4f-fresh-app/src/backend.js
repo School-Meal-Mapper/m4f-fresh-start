@@ -1,4 +1,5 @@
 import sponsorData from "@/sponsorIndex.js";
+import {supported_languages} from "@/constants.js";
 
 /**
  * Backend class - an object containing a whole bunch of functions
@@ -71,7 +72,6 @@ MealSite Example Structure: {
     const spreadsheetUrl = sponsorData(abbr).data.spreadsheetUrl;
     const res = await fetch(spreadsheetUrl);
     const raw = await res.json();
-    console.log(raw);
     const missing = { $t: "N/A" };
     const processed = raw.feed.entry
       .filter((site) => site.gsx$mealsitename.$t)
@@ -133,11 +133,44 @@ MealSite Example Structure: {
     return processed;
   }
 
-  static async getFaq(abbr) {
+  static async getFaq(abbr) { // currently only works with chapel hill, please change spreadsheet headers to "full-language-name_question/answer"
     const faqUrl = sponsorData(abbr).data.faqUrl;
     const res = await fetch(faqUrl);
     const raw = await res.json();
-    console.log(raw);
-    return;
+    console.log(raw, "gs json")
+
+    const langsInSheet = supported_languages.filter(lang => raw.feed.entry[0][`gsx$${lang.english_name.toLowerCase()}question`]); // filters what language headers are in the sheet, but only if it is supported in constants.js
+    const processed = raw.feed.entry
+    .filter(question => question.gsx$englishquestion.$t)// check to make sure rows must have english question text
+    .map(row => {
+      const qna = {}
+      langsInSheet.forEach(lang => {
+        qna[`${lang.iso}_question`] = row[`gsx$${lang.english_name.toLowerCase()}question`].$t;
+        qna[`${lang.iso}_answer`] = row[`gsx$${lang.english_name.toLowerCase()}answer`].$t;
+      })
+      return qna;
+    });
+    return processed;
+  }
+
+  static async getProviderInfo(abbr) {
+    const metaUrl = sponsorData(abbr).data.providerinfoUrl;
+    const res = await fetch(metaUrl);
+    const raw = await res.json();
+    const row = raw.feed.entry[0];
+    return {
+      state: row.gsx$state.$t,
+      county: row.gsx$county.$t,
+      provider_name: row.gsx$providername.$t,
+      sponsor_site: row.gsx$weblink.$t,
+      sponsor_redirect: row.gsx$redirectlink.$t,
+      menu_site: row.gsx$menulink.$t,
+      twitter: row.gsx$twitter.$t,
+      instagram: row.gsx$instagram.$t,
+      facebook: row.gsx$facebook.$t,
+      phone: row.gsx$contactphone.$t,
+      person: row.gsx$contactname.$t
+    };
   }
 }
+
