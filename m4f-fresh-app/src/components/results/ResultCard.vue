@@ -15,10 +15,7 @@
       ><i class="far fa-clock" />
       {{ icon_spacing }}
       <span v-if="checkOpen(result)">
-        <b
-          ><span class="open-indicator">Open </span>today until
-          {{ getTodaysTime(result) }}.</b
-        >
+        <b><span class="open-indicator">Open </span>today until {{ getTodaysTime(result) }}.</b>
       </span>
       <span v-else>
         <b><span class="closed-indicator">Closed </span>now. </b>
@@ -26,53 +23,47 @@
       </span>
     </b-card-text>
     <hr />
-    <b-card-text class="result-card-text">
-      <i class="fas fa-phone" />{{ icon_spacing + result.contact.phone }}
-    </b-card-text>
-    <b-card-text class="result-card-text">
-      <i class="fas fa-comments" />{{ icon_spacing + "English, Spanish" }}
-    </b-card-text>
+    <b-card-text class="result-card-text"> <i class="fas fa-phone" />{{ icon_spacing + result.contact.phone }} </b-card-text>
+    <b-card-text class="result-card-text"> <i class="fas fa-comments" />{{ icon_spacing + 'English, Spanish' }} </b-card-text>
     <hr />
     <b-card-text class="result-card-text" v-if="result.web_link">
       <i class="fas fa-globe" />{{ icon_spacing + result.weblink }}
     </b-card-text>
-    <b-card-text class="result-card-text" v-if="result.notes"
-      >{{ result.notes.slice(0, 100) + "..." }}
-    </b-card-text>
+    <b-card-text class="result-card-text" v-if="result.notes">{{ result.notes.slice(0, 100) + '...' }} </b-card-text>
     <div class="accent-bar" />
     <!-- Not used now, but could make it look better, like on Zillow. -->
   </b-card>
 </template>
 
 <script>
-import TagsList from "../TagsList.vue";
+import TagsList from '../TagsList.vue';
 export default {
   components: { TagsList },
   props: {
     display: String,
-    result: Object,
+    result: Object
   },
   created() {
-    this.icon_spacing = "    ";
+    this.icon_spacing = '    ';
   },
   methods: {
     checkOpen() {
       return true;
     },
     getTodaysTime() {
-      return "6:00 pm";
+      return '6:00 pm';
     },
     getTomorrowsTime() {
-      return "12 pm Tuesday";
+      return '12 pm Tuesday';
     },
     lookupTags() {
       // should make an overall ResultCard component that allows includes these functions
       // the ResultCard should have condensed, preview, and full
     },
     emitTap() {
-      this.$emit("tap", this.result); // sends the result object back to the parent
-    },
-  },
+      this.$emit('tap', this.result); // sends the result object back to the parent
+    }
+  }
 };
 </script>
 

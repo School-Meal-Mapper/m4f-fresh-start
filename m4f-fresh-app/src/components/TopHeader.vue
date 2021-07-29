@@ -2,18 +2,11 @@
   <b-navbar toggleable="lg" type="dark" class="banner" id="topnav">
     <div class="logoSlot d-flex flex-row">
       <b-navbar-brand class="left">
-        <sponsor-logo
-          :abbr="sponsor.sponsorAbbr"
-          :format="sponsor.logoFormat"
-          :name="sponsor.sponsorName"
-        />
+        <sponsor-logo :abbr="sponsor.sponsorAbbr" :format="sponsor.logoFormat" :name="sponsor.sponsorName" />
       </b-navbar-brand>
     </div>
 
-    <b-navbar-toggle
-      target="nav-collapse"
-      aria-label="More options"
-    ></b-navbar-toggle>
+    <b-navbar-toggle target="nav-collapse" aria-label="More options"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" v-model="expanded" is-nav>
       <b-navbar-nav class="ml-auto">
@@ -29,7 +22,7 @@
             variant="buttons"
             type="link"
           >
-            <b>{{ language != "en" ? "sobre nosotros" : "About Us" }}</b>
+            <b>{{ language != 'en' ? 'sobre nosotros' : 'About Us' }}</b>
           </b-button>
           <b-button
             v-else-if="this.$route.path.includes('/faq')"
@@ -50,8 +43,8 @@
               name: 'FAQPage',
               params: {
                 lang: $route.params.lang,
-                sponsor: $route.params.sponsor,
-              },
+                sponsor: $route.params.sponsor
+              }
             }"
           >
             <b>Questions and Contact Information</b>
@@ -77,7 +70,7 @@
         <b-nav-item
           :to="{
             name: 'MFFLandingPage',
-            params: { lang: $route.params.lang },
+            params: { lang: $route.params.lang }
           }"
           right
         >
@@ -92,9 +85,9 @@
 </template>
 
 <script>
-import sponsorData from "@/sponsorIndex.js";
-import {supported_languages} from "@/constants.js";
-import SponsorLogo from "@/components/SponsorLogo.vue";
+import sponsorData from '@/sponsorIndex.js';
+import { supported_languages } from '@/constants.js';
+import SponsorLogo from '@/components/SponsorLogo.vue';
 
 /**
  * <top-header> is the horizontal navigation at the top of the screen throughout the
@@ -102,36 +95,36 @@ import SponsorLogo from "@/components/SponsorLogo.vue";
  */
 export default {
   components: { SponsorLogo },
-  name: "top-header",
+  name: 'top-header',
   props: {},
   data() {
     return {
       sponsor: sponsorData(this.$route.params.sponsor),
-      language: this.$route.params.lang ?? "en",
-      text: "",
+      language: this.$route.params.lang ?? 'en',
+      text: '',
       window: {
         width: 0,
-        height: 0,
+        height: 0
       },
-      expanded: false,
+      expanded: false
     };
   },
   watch: {
-    "$route.params.sponsor"(to, from) {
+    '$route.params.sponsor'(to, from) {
       if (to != from) {
         this.sponsor = sponsorData(this.$route.params.sponsor);
         this.refreshCSSVariables();
       }
     },
-    "$route.params.lang"(to, from) {
-      to ??= "en";
-      from ??= "en";
+    '$route.params.lang'(to, from) {
+      to ??= 'en';
+      from ??= 'en';
       console.log(to, from);
       if (to != from) {
-        this.$root.$i18n.locale = to ?? "en"; // changes a global variable in i18n plugin
-        this.language = this.$route.params.lang ?? "en";
+        this.$root.$i18n.locale = to ?? 'en'; // changes a global variable in i18n plugin
+        this.language = this.$route.params.lang ?? 'en';
       }
-    },
+    }
   },
   computed: {
     filteredLangs: function () {
@@ -143,11 +136,11 @@ export default {
       } else {
         return this.languages;
       }
-    },
+    }
   },
   created() {
     this.languages = supported_languages;
-    window.addEventListener("resize", this.handleResize);
+    window.addEventListener('resize', this.handleResize);
     this.handleResize();
     console.log(this.$route);
   },
@@ -164,41 +157,26 @@ export default {
       this.window.height = window.innerHeight;
     },
     refreshCSSVariables() {
-      document.documentElement.style.setProperty(
-        "--banner-light",
-        this.sponsor.colors.bannerColor
-      );
-      document.documentElement.style.setProperty(
-        "--banner-dark",
-        this.sponsor.colors.bannerColorDark
-      );
-      document.documentElement.style.setProperty(
-        "--nav-link-light",
-        this.sponsor.colors.navLink
-      );
-      document.documentElement.style.setProperty(
-        "--nav-link-dark",
-        this.sponsor.colors.navLinkDark
-      );
-      document.documentElement.style.setProperty(
-        "--accentColor",
-        this.sponsor.colors.accentColor
-      );
-    },
+      document.documentElement.style.setProperty('--banner-light', this.sponsor.colors.bannerColor);
+      document.documentElement.style.setProperty('--banner-dark', this.sponsor.colors.bannerColorDark);
+      document.documentElement.style.setProperty('--nav-link-light', this.sponsor.colors.navLink);
+      document.documentElement.style.setProperty('--nav-link-dark', this.sponsor.colors.navLinkDark);
+      document.documentElement.style.setProperty('--accentColor', this.sponsor.colors.accentColor);
+    }
   },
   mounted() {
     this.refreshCSSVariables();
-  },
+  }
 };
 </script>
 
 <style lang="scss">
 :root {
-  --banner-light: "#E9ECEF";
-  --banner-dark: "#212529";
-  --nav-link-light: "#000000";
-  --nav-link-dark: "#ffffff";
-  --accentColor: "#ffffff";
+  --banner-light: '#E9ECEF';
+  --banner-dark: '#212529';
+  --nav-link-light: '#000000';
+  --nav-link-dark: '#ffffff';
+  --accentColor: '#ffffff';
 }
 
 #topnav {

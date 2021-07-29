@@ -2,15 +2,11 @@
   <span class="pagetitle">
     <picture>
       <source
-        :srcset="
-          require(`@/districtLogos/${sponsor.sponsorAbbr}-logo-dark.${sponsor.logoFormat}`)
-        "
+        :srcset="require(`@/districtLogos/${sponsor.sponsorAbbr}-logo-dark.${sponsor.logoFormat}`)"
         media="(prefers-color-scheme: dark)"
       />
       <img
-        :src="
-          require(`@/districtLogos/${sponsor.sponsorAbbr}-logo.${sponsor.logoFormat}`)
-        "
+        :src="require(`@/districtLogos/${sponsor.sponsorAbbr}-logo.${sponsor.logoFormat}`)"
         height="80"
         :alt="`${sponsor.sponsorName} Logo`"
         class="image"
@@ -19,25 +15,25 @@
   </span>
 </template>
 <script>
-import sponsorData from "@/sponsorIndex";
+import sponsorData from '@/sponsorIndex';
 
 /**
  * <sponsor-logo> - Component that holds logic for the sponsor logo depending on the URL.
  */
 export default {
-  name: "sponsor-logo",
+  name: 'sponsor-logo',
   data() {
     return {
-      sponsor: sponsorData(this.$route.params.sponsor),
+      sponsor: sponsorData(this.$route.params.sponsor)
     };
   },
   watch: {
-    "$route.params.sponsor"(to, from) {
+    '$route.params.sponsor'(to, from) {
       if (to != from) {
         this.sponsor = sponsorData(this.$route.params.sponsor);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">

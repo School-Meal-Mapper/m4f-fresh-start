@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-if="!subvalue"
-    class="tag-icon"
-    aria-label="Tag"
-    :style="lookup[value].css"
-  >
+  <div v-if="!subvalue" class="tag-icon" aria-label="Tag" :style="lookup[value].css">
     {{ lookup[value].text }}
   </div>
   <div v-else class="tag-icon" aria-label="Tag" :style="lookup[value].css">
@@ -33,76 +28,76 @@
 const lookup = {
   transitfriendly: {
     css: {
-      "background-color": "blue",
-      color: "white",
+      'background-color': 'blue',
+      color: 'white'
     },
-    text: "Near Transit",
+    text: 'Near Transit'
   },
   foodpantry: {
     css: {
-      "background-color": "red",
-      color: "white",
+      'background-color': 'red',
+      color: 'white'
     },
-    text: "Food Pantry",
+    text: 'Food Pantry'
   },
   prepackagedmealsavailable: {
     css: {
-      "background-color": "orange",
-      color: "black",
+      'background-color': 'orange',
+      color: 'black'
     },
-    text: "Prepackaged Meals Available",
+    text: 'Prepackaged Meals Available'
   },
   dietaryoptionsoffered: {
     vegetarian: {
       css: {
-        "background-color": "green",
-        color: "white",
+        'background-color': 'green',
+        color: 'white'
       },
-      text: "Vegetarian Options",
+      text: 'Vegetarian Options'
     },
     kosher: {
       css: {
-        "background-color": "azure",
-        color: "black",
+        'background-color': 'azure',
+        color: 'black'
       },
-      text: "Kosher Options",
+      text: 'Kosher Options'
     },
     halal: {
       css: {
-        "background-color": "gray",
-        color: "white",
+        'background-color': 'gray',
+        color: 'white'
       },
-      text: "Halal Options",
+      text: 'Halal Options'
     },
     dairyfree: {
       css: {
-        "background-color": "white",
-        color: "black",
+        'background-color': 'white',
+        color: 'black'
       },
-      text: "Dairy-Free Options",
+      text: 'Dairy-Free Options'
     },
     nutfree: {
       css: {
-        "background-color": "yellow",
-        color: "black",
+        'background-color': 'yellow',
+        color: 'black'
       },
-      text: "Nut-Free Options",
+      text: 'Nut-Free Options'
     },
     glutenfree: {
       css: {
-        "background-color": "purple",
-        color: "white",
+        'background-color': 'purple',
+        color: 'white'
       },
-      text: "Gluten-Free Options",
-    },
+      text: 'Gluten-Free Options'
+    }
   },
   hotmealsavailable: {
     css: {
-      "background-color": "darkred",
-      color: "white",
+      'background-color': 'darkred',
+      color: 'white'
     },
-    text: "Hot Meals",
-  },
+    text: 'Hot Meals'
+  }
 };
 
 export default {
@@ -112,13 +107,13 @@ export default {
   props: {
     value: {
       type: String,
-      required: true,
+      required: true
     },
     subvalue: {
       type: String,
-      default: "",
-    },
-  },
+      default: ''
+    }
+  }
 };
 </script>
 

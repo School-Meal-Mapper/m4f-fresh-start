@@ -1,21 +1,16 @@
 <template>
   <div class="tag-list">
-    <tag-oval
-      v-for="(tag, index) in includedTags"
-      v-bind:key="index"
-      :value="tag.value"
-      :subvalue="tag.subvalue"
-    />
+    <tag-oval v-for="(tag, index) in includedTags" v-bind:key="index" :value="tag.value" :subvalue="tag.subvalue" />
   </div>
 </template>
 
 <script>
-import TagOval from "@/components/TagOval.vue";
+import TagOval from '@/components/TagOval.vue';
 
 export default {
   components: { TagOval },
   props: {
-    result: Object, // meal site result object, pass this in and it will generate a list of tags in a div
+    result: Object // meal site result object, pass this in and it will generate a list of tags in a div
   },
   computed: {
     includedTags: function () {
@@ -34,8 +29,8 @@ export default {
         }
       });
       return include;
-    },
-  },
+    }
+  }
 };
 </script>
 

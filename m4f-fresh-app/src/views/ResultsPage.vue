@@ -1,5 +1,5 @@
 <template>
-  <div id="result-page" class="page"> 
+  <div id="result-page" class="page">
     <nav id="page-header">
       <div class="page-header-row">
         <div class="page-header-flex">
@@ -8,8 +8,8 @@
               name: 'SponsorLandingPage',
               params: {
                 lang: $route.params.lang,
-                sponsor: $route.params.sponsor,
-              },
+                sponsor: $route.params.sponsor
+              }
             }"
             class="back-link"
           >
@@ -22,36 +22,24 @@
       </div>
       <div class="search-row">
         <form>
-          <b-form-input
-            v-model="searchText"
-            id="searchbar"
-            type="search"
-            placeholder="Enter a location to find closest sites."
-          />
+          <b-form-input v-model="searchText" id="searchbar" type="search" placeholder="Enter a location to find closest sites." />
         </form>
       </div>
     </nav>
     <main>
-      <result-card
-        v-for="(item, index) in filteredResults"
-        v-bind:key="index"
-        :result="item"
-        @tap="showResultDetails"
-      />
+      <result-card v-for="(item, index) in filteredResults" v-bind:key="index" :result="item" @tap="showResultDetails" />
       <b-spinner v-if="isLoading" label="primary" />
-      <p v-if="filteredResults.length == 0 && !isLoading">
-        So sorry, there are no results with the selected tags.
-      </p>
+      <p v-if="filteredResults.length == 0 && !isLoading">So sorry, there are no results with the selected tags.</p>
     </main>
   </div>
 </template>
 
 <script>
-import sponsorData from "@/sponsorIndex.js";
-import Backend from "@/backend.js";
+import sponsorData from '@/sponsorIndex.js';
+import Backend from '@/backend.js';
 
-import ResultCard from "@/components/results/ResultCard.vue";
-import ResultsFilter from "@/components/results/ResultsFilter.vue";
+import ResultCard from '@/components/results/ResultCard.vue';
+import ResultsFilter from '@/components/results/ResultsFilter.vue';
 // import Tag from './Tag.vue'
 /**
  * ResultsPage.vue replaces ResultsList.vue
@@ -60,7 +48,7 @@ export default {
   components: { ResultCard, ResultsFilter },
   // components: { Tag },
   props: {
-    initialSearch: String,
+    initialSearch: String
   },
   created() {
     this.filteredResults = this.results;
@@ -72,57 +60,51 @@ export default {
       filteredResults: [],
       tagsSelected: [],
       isLoading: true,
-      searchText: "",
+      searchText: ''
     };
   },
   methods: {
     async test() {
       console.log(this.sponsor.sponsorAbbr);
       console.log(await Backend.getMealSites(this.$route.params.sponsor));
-      console.log(this.results, "results passed in");
-      console.log(this.filteredResults, "self-filtered results");
+      console.log(this.results, 'results passed in');
+      console.log(this.filteredResults, 'self-filtered results');
     },
     updateTagsSelected() {
       let tempRes = this.results;
       this.tagsSelected.forEach((tag) => {
         tempRes = tempRes.filter((site) => {
           try {
-            const splittedTag = tag.split(".");
-            if (splittedTag[0] == "dietaryoptionsoffered") {
-              return site.tags["dietaryoptionsoffered"]
-                .toLowerCase()
-                .includes(splittedTag[1]);
+            const splittedTag = tag.split('.');
+            if (splittedTag[0] == 'dietaryoptionsoffered') {
+              return site.tags['dietaryoptionsoffered'].toLowerCase().includes(splittedTag[1]);
             }
             return site.tags[tag];
           } catch (e) {
             /* I used try-catch because for some reason if the column doesn't exist, it stops function execution rather 
                than returning undefined.
             */
-            console.error(
-              `Note! The tag name (${tag}) is not set up right. Check the spreadsheet or the checkbox's value attribute.`
-            );
+            console.error(`Note! The tag name (${tag}) is not set up right. Check the spreadsheet or the checkbox's value attribute.`);
             return true;
           }
         });
       });
       return tempRes; // this sends the data to be reacted upon
     },
-    showResultDetails() {},
+    showResultDetails() {}
   },
   watch: {
     tagsSelected: function () {
       this.filteredResults = this.updateTagsSelected();
-    },
+    }
   },
   async mounted() {
-    this.results = (
-      await Backend.getMealSites(this.$route.params.sponsor)
-    ).filter((site) => site.open_status);
+    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter((site) => site.open_status);
     this.isLoading = false;
     this.filteredResults = this.results;
 
-    this.searchText = this.initialSearch ?? "";
-  },
+    this.searchText = this.initialSearch ?? '';
+  }
 };
 </script>
 

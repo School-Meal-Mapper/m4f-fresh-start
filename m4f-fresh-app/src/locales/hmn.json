@@ -1,41 +1,41 @@
 {
-	"Languages": {
-		"am": "Amharic",
-		"ar": "Arabic",
-		"bn": "Bengali",
-		"en": "Lus Askiv",
-		"es": "Lus Mev",
-		"fil": "Txhiaj Foom",
-		"fr": "Fab Kis",
-		"hi": "Hindi",
-		"hmn": "Hmong",
-		"ja": "Japanese",
-		"ko": "Kauslim",
-		"mh": "Cuav"
-	},
-	"MFFLanding": {
-		"findMeals": "Nrhiav pluas mov dawb nyob ze kuv!",
-		"learnMore": "Kawm ntxiv txog peb lub luag haujlwm txhawm rau txuas cov tsev neeg nrog zaub mov dawb.",
-		"localSponsor": "Txuas nrog Tus Txhawb Nqa Hauv Zos kom Nrhiav Cov Khoom Noj Dawb!",
-		"moreSponsors": "Tsis txhob pom ib tus neeg pab nyiaj noj dawb nyob hauv koj lub nras?",
-		"search": "Tshawb lub npe ntawm lub tsev kawm koj cheeb tsam.",
-		"selectDistrict": "Thov xaiv koj lub cheeb tsam.",
-		"selectState": "Thov xaiv koj lub xeev.",
-		"welcome": "Txais tos rau M4F!"
-	},
-	"Results": {
-		"enterLoc": "Nkag mus rau qhov chaw nrhiav cov chaw ze tshaj plaws.",
-		"goBack": "Rov qab mus Rau Tus Neeg Muab Tsev",
-		"noResults": " Thov txim, tsis muaj ib qho tshwm sim nrog cov cim xaiv."
-	},
-	"SponsorLanding": {
-		"announcementMsg": "Sau npe ntawm no kom tau txais zaub mov dawb thaum Lub Yim Hli 2021.",
-		"groceries": "Tau Txais Nyiaj Rau Cov Khw Muag Khoom Noj",
-		"helpConnect": "Xav Tau Kev Pab? Txuas Nrog Peb!",
-		"joinUs": "Koom nrog peb lub caij ntuj sov no rau pluas mov noj dawb ntawm ib qho ntawm peb qhov chaw!",
-		"learnMore": "Kawm Ntxiv Txog Zaub Mov Noj Dawb",
-		"menuAndInfo": "Ntawv Qhia Ua Zaub Mov Thiab Tshwj Xeeb",
-		"schoolMeals": "Cuv Npe Thov Mov Noj Dawb Xyoo Kawm Ntawv",
-		"wrongProvider": "Tsis Yog Koj Tus Zov Me Noj Hauv Zos?"
-	}
+  "Languages": {
+    "am": "Amharic",
+    "ar": "Arabic",
+    "bn": "Bengali",
+    "en": "Lus Askiv",
+    "es": "Lus Mev",
+    "fil": "Txhiaj Foom",
+    "fr": "Fab Kis",
+    "hi": "Hindi",
+    "hmn": "Hmong",
+    "ja": "Japanese",
+    "ko": "Kauslim",
+    "mh": "Cuav"
+  },
+  "MFFLanding": {
+    "findMeals": "Nrhiav pluas mov dawb nyob ze kuv!",
+    "learnMore": "Kawm ntxiv txog peb lub luag haujlwm txhawm rau txuas cov tsev neeg nrog zaub mov dawb.",
+    "localSponsor": "Txuas nrog Tus Txhawb Nqa Hauv Zos kom Nrhiav Cov Khoom Noj Dawb!",
+    "moreSponsors": "Tsis txhob pom ib tus neeg pab nyiaj noj dawb nyob hauv koj lub nras?",
+    "search": "Tshawb lub npe ntawm lub tsev kawm koj cheeb tsam.",
+    "selectDistrict": "Thov xaiv koj lub cheeb tsam.",
+    "selectState": "Thov xaiv koj lub xeev.",
+    "welcome": "Txais tos rau M4F!"
+  },
+  "Results": {
+    "enterLoc": "Nkag mus rau qhov chaw nrhiav cov chaw ze tshaj plaws.",
+    "goBack": "Rov qab mus Rau Tus Neeg Muab Tsev",
+    "noResults": " Thov txim, tsis muaj ib qho tshwm sim nrog cov cim xaiv."
+  },
+  "SponsorLanding": {
+    "announcementMsg": "Sau npe ntawm no kom tau txais zaub mov dawb thaum Lub Yim Hli 2021.",
+    "groceries": "Tau Txais Nyiaj Rau Cov Khw Muag Khoom Noj",
+    "helpConnect": "Xav Tau Kev Pab? Txuas Nrog Peb!",
+    "joinUs": "Koom nrog peb lub caij ntuj sov no rau pluas mov noj dawb ntawm ib qho ntawm peb qhov chaw!",
+    "learnMore": "Kawm Ntxiv Txog Zaub Mov Noj Dawb",
+    "menuAndInfo": "Ntawv Qhia Ua Zaub Mov Thiab Tshwj Xeeb",
+    "schoolMeals": "Cuv Npe Thov Mov Noj Dawb Xyoo Kawm Ntawv",
+    "wrongProvider": "Tsis Yog Koj Tus Zov Me Noj Hauv Zos?"
+  }
 }

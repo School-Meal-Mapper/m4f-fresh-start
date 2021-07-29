@@ -1,41 +1,41 @@
 {
-	"Languages": {
-		"am": "阿姆哈拉语",
-		"ar": "阿拉伯",
-		"bn": "孟加拉",
-		"en": "英语",
-		"es": "西班牙语",
-		"fil": "菲律宾",
-		"fr": "法国",
-		"hi": "印地语",
-		"hmn": "苗族",
-		"ja": "日本",
-		"ko": "朝鲜的",
-		"mh": ""
-	},
-	"MFFLanding": {
-		"findMeals": "查找我附近的免费餐点！",
-		"learnMore": "详细了解我们将家庭与免费餐点联系起来的使命。",
-		"localSponsor": "与当地赞助商联系以查找免费餐点！",
-		"moreSponsors": "在您所在的县没有看到免费餐赞助商吗？",
-		"search": "按当地学校的名称搜索。",
-		"selectDistrict": "请选择您所在的地区。",
-		"selectState": "请选择您所在的州。",
-		"welcome": "欢迎来到 M4F！"
-	},
-	"Results": {
-		"enterLoc": "输入位置以查找最近的站点。",
-		"goBack": "返回提供者主页",
-		"noResults": " 很抱歉，所选标签没有结果。"
-	},
-	"SponsorLanding": {
-		"announcementMsg": "在此处注册以在 2021 年 8 月期间获得免费餐点。",
-		"groceries": "为杂货赚钱",
-		"helpConnect": "需要帮忙？联系我们！",
-		"joinUs": "今年夏天加入我们，在我们的一个地点免费用餐！",
-		"learnMore": "了解更多关于免费餐的信息",
-		"menuAndInfo": "菜单和特别活动",
-		"schoolMeals": "注册免费学年膳食",
-		"wrongProvider": "不是您当地的膳食供应商？"
-	}
+  "Languages": {
+    "am": "阿姆哈拉语",
+    "ar": "阿拉伯",
+    "bn": "孟加拉",
+    "en": "英语",
+    "es": "西班牙语",
+    "fil": "菲律宾",
+    "fr": "法国",
+    "hi": "印地语",
+    "hmn": "苗族",
+    "ja": "日本",
+    "ko": "朝鲜的",
+    "mh": ""
+  },
+  "MFFLanding": {
+    "findMeals": "查找我附近的免费餐点！",
+    "learnMore": "详细了解我们将家庭与免费餐点联系起来的使命。",
+    "localSponsor": "与当地赞助商联系以查找免费餐点！",
+    "moreSponsors": "在您所在的县没有看到免费餐赞助商吗？",
+    "search": "按当地学校的名称搜索。",
+    "selectDistrict": "请选择您所在的地区。",
+    "selectState": "请选择您所在的州。",
+    "welcome": "欢迎来到 M4F！"
+  },
+  "Results": {
+    "enterLoc": "输入位置以查找最近的站点。",
+    "goBack": "返回提供者主页",
+    "noResults": " 很抱歉，所选标签没有结果。"
+  },
+  "SponsorLanding": {
+    "announcementMsg": "在此处注册以在 2021 年 8 月期间获得免费餐点。",
+    "groceries": "为杂货赚钱",
+    "helpConnect": "需要帮忙？联系我们！",
+    "joinUs": "今年夏天加入我们，在我们的一个地点免费用餐！",
+    "learnMore": "了解更多关于免费餐的信息",
+    "menuAndInfo": "菜单和特别活动",
+    "schoolMeals": "注册免费学年膳食",
+    "wrongProvider": "不是您当地的膳食供应商？"
+  }
 }

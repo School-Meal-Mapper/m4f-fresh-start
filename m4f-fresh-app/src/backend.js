@@ -1,5 +1,5 @@
-import sponsorData from "@/sponsorIndex.js";
-import {supported_languages} from "@/constants.js";
+import sponsorData from '@/sponsorIndex.js';
+import { supported_languages } from '@/constants.js';
 
 /**
  * Backend class - an object containing a whole bunch of functions
@@ -72,14 +72,14 @@ MealSite Example Structure: {
     const spreadsheetUrl = sponsorData(abbr).data.spreadsheetUrl;
     const res = await fetch(spreadsheetUrl);
     const raw = await res.json();
-    const missing = { $t: "N/A" };
+    const missing = { $t: 'N/A' };
     const processed = raw.feed.entry
       .filter((site) => site.gsx$mealsitename.$t)
       .map((site) => {
         return {
           name: site.gsx$mealsitename.$t,
           school_district: site.gsx$schooldistrict.$t,
-          open_status: site.gsx$mealsitestatus.$t.toLowerCase() == "open",
+          open_status: site.gsx$mealsitestatus.$t.toLowerCase() == 'open',
           location: {
             address: site.gsx$mealsiteaddress1.$t,
             address_2: site.gsx$mealsiteaddress2.$t,
@@ -88,12 +88,12 @@ MealSite Example Structure: {
             zip: site.gsx$zip.$t, // will be a string
             county: site.gsx$county.$t,
             lat: site.gsx$lat.$t, // will be a string
-            lng: site.gsx$lon.$t, // will be a string
+            lng: site.gsx$lon.$t // will be a string
           },
           additional_directions: (site.gsx$additionaldirections ?? missing).$t,
           contact: {
             name: (site.gsx$contactname ?? missing).$t,
-            phone: (site.gsx$contactphone ?? missing).$t,
+            phone: (site.gsx$contactphone ?? missing).$t
           },
           notes: site.gsx$notes.$t,
           web_link: site.gsx$weblink.$t,
@@ -105,51 +105,46 @@ MealSite Example Structure: {
             wed: site.gsx$wed.$t,
             thu: site.gsx$thr.$t,
             fri: site.gsx$fri.$t,
-            sat: site.gsx$sat.$t,
+            sat: site.gsx$sat.$t
           },
           dates: {
             start: site.gsx$startdate.$t,
-            end: site.gsx$enddate.$t,
+            end: site.gsx$enddate.$t
           },
           update_info: {
             person: site.gsx$updatedby.$t,
-            date: site.gsx$lastupdate.$t,
+            date: site.gsx$lastupdate.$t
           },
           tags: {
-            transitfriendly: (site.gsx$transitfriendly ?? missing).$t == "TRUE",
-            foodpantry: (site.gsx$foodpantry ?? missing).$t == "TRUE",
-            prepackagedmealsavailable:
-              (site.gsx$prepackagedmealsavailable ?? missing).$t == "TRUE",
-            dietaryoptionsoffered: (
-              site.gsx$dietaryoptionsoffered ?? missing
-            ).$t
-              .toLowerCase()
-              .split(", "),
-            hotmealsavailable:
-              (site.gsx$hotmealsavailable ?? missing).$t == "TRUE",
-          },
+            transitfriendly: (site.gsx$transitfriendly ?? missing).$t == 'TRUE',
+            foodpantry: (site.gsx$foodpantry ?? missing).$t == 'TRUE',
+            prepackagedmealsavailable: (site.gsx$prepackagedmealsavailable ?? missing).$t == 'TRUE',
+            dietaryoptionsoffered: (site.gsx$dietaryoptionsoffered ?? missing).$t.toLowerCase().split(', '),
+            hotmealsavailable: (site.gsx$hotmealsavailable ?? missing).$t == 'TRUE'
+          }
         };
       });
     return processed;
   }
 
-  static async getFaq(abbr) { // currently only works with chapel hill, please change spreadsheet headers to "full-language-name_question/answer"
+  static async getFaq(abbr) {
+    // currently only works with chapel hill, please change spreadsheet headers to "full-language-name_question/answer"
     const faqUrl = sponsorData(abbr).data.faqUrl;
     const res = await fetch(faqUrl);
     const raw = await res.json();
-    console.log(raw, "gs json")
+    console.log(raw, 'gs json');
 
-    const langsInSheet = supported_languages.filter(lang => raw.feed.entry[0][`gsx$${lang.english_name.toLowerCase()}question`]); // filters what language headers are in the sheet, but only if it is supported in constants.js
+    const langsInSheet = supported_languages.filter((lang) => raw.feed.entry[0][`gsx$${lang.english_name.toLowerCase()}question`]); // filters what language headers are in the sheet, but only if it is supported in constants.js
     const processed = raw.feed.entry
-    .filter(question => question.gsx$englishquestion.$t)// check to make sure rows must have english question text
-    .map(row => {
-      const qna = {}
-      langsInSheet.forEach(lang => {
-        qna[`${lang.iso}_question`] = row[`gsx$${lang.english_name.toLowerCase()}question`].$t;
-        qna[`${lang.iso}_answer`] = row[`gsx$${lang.english_name.toLowerCase()}answer`].$t;
-      })
-      return qna;
-    });
+      .filter((question) => question.gsx$englishquestion.$t) // check to make sure rows must have english question text
+      .map((row) => {
+        const qna = {};
+        langsInSheet.forEach((lang) => {
+          qna[`${lang.iso}_question`] = row[`gsx$${lang.english_name.toLowerCase()}question`].$t;
+          qna[`${lang.iso}_answer`] = row[`gsx$${lang.english_name.toLowerCase()}answer`].$t;
+        });
+        return qna;
+      });
     return processed;
   }
 
@@ -173,4 +168,3 @@ MealSite Example Structure: {
     };
   }
 }
-
