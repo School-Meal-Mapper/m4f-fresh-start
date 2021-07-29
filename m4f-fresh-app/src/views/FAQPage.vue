@@ -11,9 +11,9 @@
     </ul>
     
     <div class="accordion" role="tablist" v-if="qnas">
-      <b-card no-body class="mb-1" v-for="(qna, index) in qnas" v-bind:key="index">
-        <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle="'accordion-'+index.toString()" class="font-weight-bold question" variant="info">
+      <b-card no-body class="mb-1 backgroundless" v-for="(qna, index) in qnas" v-bind:key="index">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
+          <b-button block v-b-toggle="'accordion-'+index.toString()" class="font-weight-bold question">
             {{qna[`${$i18n.locale}_question`] || qna.en_question}}
           </b-button>
         </b-card-header>
@@ -52,6 +52,10 @@ export default {
 #faqs {
   text-align: center;
   flex-grow: 1;
+  margin: 20px;
+  @media (max-width: 768px) {
+    margin: 10px;
+  }
 }
 
 #faqs h3 {
@@ -88,9 +92,17 @@ export default {
   }
 }
 
+.backgroundless {
+  background-color: rgba(0,0,0,0);
+  border: none;
+}
+
 .question {
-  outline-style: solid;
-  outline-color: #dcdcdc;
+  // outline-style: solid;
+  // outline-color: #dcdcdc;
+  // outline: solid #dcdcdc;
+  border: 2px solid #dcdcdc;
+  background-color: white;
   @media (prefers-color-scheme: dark) {
     color: #f8f9fa !important; // same as bootstrap's gray-100
   }
