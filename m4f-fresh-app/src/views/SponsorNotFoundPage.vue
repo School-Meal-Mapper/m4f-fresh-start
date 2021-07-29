@@ -1,10 +1,10 @@
 <template>
-  <div class="home">
+  <div class="home" id="SNFProotdiv">
     <h1>Looks like [this sponsor] isn't on our site yet.</h1>
     <h2>Want to see them on Meals for Families?</h2>
     <br />
     <!-- white rounded container for email text, Your Name input, and Send Email button -->
-    <b-container class="emailContainer">
+    <div class="emailContainer">
       <h2 style="color: #000000; padding-top: 10px">Let them know by sending them the email below!</h2>
       <div class="row">
         <div class="col-sm-6 form-group">
@@ -28,7 +28,7 @@
         <a :href="emailLink()" style="color: black;">Send Email</a>
         </b-button>
       </div>
-    </b-container>
+    </div>
   </div>
 </template>
 <script>
@@ -67,12 +67,29 @@ export default {
   border-radius: .25rem!important;
 }
 
-.emailContainer {
-  background-color: #ffffff;
-  border: 1 px solid #ced4da;
-  border-radius: .25rem!important;
-  height: 400px;
-  padding: 25px;
+#SNFProotdiv {
+  margin: 25px;
+}
+@media (max-width: 768px) {
+  .emailContainer {
+    background-color: #ffffff;
+    border: 1 px solid #ced4da;
+    border-radius: .25rem!important;
+    padding: 25px;
+    height: 570px;
+  }
+}
+
+@media (min-width: 768px) {
+  .emailContainer {
+    background-color: #ffffff;
+    border: 1 px solid #ced4da;
+    border-radius: .25rem!important;
+    padding: 25px;
+    height: 500px;
+    margin-left: 100px;
+    margin-right: 100px;
+  }
 }
 
 </style>
