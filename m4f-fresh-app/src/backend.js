@@ -137,18 +137,19 @@ MealSite Example Structure: {
     const faqUrl = sponsorData(abbr).data.faqUrl;
     const res = await fetch(faqUrl);
     const raw = await res.json();
+    console.log(raw, "gs json")
 
-    const langsInSheet = supported_languages.filter(lang => raw.feed.entry[0][`${lang.english_name}question`]); // filters what language headers are in the sheet
+    const langsInSheet = supported_languages.filter(lang => raw.feed.entry[0][`gsx$${lang.english_name.toLowerCase()}question`]); // filters what language headers are in the sheet, but only if it is supported in constants.js
     const processed = raw.feed.entry
-    .filter(question => question.gsx$enquestion.$t) // check to make sure only rows with at least an english question are present
+    .filter(question => question.gsx$englishquestion.$t)// check to make sure rows must have english question text
     .map(row => {
       const qna = {}
       langsInSheet.forEach(lang => {
-        qna[`${lang.iso}_question`] = row[`${lang.english_name}_question`];
-        qna[`${lang.iso}_answer`] = row[`${lang.english_name}_answer`];
+        qna[`${lang.iso}_question`] = row[`gsx$${lang.english_name.toLowerCase()}question`].$t;
+        qna[`${lang.iso}_answer`] = row[`gsx$${lang.english_name.toLowerCase()}answer`].$t;
       })
       return qna;
-    })
+    });
     return processed;
   }
 
@@ -156,8 +157,20 @@ MealSite Example Structure: {
     const metaUrl = sponsorData(abbr).data.providerinfoUrl;
     const res = await fetch(metaUrl);
     const raw = await res.json();
-
-    return raw;
+    const row = raw.feed.entry[0];
+    return {
+      state: row.gsx$state.$t,
+      county: row.gsx$county.$t,
+      provider_name: row.gsx$providername.$t,
+      sponsor_site: row.gsx$weblink.$t,
+      sponsor_redirect: row.gsx$redirectlink.$t,
+      menu_site: row.gsx$menulink.$t,
+      twitter: row.gsx$twitter.$t,
+      instagram: row.gsx$instagram.$t,
+      facebook: row.gsx$facebook.$t,
+      phone: row.gsx$contactphone.$t,
+      person: row.gsx$contactname.$t
+    };
   }
 }
 

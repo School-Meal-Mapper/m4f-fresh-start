@@ -103,6 +103,7 @@ export default {
   color: black;
   padding: 25px 40px;
   margin: 20px 0 0 0;
+  width: 100%;
   max-width: 850px;
 }
 

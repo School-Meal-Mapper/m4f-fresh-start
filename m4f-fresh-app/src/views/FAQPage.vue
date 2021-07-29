@@ -1,82 +1,27 @@
 <template>
-  <div id="faqs">
+  <div id="faqs" class="page">
     <h3>About Free Meals</h3>
     <p>Connect with your local meal provider for more information on free meals.</p>
-    <ul>
+    <ul class="fa-ul contact-list">
+      <li class="fa-li" v-if="contact.phone"><i class="fas fa-phone-alt" /><a :href="`tel:${contact.phone}`">{{`${contact.person}, ${contact.phone}`}}</a></li>
+      <li class="fa-li" v-if="contact.sponsor_site"><i class="fas fa-globe" /><a :href="contact.sponsor_redirect">{{contact.sponsor_site}}</a></li>
+      <li class="fa-li" v-if="contact.facebook"><i class="fab fa-facebook" /><a :href="contact.facebook">{{contact.facebook}}</a></li>
+      <li class="fa-li" v-if="contact.twitter"><i class="fab fa-twitter" /><a :href="`https://www.twitter.com/${contact.twitter}`">{{"@"+contact.twitter}}</a></li>
+      <li class="fa-li" v-if="contact.instagram"><i class="fab fa-instagram" /><a :href="`https://www.instagram.com/${contact.instagram}`">{{"@"+contact.instagram}}</a></li>
     </ul>
-  </div>
-</template>
-
-<script>
-import Backend from "@/backend.js";
-export default {
-  async mounted() {
-    console.log(await Backend.getFaq(this.$route.params.sponsor));
-  },
-};
-</script>
-
-<style></style>
-<!--
-<template>
-  <div id="faqs">
-    <h3>{{ $t('FAQs.buttonText') }}</h3>
-    <p v-if="info != null">
-      {{ $t('FAQs.forMoreInformation') }}
-      <icon-list-item
-        v-if="info[0].gsx$contactname !== undefined && !!info[0].gsx$contactname.$t"
-        icon="fas fa-phone-alt"
-        :title="(info[0].gsx$contactname.$t + ', ' + info[0].gsx$contactphone.$t)"
-        :link="'tel:' + info[0].gsx$contactphone.$t"
-        target="_blank"
-      />
-
-      <icon-list-item
-        v-if="info[0].gsx$weblink !== undefined && !!info[0].gsx$weblink.$t"
-        icon="fas fa-globe"
-        :title="getDomain(info[0].gsx$weblink.$t)"
-        :link="info[0].gsx$weblink.$t"
-        target="_blank"
-      />
-
-      <icon-list-item
-        v-if="info[0].gsx$twitter !== undefined && !!info[0].gsx$twitter.$t"
-        icon="fa fa-twitter"
-        :title="'@' + info[0].gsx$twitter.$t"
-        :link="'https://www.twitter.com/' + info[0].gsx$twitter.$t"
-        target="_blank"
-      />
-
-      <icon-list-item
-        v-if="info[0].gsx$instagram !== undefined && !!info[0].gsx$instagram.$t"
-        icon="fa fa-instagram"
-        :title="'@' + info[0].gsx$instagram.$t"
-        :link="'https://www.instagram.com/' + info[0].gsx$instagram.$t"
-        target="_blank"
-      />
-
-      <icon-list-item
-        v-if="info[0].gsx$facebook !== undefined && !!info[0].gsx$facebook.$t"
-        icon="fa fa-facebook-square"
-        :title="'@' + info[0].gsx$facebook.$t.split('/')[3]"
-        :link="info[0].gsx$facebook.$t"
-        target="_blank"
-      />
-    </p>
-
-    <f-a-q-search :sheetsQnA="questions" :translateQuestion="translatedQuestion" :translateAnswer="translateAnswer"></f-a-q-search>
-    <b-button @click="logQuestions"></b-button>
-
-    <div class="accordion" role="tablist" v-if="questions != null">
-      <b-card no-body class="mb-1" v-for="(question, index) in questions" v-bind:key="index">
+    
+    <div class="accordion" role="tablist" v-if="qnas">
+      <b-card no-body class="mb-1" v-for="(qna, index) in qnas" v-bind:key="index">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle="'accordion-' + index.toString()" class="font-weight-bold question" variant="info"
-            >{{ translatedQuestion(question, $i18n.locale) }}
+          <b-button block v-b-toggle="'accordion-'+index.toString()" class="font-weight-bold question" variant="info">
+            {{qna[`${$i18n.locale}_question`] || qna.en_question}}
           </b-button>
         </b-card-header>
-        <b-collapse :id="'accordion-' + index.toString()" accordion="my-accordion" role="tabpanel">
+        <b-collapse :id="'accordion-'+index.toString()" accordion="my-accordion" role="tabpanel">
           <b-card-body>
-            <b-card-text>{{ translatedAnswer(question, $i18n.locale) }}</b-card-text>
+            <b-card-text>
+              {{qna[`${$i18n.locale}_answer`] || qna.en_answer}}
+            </b-card-text>
           </b-card-body>
         </b-collapse>
       </b-card>
@@ -85,89 +30,48 @@ export default {
 </template>
 
 <script>
-import { districtData } from '@/themes/MealsForFamilies/districtData'
-import FAQSearch from '@/components/FAQSearch.vue'
-import IconListItem from '@/components/IconListItem.vue'
-
-document.documentElement.style.setProperty('--primary-color', districtData.colors.primaryColor)
-document.documentElement.style.setProperty('--banner-light', districtData.colors.bannerColor)
-document.documentElement.style.setProperty('--banner-dark', districtData.colors.bannerColorDark)
-document.documentElement.style.setProperty('--nav-link-light', districtData.colors.navLink)
-document.documentElement.style.setProperty('--nav-link-dark', districtData.colors.navLinkDark)
-
+import Backend from "@/backend.js";
 export default {
-  name: 'faq',
-  components: {
-    IconListItem,
-    FAQSearch
-  },
   data() {
     return {
-      questions: null,
-      info: null
+      isLoading: true,
+      qnas: [],
+      contact: {}
     }
   },
-  async created() {
-    console.log(districtData.data.faqUrl)
-    console.log(districtData.data.providerinfoUrl)
-    if (districtData.data.providerinfoUrl != null) {
-      const res3 = await fetch(districtData.data.providerinfoUrl)
-      const info = await res3.json()
-      this.info = info.feed.entry
-    }
-    if (districtData.data.faqUrl != null) {
-      const res2 = await fetch(districtData.data.faqUrl)
-      const faqs = await res2.json()
-      this.questions = faqs.feed.entry.slice(0, 20) // don't want a district to have more than 20
-    }
+  async mounted() {
+    this.contact = await Backend.getProviderInfo(this.$route.params.sponsor);
+    this.qnas = await Backend.getFaq(this.$route.params.sponsor);
+    console.log(this.qnas, "the object received")
+    console.log(this.$i18n.locale)
   },
-  methods: {
-    getDomain: function (url) {
-      var urlParts = url.replace('http://', '').replace('https://', '').replace('www.', '')
-      return urlParts
-    },
-    translatedQuestion: function (question, locale) {
-      if (question['gsx$' + locale + 'question'] !== undefined && question['gsx$' + locale + 'question'].$t !== '') {
-        return question['gsx$' + locale + 'question'].$t
-      } else return question.gsx$enquestion.$t
-    },
-    translatedAnswer: function (question, locale) {
-      if (question['gsx$' + locale + 'answer'] !== undefined && question['gsx$' + locale + 'answer'].$t !== '') {
-        return question['gsx$' + locale + 'answer'].$t
-      } else return question.gsx$enanswer.$t
-    },
-    logQuestions: function () {
-      // console.log(this.translatedAnswer(this.questions[0], 'en'))
-      console.log(this.questions)
-    }
-  }
-}
+};
 </script>
 
 <style lang="scss">
-.root {
-  --primary-color: blue;
-  --banner-light: '#E9ECEF';
-  --banner-dark: '#212529';
-  --nav-link-light: '#F8F8F8';
-  --nav-link-dark: '#F8F8F8';
+#faqs {
+  text-align: center;
+  flex-grow: 1;
 }
 
-.question {
-  outline-style: solid;
-  outline-color: #dcdcdc;
-  @media (prefers-color-scheme: dark) {
-    color: $gray-100 !important;
-  }
+#faqs h3 {
+  margin: 15px auto;
+  font-weight: bold;
 }
 
-.question:hover {
-  background-color: var(--banner-light);
-  outline-style: solid;
-  outline-color: black;
-  @media (prefers-color-scheme: dark) {
-    background-color: var(--banner-dark);
-  }
+.contact-list {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.contact-list li {
+  width: 100%;
+  margin: 5px auto;
+}
+
+.contact-list i {
+  padding-right: .6em;
+  font-size: 1.3em;
 }
 
 .btn-block {
@@ -184,6 +88,22 @@ export default {
   }
 }
 
+.question {
+  outline-style: solid;
+  outline-color: #dcdcdc;
+  @media (prefers-color-scheme: dark) {
+    color: #f8f9fa !important; // same as bootstrap's gray-100
+  }
+}
+
+.question:hover {
+  background-color: var(--banner-light);
+  outline-style: solid;
+  outline-color: black;
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--banner-dark);
+  }
+}
 .question[aria-expanded='false'] {
   &::after {
     font-family: 'Font Awesome 5 Free';
@@ -200,12 +120,4 @@ export default {
     margin-left: 15px;
   }
 }
-#faqs {
-  padding: 100px 24px 24px;
-  margin: 0 auto;
-  text-align: center;
-  overflow-y: overlay;
-  max-height: 100vh;
-}
 </style>
--->

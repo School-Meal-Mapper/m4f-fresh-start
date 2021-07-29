@@ -92,4 +92,8 @@ body {
   height: inherit;
   overflow: auto;
 }
+
+.page {
+  flex-grow: 1;
+}
 </style>
