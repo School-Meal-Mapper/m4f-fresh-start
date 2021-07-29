@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import TagsList from "../TagsList.vue";
+import TagsList from '../TagsList.vue';
 export default {
   components: { TagsList },
   props: {

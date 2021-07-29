@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div id="homePage" class="page">
     <br />
     <b-container>
       <h1>Welcome to M4F!</h1>
@@ -118,7 +118,7 @@ export default {
   --nav-link-dark: '#F8F8F8';
   --accentColor: '#ff4a3';
 }
-.home {
+#homePage {
   display: flex;
   flex-direction: column;
   min-height: 100%;

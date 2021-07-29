@@ -10,7 +10,7 @@ import TagOval from '@/components/TagOval.vue';
 export default {
   components: { TagOval },
   props: {
-    result: Object, // meal site result object, pass this in and it will generate a list of tags in a div
+    result: Object // meal site result object, pass this in and it will generate a list of tags in a div
   },
   computed: {
     includedTags: function () {
