@@ -42,7 +42,7 @@ export default function sponsorData(abbr) {
       accentColor: '#7cba3e',
       navLink: '#f8f8f8',
       navLinkDark: '#f8f8f8',
-      logoFormat: 'svg',
+      logoFormat: 'png',
       // map settings for district-specific page
       initialMapCenterLat: 35.943068,
       initialMapCenterLng: -79.097216,
