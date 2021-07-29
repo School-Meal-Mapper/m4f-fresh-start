@@ -12,9 +12,7 @@
         <h1>Name of Meal Site</h1>
         <a class="share-button"><i class="fas fa-share-alt" /></a>
       </div>
-      <div class="tag-bar">
-        List of tags, maybe we should have a unified tag bar
-      </div>
+      <div class="tag-bar">List of tags, maybe we should have a unified tag bar</div>
       <!-- where Flags (warnings and important info) should be -->
       <!-- <b-card class="warning-flag">
         Example-text: This meal site is only for students of the Shefield County Schools.
@@ -34,10 +32,7 @@
         ><i class="far fa-clock" />
         {{ icon_spacing }}
         <span v-if="checkOpen(result)">
-          <b
-            ><span class="open-indicator">Open </span>today until
-            {{ getTodaysTime(result) }}.</b
-          >
+          <b><span class="open-indicator">Open </span>today until {{ getTodaysTime(result) }}.</b>
         </span>
         <span v-else>
           <b><span class="closed-indicator">Closed </span>now. </b>
@@ -45,19 +40,13 @@
         </span>
       </b-card-text>
       <hr />
-      <b-card-text class="result-card-text">
-        <i class="fas fa-phone" />{{ icon_spacing + result.contact.phone }}
-      </b-card-text>
-      <b-card-text class="result-card-text">
-        <i class="fas fa-comments" />{{ icon_spacing + "English, Spanish" }}
-      </b-card-text>
+      <b-card-text class="result-card-text"> <i class="fas fa-phone" />{{ icon_spacing + result.contact.phone }} </b-card-text>
+      <b-card-text class="result-card-text"> <i class="fas fa-comments" />{{ icon_spacing + 'English, Spanish' }} </b-card-text>
       <hr />
       <b-card-text class="result-card-text" v-if="result.web_link">
         <i class="fas fa-globe" />{{ icon_spacing + result.weblink }}
       </b-card-text>
-      <b-card-text class="result-card-text" v-if="result.notes"
-        >{{ result.notes }}
-      </b-card-text>
+      <b-card-text class="result-card-text" v-if="result.notes">{{ result.notes }} </b-card-text>
     </b-card>
   </div>
 </template>
@@ -69,8 +58,8 @@
  */
 export default {
   props: {
-    result: Object,
-  },
+    result: Object
+  }
 };
 </script>
 

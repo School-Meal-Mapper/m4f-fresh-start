@@ -1,0 +1,41 @@
+{
+  "Languages": {
+    "am": "Amharique",
+    "ar": "Arabe",
+    "bn": "bengali",
+    "en": "Anglais",
+    "es": "Espanol",
+    "fil": "Philippin",
+    "fr": "français",
+    "hi": "Hindi",
+    "hmn": "Hmong",
+    "ja": "japonais",
+    "ko": "coréen",
+    "mh": "Marshallese"
+  },
+  "MFFLanding": {
+    "findMeals": "Trouvez des repas gratuits près de chez moi!",
+    "learnMore": "En savoir plus sur notre mission de connecter les familles avec des repas gratuits.",
+    "localSponsor": "Connectez-vous avec un sponsor local pour trouver des sites de repas gratuits !",
+    "moreSponsors": "Vous ne voyez pas de parrain de repas gratuit dans votre comté ?",
+    "search": "Recherchez par le nom de votre école locale.",
+    "selectDistrict": "Veuillez sélectionner votre quartier.",
+    "selectState": "Veuillez sélectionner votre état.",
+    "welcome": "Bienvenue sur M4F !"
+  },
+  "Results": {
+    "enterLoc": "Entrez un emplacement pour trouver les sites les plus proches.",
+    "goBack": "Retour à l'accueil du fournisseur",
+    "noResults": " Désolé, il n'y a aucun résultat avec les balises sélectionnées."
+  },
+  "SponsorLanding": {
+    "announcementMsg": "Inscrivez-vous ici pour recevoir des repas gratuits en août 2021.",
+    "groceries": "Obtenez de l'argent pour l'épicerie",
+    "helpConnect": "Besoin d'aide? Connecte-toi avec nous!",
+    "joinUs": "Rejoignez-nous cet été pour des repas gratuits dans l'une de nos succursales!",
+    "learnMore": "En savoir plus sur les repas gratuits",
+    "menuAndInfo": "Menu et événements spéciaux",
+    "schoolMeals": "Inscrivez-vous aux repas scolaires gratuits",
+    "wrongProvider": "Pas votre fournisseur de repas local ?"
+  }
+}

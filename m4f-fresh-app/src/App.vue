@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="base">
     <!-- Tab-skip buttons -->
     <!-- <a class="skip-to-main" href="#search-filter-wrapper" v-if="!checkParam">
       Skip to results.
@@ -13,16 +13,19 @@
 </template>
 
 <script>
-import TopHeader from "@/components/TopHeader.vue";
+import TopHeader from '@/components/TopHeader.vue';
 export default {
   components: {
-    "top-header": TopHeader,
+    'top-header': TopHeader
   },
   data() {
     return {
-      logoLink: null,
+      logoLink: null
     };
   },
+  mounted() {
+    this.$root.$i18n.locale = this.$route.params.lang ?? 'en';
+  }
 };
 </script>
 
@@ -34,7 +37,7 @@ body {
 body {
   color: #808080;
   background-color: #ffffff;
-  font-family: "Noto Sans", Arial, Helvetica, sans-serif;
+  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   body {
@@ -43,7 +46,7 @@ body {
 }
 
 #app {
-  font-family: "Noto Sans", Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans', Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -64,7 +67,7 @@ body {
 }
 
 .skip-to-main {
-  background: "fff4a3";
+  background: 'fff4a3';
   color: black;
   left: 50%;
   padding: 7px;
@@ -79,7 +82,7 @@ body {
   transform: translateY(0%);
 }
 
-.home {
+.base {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -88,5 +91,9 @@ body {
 #wrapper {
   height: inherit;
   overflow: auto;
+}
+
+.page {
+  flex-grow: 1;
 }
 </style>

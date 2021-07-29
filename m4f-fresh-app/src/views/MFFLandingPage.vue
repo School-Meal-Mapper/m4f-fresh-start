@@ -23,25 +23,16 @@
       <div class="district-buttons" id="mffGenDiv">
         <p>
           <b-form-select v-model="selectedState" :options="nc" class="mb-3">
-            <b-form-select-option :value="null"
-              >Please select your state.</b-form-select-option
-            >
+            <b-form-select-option :value="null">Please select your state.</b-form-select-option>
           </b-form-select>
-          <b-form-select
-            v-model="selectedDistrict"
-            :options="districtOptions"
-            :disabled="this.selectedState !== 'nc'"
-            class="mb-3"
-          >
-            <b-form-select-option :value="null"
-              >Please select your district.</b-form-select-option
-            >
+          <b-form-select v-model="selectedDistrict" :options="districtOptions" :disabled="this.selectedState !== 'nc'" class="mb-3">
+            <b-form-select-option :value="null">Please select your district.</b-form-select-option>
           </b-form-select>
           <b-button
             class="mffGenButton"
             :to="{
               name: 'SponsorLandingPage',
-              params: { sponsor: selectedDistrict, lang: $route.params.lang },
+              params: { sponsor: selectedDistrict, lang: $route.params.lang }
             }"
             :disabled="this.selectedDistrict === null"
             >Find free meals near me!</b-button
@@ -55,11 +46,7 @@
           <p>
             Learn more about our mission to connect families with free meals.
             <b-button class="triangleButton">
-              <b-icon
-                icon="triangle-fill"
-                rotate="90"
-                aria-label="arrow"
-              ></b-icon>
+              <b-icon icon="triangle-fill" rotate="90" aria-label="arrow"></b-icon>
             </b-button>
           </p>
         </b-link>
@@ -73,14 +60,10 @@
               class="triangleButton"
               :to="{
                 name: 'SponsorNotFoundPage',
-                params: { lang: $route.params.lang },
+                params: { lang: $route.params.lang }
               }"
             >
-              <b-icon
-                aria-label="arrow"
-                icon="triangle-fill"
-                rotate="90"
-              ></b-icon>
+              <b-icon aria-label="arrow" icon="triangle-fill" rotate="90"></b-icon>
             </b-button>
           </p>
         </b-link>
@@ -90,10 +73,10 @@
 </template>
 <script>
 // @ is an alias to /src
-import { nc, districts } from "../constants";
-import sponsorData from "@/sponsorIndex";
+import { nc, districts } from '../constants';
+import sponsorData from '@/sponsorIndex';
 export default {
-  name: "MFFLandingPage",
+  name: 'MFFLandingPage',
   components: {},
   data() {
     return {
@@ -101,39 +84,39 @@ export default {
       districts: districts,
       selectedState: null,
       selectedDistrict: null,
-      sponsor: sponsorData(this.$route.params.sponsor),
+      sponsor: sponsorData(this.$route.params.sponsor)
     };
   },
   watch: {
-    "$route.params.sponsor"(to, from) {
+    '$route.params.sponsor'(to, from) {
       if (to != from) {
         this.sponsor = sponsorData(this.$route.params.sponsor);
         this.refreshCSSVariables();
       }
-    },
+    }
   },
   computed: {
     districtOptions() {
-      if (this.selectedState == "nc") {
+      if (this.selectedState == 'nc') {
         return districts[this.selectedState];
       }
       if (this.selectedState == null) {
-        return [{ value: null, text: "You must select your state." }];
+        return [{ value: null, text: 'You must select your state.' }];
       } else {
-        return [{ value: null, text: "You must select your state." }];
+        return [{ value: null, text: 'You must select your state.' }];
       }
-    },
-  },
+    }
+  }
 };
 </script>
 <style>
 .root {
-  --primary-color: "#1D6363";
-  --banner-light: "#1D6363";
-  --banner-dark: "#1B3C65";
-  --nav-link-light: "#F8F8F8";
-  --nav-link-dark: "#F8F8F8";
-  --accentColor: "#ff4a3";
+  --primary-color: '#1D6363';
+  --banner-light: '#1D6363';
+  --banner-dark: '#1B3C65';
+  --nav-link-light: '#F8F8F8';
+  --nav-link-dark: '#F8F8F8';
+  --accentColor: '#ff4a3';
 }
 .home {
   display: flex;
