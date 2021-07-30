@@ -6,12 +6,14 @@
     <!-- white rounded container for email text, Your Name input, and Send Email button -->
     <div class="emailContainer">
       <h2 style="color: #000000; padding-top: 10px">Let them know by sending them the email below!</h2>
+      <!--
       <div class="row">
         <div class="col-sm-6 form-group">
           <label for="name" style="color: black"> Your Name:</label>
           <input type="text" class="form-control" id="yourNameInput" name="name" required />
         </div>
       </div>
+      -->
       <p id="emailText" style="border: 2px; border-style: solid; border-color: #ced4da; padding: 1em">
         Dear [this sponsor],
         <br />
