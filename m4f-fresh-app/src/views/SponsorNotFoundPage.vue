@@ -15,16 +15,16 @@
       <p id="emailText" style="border: 2px; border-style: solid; border-color: #ced4da; padding: 1em">
         Dear [this sponsor],
         <br />
-        I am a [student or parent/guardian] in your area who is interested in finding meal sites near me. I ask that you consider contacting
-        Meals 4 Families to join their site to make it easier for families in your area to find free meal sites.
+        I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to
+        join their site to make it easier for families in your area to find free meal sites.
         <br />
         <br />
         Best,
         <br />
-        [Your Name]
+        [YOUR NAME HERE]
       </p>
       <div style="text-align: center">
-        <!-- href to emailLink() enclosed in <a> since it would not work in button href -->
+        <!-- button that opens pre-filled email to send to sponsors -->
         <b-button class="mffGenButton" :href="emailLink()" style="color: black">Send Email</b-button>
       </div>
     </div>
