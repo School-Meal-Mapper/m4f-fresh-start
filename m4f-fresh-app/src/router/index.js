@@ -14,6 +14,10 @@ import SchoolMealsPage from '@/views/SchoolMealsPage.vue';
 import GroceriesPage from '@/views/GroceriesPage.vue';
 import HelpAndConnectPage from '@/views/HelpAndConnectPage.vue';
 
+import DataWrapper from '@/views/DataWrapper.vue';
+import WMapPage from '@/views/data_wrapper/WMapPage.vue';
+import WResultsPage from '@/views/data_wrapper/WResultsPage.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -51,6 +55,23 @@ const routes = [
         //   component: MapPage
         // }
         // ]
+      },
+      {
+        path: ':sponsor/w',
+        name: 'DataWrapper',
+        component: DataWrapper,
+        children: [
+          {
+            path: 'results',
+            name: 'WResultsPage',
+            component: WResultsPage
+          },
+          {
+            path: 'map',
+            name: 'WMapPage',
+            component: WMapPage
+          }
+        ]
       },
       {
         path: ':sponsor/results', // maybe I should make results and map into children so then one page can hold all of the meal site data without reloading

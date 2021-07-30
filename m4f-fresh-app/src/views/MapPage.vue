@@ -1,5 +1,5 @@
 <template>
-  <h1>Hello everyone. This is the future location of the map view!</h1>
+  <div id="map-page" class="page">This is where the map will go.</div>
 </template>
 
 <script>

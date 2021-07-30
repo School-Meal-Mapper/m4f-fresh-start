@@ -241,7 +241,7 @@ export default function sponsorData(abbr) {
       navLink: sp.navLink,
       navLinkDark: sp.navLinkDark
     },
-    settings: {
+    map: {
       initialMapCenter: {
         lat: sp.initialMapCenterLat,
         lng: sp.initialMapCenterLng
@@ -249,22 +249,22 @@ export default function sponsorData(abbr) {
       initialMapZoom: sp.initialMapZoom,
       clusterZoom: sp.clusterZoom,
       maxZoom: sp.maxZoom,
-      minZoom: sp.minZoom
+      minZoom: sp.minZoom,
+      source: {
+        light: {
+          url: sp.lightUrl,
+          attribution: sp.lightAttribution
+        },
+        dark: {
+          url: sp.darkUrl,
+          attribution: sp.darkAttribution
+        }
+      }
     },
     data: {
       spreadsheetUrl: sp.spreadsheetUrl,
       faqUrl: sp.faqUrl,
       providerinfoUrl: sp.providerinfoUrl
-    },
-    maps: {
-      normal: {
-        url: sp.lightUrl,
-        attribution: sp.lightAttribution
-      },
-      dark: {
-        url: sp.darkUrl,
-        attribution: sp.darkAttribution
-      }
     }
   };
 }

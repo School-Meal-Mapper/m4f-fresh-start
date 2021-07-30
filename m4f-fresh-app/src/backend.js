@@ -72,7 +72,7 @@ MealSite Example Structure: {
     const spreadsheetUrl = sponsorData(abbr).data.spreadsheetUrl;
     const res = await fetch(spreadsheetUrl);
     const raw = await res.json();
-    const missing = { $t: 'N/A' };
+    const missing = { $t: 'N/A' }; // this should really be replaced with optional chaining ( .? operator, see https://www.youtube.com/watch?v=v2tJ3nzXh8I)
     const processed = raw.feed.entry
       .filter((site) => site.gsx$mealsitename.$t)
       .map((site) => {

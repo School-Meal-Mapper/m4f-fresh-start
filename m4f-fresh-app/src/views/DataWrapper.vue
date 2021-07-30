@@ -1,5 +1,5 @@
 <template>
-  <div id="result-page" class="page">
+  <div id="results-wrapper" class="page">
     <nav id="results-header">
       <div class="results-header-row">
         <div class="results-header-flex">
@@ -26,11 +26,9 @@
         </form>
       </div>
     </nav>
-    <main>
-      <result-card v-for="(item, index) in filteredResults" v-bind:key="index" :result="item" @tap="showResultDetails" />
-      <b-spinner v-if="isLoading" label="primary" />
-      <p v-if="filteredResults.length == 0 && !isLoading">So sorry, there are no results with the selected tags.</p>
-    </main>
+    <!-- Where router will insert the map or results page. -->
+    <b-spinner v-if="isLoading" label="primary" class="centered" />
+    <router-view :data="filteredResults" :isLoading="isLoading" />
   </div>
 </template>
 
@@ -38,15 +36,11 @@
 import sponsorData from '@/sponsorIndex.js';
 import Backend from '@/backend.js';
 
-import ResultCard from '@/components/results/ResultCard.vue';
 import ResultsFilter from '@/components/results/ResultsFilter.vue';
-// import Tag from './Tag.vue'
-/**
- * ResultsPage.vue replaces ResultsList.vue
- */
 export default {
-  components: { ResultCard, ResultsFilter },
-  // components: { Tag },
+  components: {
+    ResultsFilter
+  },
   props: {
     initialSearch: String
   },
@@ -81,7 +75,7 @@ export default {
             }
             return site.tags[tag];
           } catch (e) {
-            /* I used try-catch because for some reason if the column doesn't exist, it stops function execution rather 
+            /* I used try-catch because for some reason if the column doesn't exist, it stops function execution rather
                than returning undefined.
             */
             console.error(`Note! The tag name (${tag}) is not set up right. Check the spreadsheet or the checkbox's value attribute.`);
@@ -90,8 +84,7 @@ export default {
         });
       });
       return tempRes; // this sends the data to be reacted upon
-    },
-    showResultDetails() {}
+    }
   },
   watch: {
     tagsSelected: function () {
@@ -109,7 +102,7 @@ export default {
 </script>
 
 <style>
-#result-page {
+#results-wrapper {
   display: flex;
   flex-direction: column;
   background-color: #eee;
@@ -119,7 +112,7 @@ export default {
   flex-grow: 1;
 }
 
-#result-page main {
+#results-wrapper main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,5 +161,9 @@ export default {
 
 .back-link {
   display: inline-block;
+}
+
+.centered {
+  margin: auto;
 }
 </style>
