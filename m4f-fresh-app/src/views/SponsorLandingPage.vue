@@ -20,8 +20,8 @@
       <b-button
         class="find-site"
         :to="{
-          name: 'ResultsPage',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
+          name: 'DataWrapper',
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang, view: 'list' },
           query: { searchText: text }
         }"
         >{{ this.$t('SponsorLanding.findSite') }}

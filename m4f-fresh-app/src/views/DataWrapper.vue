@@ -13,7 +13,7 @@
             }"
             class="back-link"
           >
-            <i class="fas fa-chevron-left" /> Return to Provider Home
+            <i class="fas fa-chevron-left" /> Go Back
           </b-link>
           <!-- <b-button @click="test"> Test </b-button>
           <p>{{ `Showing ${filteredResults.length} results.`}}</p> -->
@@ -26,9 +26,33 @@
         </form>
       </div>
     </nav>
-    <!-- Where router will insert the map or results page. -->
     <b-spinner v-if="isLoading" label="primary" class="centered" />
-    <router-view :data="filteredResults" :isLoading="isLoading" />
+    <!-- 
+      Here I am letting this component manage the routing of the pages. This does not seem
+      like best practices, but I cannot figure out how I would set up index.js to route to these
+      pages without requiring an extra parameter in the URL path. If you want to add up an additional
+      view for the landing page, you must add to the :sponsor/:view route's regex with the name of that path.
+      Then, add an v-if below with the view's route.
+     -->
+    <results-page v-if="$route.params.view === 'list'" :data="filteredResults" :isLoading="isLoading" />
+    <map-page v-else-if="$route.params.view === 'map'" :data="filteredResults" :isLoading="isLoading" />
+    <!-- Original setup: <router-view :data="filteredResults" :isLoading="isLoading" /> -->
+
+    <div class="view-switcher-spacer" />
+    <b-navbar class="view-switcher">
+      <b-nav pills>
+        <b-nav-item
+          class="view-switcher-link"
+          :to="{ name: DataWrapper, params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'list' } }"
+          >List</b-nav-item
+        >
+        <b-nav-item
+          class="view-switcher-link"
+          :to="{ name: DataWrapper, params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'map' } }"
+          >Map</b-nav-item
+        >
+      </b-nav>
+    </b-navbar>
   </div>
 </template>
 
@@ -37,9 +61,13 @@ import sponsorData from '@/sponsorIndex.js';
 import Backend from '@/backend.js';
 
 import ResultsFilter from '@/components/results/ResultsFilter.vue';
+import ResultsPage from '@/views/data_views/ResultsPage.vue';
+import MapPage from '@/views/data_views/MapPage.vue';
 export default {
   components: {
-    ResultsFilter
+    ResultsFilter,
+    ResultsPage,
+    MapPage
   },
   props: {
     initialSearch: String
@@ -96,7 +124,7 @@ export default {
     this.isLoading = false;
     this.filteredResults = this.results;
 
-    this.searchText = this.initialSearch ?? '';
+    this.searchText = this.$route.query.searchText ?? '';
   }
 };
 </script>
@@ -165,5 +193,32 @@ export default {
 
 .centered {
   margin: auto;
+}
+
+.view-switcher {
+  position: fixed;
+  bottom: 0;
+  align-self: flex-end;
+  height: 3rem;
+  width: 100%;
+  background-color: white;
+  border-top: 1px solid black;
+}
+
+.view-switcher-spacer {
+  width: 100%;
+  height: 3rem;
+}
+
+.view-switcher ul {
+  justify-content: space-between !important;
+}
+
+.view-switcher li {
+  display: inline-block;
+}
+
+.view-switcher .nav-link {
+  color: black;
 }
 </style>

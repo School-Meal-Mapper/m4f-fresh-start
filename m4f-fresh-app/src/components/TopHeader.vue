@@ -263,16 +263,6 @@ export default {
   flex: 1;
 }
 
-@media (min-width: 768px) {
-  .navbar-nav {
-    margin-bottom: 0 !important;
-  }
-  .navbar-brand {
-    margin-right: 2px !important;
-    font-size: 1.25rem !important;
-  }
-}
-
 .sm-name {
   display: inline;
   // @include media-breakpoint-up(lg) {
@@ -302,7 +292,7 @@ export default {
   }
 }
 
-.nav-link {
+#topnav .nav-link {
   color: var(--nav-link-light) !important;
   @media (prefers-color-scheme: dark) {
     color: var(--nav-link-dark) !important;
@@ -312,5 +302,15 @@ export default {
 .accentButton {
   background-color: var(--accentColor) !important;
   box-shadow: 2px 2px 3px rgb(0 0 0 / 60%);
+}
+
+@media (min-width: 768px) {
+  .navbar-nav {
+    margin-bottom: 0 !important;
+  }
+  .navbar-brand {
+    margin-right: 2px !important;
+    font-size: 1.25rem !important;
+  }
 }
 </style>
