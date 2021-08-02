@@ -4,6 +4,7 @@
     <b-container>
       <h1>Welcome to M4F!</h1>
       <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
+      <p>testPrincipalFirstNameRowIncudes()</p>
       <br />
       <div class="input-group rounded">
         <b-form-input
@@ -75,6 +76,7 @@
 // @ is an alias to /src
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
+import testPrincipalFirstNameRowIncudes from '../allSchoolsData';
 export default {
   name: 'MFFLandingPage',
   components: {},
