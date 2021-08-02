@@ -43,12 +43,12 @@
       <b-nav pills>
         <b-nav-item
           class="view-switcher-link"
-          :to="{ name: DataWrapper, params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'list' } }"
+          :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'list' } }"
           >List</b-nav-item
         >
         <b-nav-item
           class="view-switcher-link"
-          :to="{ name: DataWrapper, params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'map' } }"
+          :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'map' } }"
           >Map</b-nav-item
         >
       </b-nav>
@@ -82,7 +82,10 @@ export default {
       filteredResults: [],
       tagsSelected: [],
       isLoading: true,
-      searchText: ''
+      searchText: '',
+      siteName: Backend.getMealSites(this.$route.params.sponsor).name,
+      siteAddress: Backend.getMealSites(this.$route.params.sponsor).address,
+      names: []
     };
   },
   methods: {
@@ -112,6 +115,30 @@ export default {
         });
       });
       return tempRes; // this sends the data to be reacted upon
+    },
+    search(event) {
+      if (event.which === 13) {
+        event.preventDefault();
+        // this.$emit('search', this.text);
+      }
+    },
+    searchLoc: function (location) {
+      if (
+        // meal site name.includes(location searched) ||
+        this.siteName.includes(this.searchText) ||
+        // location searched.includes(meal site addresss) ||
+        this.searchText.includes(this.siteAddress) ||
+        // meal site address.includes(location searched)
+        this.siteAddress.includes(this.searchText)
+      ) {
+        /*
+          const val = {
+            locValue: index,
+            isSetbyMap: false
+          } */
+        //this.passLocation(val)
+        return location;
+      }
     }
   },
   watch: {
@@ -125,6 +152,9 @@ export default {
     this.filteredResults = this.results;
 
     this.searchText = this.$route.query.searchText ?? '';
+    this.names = (await Backend.getMealSites(this.$route.params.sponsor)).map((site) => site.name);
+    console.log(this.names);
+    console.log(Backend.getMealSites(this.$route.params.sponsor));
   }
 };
 </script>
@@ -184,8 +214,10 @@ export default {
   display: inline-block;
 }
 
+/*
 #searchbar {
 }
+*/
 
 .back-link {
   display: inline-block;
