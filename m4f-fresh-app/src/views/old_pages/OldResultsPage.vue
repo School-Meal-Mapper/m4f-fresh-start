@@ -1,5 +1,5 @@
 <template>
-  <div id="results-wrapper" class="page">
+  <div id="result-page" class="page">
     <nav id="results-header">
       <div class="results-header-row">
         <div class="results-header-flex">
@@ -13,7 +13,7 @@
             }"
             class="back-link"
           >
-            <i class="fas fa-chevron-left" /> Go Back
+            <i class="fas fa-chevron-left" /> Return to Provider Home
           </b-link>
           <!-- <b-button @click="test"> Test </b-button>
           <p>{{ `Showing ${filteredResults.length} results.`}}</p> -->
@@ -21,38 +21,16 @@
         </div>
       </div>
       <div class="search-row">
-        <b-form @submit="stopSubmit">
+        <form>
           <b-form-input v-model="searchText" id="searchbar" type="search" placeholder="Enter a location to find closest sites." />
-        </b-form>
+        </form>
       </div>
     </nav>
-    <b-spinner v-if="isLoading" label="primary" class="centered" />
-    <!-- 
-      Here I am letting this component manage the routing of the pages. This does not seem
-      like best practices, but I cannot figure out how I would set up index.js to route to these
-      pages without requiring an extra parameter in the URL path. If you want to add up an additional
-      view for the landing page, you must add to the :sponsor/:view route's regex with the name of that path.
-      Then, add an v-if below with the view's route.
-     -->
-    <results-page v-if="$route.params.view === 'list'" :data="filteredResults" :isLoading="isLoading" />
-    <map-page v-else-if="$route.params.view === 'map'" :data="filteredResults" :isLoading="isLoading" />
-    <!-- Original setup: <router-view :data="filteredResults" :isLoading="isLoading" /> -->
-
-    <div class="view-switcher-spacer" />
-    <b-navbar class="view-switcher">
-      <b-nav pills>
-        <b-nav-item
-          class="view-switcher-link"
-          :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'list' } }"
-          >List</b-nav-item
-        >
-        <b-nav-item
-          class="view-switcher-link"
-          :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'map' } }"
-          >Map</b-nav-item
-        >
-      </b-nav>
-    </b-navbar>
+    <main>
+      <result-card v-for="(item, index) in filteredResults" v-bind:key="index" :result="item" @tap="showResultDetails" />
+      <b-spinner v-if="isLoading" label="primary" />
+      <p v-if="filteredResults.length == 0 && !isLoading">So sorry, there are no results with the selected tags.</p>
+    </main>
   </div>
 </template>
 
@@ -60,17 +38,20 @@
 import sponsorData from '@/sponsorIndex.js';
 import Backend from '@/backend.js';
 
+import ResultCard from '@/components/results/ResultCard.vue';
 import ResultsFilter from '@/components/results/ResultsFilter.vue';
-import ResultsPage from '@/views/data_views/ResultsPage.vue';
-import MapPage from '@/views/data_views/MapPage.vue';
+// import Tag from './Tag.vue'
+/**
+ * ResultsPage.vue replaces ResultsList.vue
+ */
 export default {
-  components: {
-    ResultsFilter,
-    ResultsPage,
-    MapPage
-  },
+  components: { ResultCard, ResultsFilter },
+  // components: { Tag },
   props: {
     initialSearch: String
+  },
+  created() {
+    this.filteredResults = this.results;
   },
   data() {
     return {
@@ -100,7 +81,7 @@ export default {
             }
             return site.tags[tag];
           } catch (e) {
-            /* I used try-catch because for some reason if the column doesn't exist, it stops function execution rather
+            /* I used try-catch because for some reason if the column doesn't exist, it stops function execution rather 
                than returning undefined.
             */
             console.error(`Note! The tag name (${tag}) is not set up right. Check the spreadsheet or the checkbox's value attribute.`);
@@ -110,23 +91,7 @@ export default {
       });
       return tempRes; // this sends the data to be reacted upon
     },
-    stopSubmit(e) {
-      e.preventDefault();
-      this.searchLoc();
-    },
-    searchLoc() {
-      const lowercaseSearch = this.searchText.toLowerCase();
-      this.filteredResults = this.results.filter((site) => {
-        return (
-          lowercaseSearch.includes(site.name.toLowerCase()) ||
-          site.name.toLowerCase().includes(lowercaseSearch) ||
-          lowercaseSearch.includes(site.location.address.toLowerCase()) ||
-          site.location.address.toLowerCase().includes(lowercaseSearch)
-        );
-      });
-
-      // so after this we should filter by using the API
-    }
+    showResultDetails() {}
   },
   watch: {
     tagsSelected: function () {
@@ -137,12 +102,14 @@ export default {
     this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter((site) => site.open_status);
     this.isLoading = false;
     this.filteredResults = this.results;
+
+    this.searchText = this.initialSearch ?? '';
   }
 };
 </script>
 
 <style>
-#results-wrapper {
+#result-page {
   display: flex;
   flex-direction: column;
   background-color: #eee;
@@ -152,7 +119,7 @@ export default {
   flex-grow: 1;
 }
 
-#results-wrapper main {
+#result-page main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -196,43 +163,10 @@ export default {
   display: inline-block;
 }
 
-/*
 #searchbar {
 }
-*/
 
 .back-link {
   display: inline-block;
-}
-
-.centered {
-  margin: auto;
-}
-
-.view-switcher {
-  position: fixed;
-  bottom: 0;
-  align-self: flex-end;
-  height: 3rem;
-  width: 100%;
-  background-color: white;
-  border-top: 1px solid black;
-}
-
-.view-switcher-spacer {
-  width: 100%;
-  height: 3rem;
-}
-
-.view-switcher ul {
-  justify-content: space-between !important;
-}
-
-.view-switcher li {
-  display: inline-block;
-}
-
-.view-switcher .nav-link {
-  color: black;
 }
 </style>
