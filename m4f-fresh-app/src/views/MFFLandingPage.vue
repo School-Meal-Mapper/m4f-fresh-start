@@ -81,7 +81,7 @@
 // @ is an alias to /src
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
-import { testSchoolsArraySearch, testSchoolsArray } from '../allSchoolsData';
+import { testSchoolsArray } from '../allSchoolsData';
 export default {
   name: 'MFFLandingPage',
   components: {},
@@ -97,9 +97,7 @@ export default {
       testSchoolsArray
     };
   },
-  methods: {
-    testSchoolsArraySearch: testSchoolsArraySearch
-  },
+  methods: {},
   watch: {
     '$route.params.sponsor'(to, from) {
       if (to != from) {
