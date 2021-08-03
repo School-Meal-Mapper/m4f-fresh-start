@@ -258,6 +258,7 @@ export default {
 }
 /*hover state for the 6 buttons*/
 .prog-btns:hover {
+  background-color: var(--banner-light);
   opacity: 0.5;
 }
 /*changes styling for mobile*/
@@ -273,7 +274,6 @@ export default {
   .prog-btns {
     width: 90%;
     height: 80px;
-    margin: 20px auto 0px;
   }
   .btnIcon {
     font-size: 150%;
