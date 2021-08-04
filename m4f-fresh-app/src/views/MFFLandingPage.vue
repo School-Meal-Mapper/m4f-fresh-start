@@ -21,9 +21,7 @@
       </div>
       <!-- start test code -->
       <div class="mt-2">Value: {{ text }}</div>
-      <br />
-      <input type="text" v-model="search" placeholder="search blogs" />
-      <p id="test">{{ blogSearchText }}</p>
+      <p id="test-2">{{ schoolSearchText }}</p>
       <!-- end test code -->
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
@@ -82,6 +80,7 @@
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
 import { testSchoolsArray } from '../allSchoolsData';
+import allSchoolsBackend from '../allSchoolsData';
 export default {
   name: 'MFFLandingPage',
   components: {},
@@ -93,11 +92,14 @@ export default {
       selectedDistrict: null,
       sponsor: sponsorData(this.$route.params.sponsor),
       text: '',
-      search: '',
       testSchoolsArray
     };
   },
-  methods: {},
+  methods: {
+    async test() {
+      console.log(await allSchoolsBackend.parseAllSchoolsSheet());
+    }
+  },
   watch: {
     '$route.params.sponsor'(to, from) {
       if (to != from) {
@@ -118,9 +120,11 @@ export default {
       }
     },
 
-    blogSearchText: function () {
+    schoolSearchText: function () {
       return this.testSchoolsArray.filter((school) => {
-        return school.match(this.search);
+        //convert both school and search text to lower case 
+        school = school.toLowerCase(); 
+        return school.match(this.text.toLowerCase());
       });
     }
   }
