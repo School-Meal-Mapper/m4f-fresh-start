@@ -84,7 +84,7 @@ const routes = [
         component: FAQPage
       },
       {
-        path: ':sponsornotfound',
+        path: 'sponsornotfound/:sponsorname',
         name: 'SponsorNotFoundPage',
         component: SponsorNotFoundPage
       },

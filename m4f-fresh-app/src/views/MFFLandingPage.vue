@@ -9,6 +9,7 @@
       <vue-bootstrap-typeahead
         v-model="query"
         :data="testSchoolsArray"
+        @hit="handleHit"
         id="searchBySchoolInput"
         placeholder="Search by the name of your local school. "
         aria-label="Search"
@@ -16,6 +17,7 @@
       />
       <!-- END vue-bootstrap-typeahead in-dev code -->
       <br />
+      <b-button @click="test">test button</b-button>
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
         <p>
@@ -78,7 +80,7 @@ import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 export default {
   name: 'MFFLandingPage',
   components: {
-    VueBootstrapTypeahead
+    VueBootstrapTypeahead // https://www.npmjs.com/package/vue-bootstrap-typeahead
   },
   data() {
     return {
@@ -93,6 +95,11 @@ export default {
   methods: {
     async test() {
       allSchoolsBackend.parseAllSchoolsSheet();
+    },
+    /* handles selected school option from VueBootstrapTypeahead search bar */
+    handleHit(evt) {
+      this.selectedSchool = evt;
+      this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
     }
   },
   watch: {
