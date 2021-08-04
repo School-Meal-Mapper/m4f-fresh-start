@@ -4,25 +4,18 @@
     <b-container>
       <h1>Welcome to M4F!</h1>
       <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
+      <br /><br />
+      <!-- START vue-bootstrap-typeahead in-dev code -->
+      <vue-bootstrap-typeahead
+        v-model="query"
+        :data="testSchoolsArray"
+        id="searchBySchoolInput"
+        placeholder="Search by the name of your local school. "
+        aria-label="Search"
+        aria-describedby="search-addon"
+      />
+      <!-- END vue-bootstrap-typeahead in-dev code -->
       <br />
-      <div class="input-group rounded">
-        <b-form-input
-          v-model="text"
-          type="search"
-          id="searchBySchoolInput"
-          class="form-control rounded"
-          placeholder="Search by the name of your local school. "
-          aria-label="Search"
-          aria-describedby="search-addon"
-        ></b-form-input>
-        <b-button type="submit" class="mffGenButton">
-          <b-icon icon="search"></b-icon>
-        </b-button>
-      </div>
-      <!-- start test code -->
-      <div class="mt-2">Value: {{ text }}</div>
-      <p id="test-2">{{ schoolSearchText }}</p>
-      <!-- end test code -->
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
         <p>
@@ -81,9 +74,12 @@ import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
 import { testSchoolsArray } from '../allSchoolsData';
 import allSchoolsBackend from '../allSchoolsData';
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 export default {
   name: 'MFFLandingPage',
-  components: {},
+  components: {
+    VueBootstrapTypeahead
+  },
   data() {
     return {
       nc: nc,
@@ -91,13 +87,12 @@ export default {
       selectedState: null,
       selectedDistrict: null,
       sponsor: sponsorData(this.$route.params.sponsor),
-      text: '',
       testSchoolsArray
     };
   },
   methods: {
     async test() {
-      console.log(await allSchoolsBackend.parseAllSchoolsSheet());
+      allSchoolsBackend.parseAllSchoolsSheet();
     }
   },
   watch: {
@@ -118,15 +113,17 @@ export default {
       } else {
         return [{ value: null, text: 'You must select your state.' }];
       }
-    },
+    }
 
-    schoolSearchText: function () {
+    /* commented out - to be deleted once VueBootstrapTypeahead search bar is fully implemented */
+    /* schoolSearchText: function () {
       return this.testSchoolsArray.filter((school) => {
-        //convert both school and search text to lower case 
-        school = school.toLowerCase(); 
+        //convert both school and search text to lower case
+        school = school.toLowerCase();
         return school.match(this.text.toLowerCase());
       });
     }
+    */
   }
 };
 </script>
