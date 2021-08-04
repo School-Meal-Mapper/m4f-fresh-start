@@ -9,7 +9,13 @@ export default class allSchoolsBackend {
     console.log(res);
 
     const raw = await res.json();
-    const processed = raw.feed.entry.filter((school) => school.gsx$schoolname.$t);
+    const processed = raw.feed.entry
+      .filter((school) => school.gsx$schoolname.$t)
+      .map((school) => {
+        return {
+          school_name: school.gsx$schoolname.$t
+        };
+      });
     console.log(processed, 'check allSchoolsData spreadsheet');
     return processed;
   }
