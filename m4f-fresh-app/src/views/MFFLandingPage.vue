@@ -74,7 +74,7 @@
 // @ is an alias to /src
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
-import { testSchoolsArray } from '../allSchoolsData';
+import { testSchoolsArray, CHCCSschools } from '../allSchoolsData';
 import allSchoolsBackend from '../allSchoolsData';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 export default {
@@ -89,7 +89,8 @@ export default {
       selectedState: null,
       selectedDistrict: null,
       sponsor: sponsorData(this.$route.params.sponsor),
-      testSchoolsArray
+      testSchoolsArray,
+      CHCCSschools
     };
   },
   methods: {
@@ -99,7 +100,19 @@ export default {
     /* handles selected school option from VueBootstrapTypeahead search bar */
     handleHit(evt) {
       this.selectedSchool = evt;
-      this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
+      var found = this.checkSponsor(this.selectedSchool);
+      if (found) {
+        this.$router.push({ name: 'SponsorLandingPage', params: { sponsor: 'chccs', lang: this.$route.params.lang } });
+      } else {
+        this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
+      }
+    },
+    checkSponsor(school) {
+      if (CHCCSschools.includes(school)) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   watch: {

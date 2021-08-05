@@ -9,21 +9,60 @@ export default class allSchoolsBackend {
     console.log(res);
 
     const raw = await res.json();
-    const processed = raw.feed.entry
-      .filter((school) => school.gsx$schoolname.$t)
-      .map((school) => {
-        return {
-          school_name: school.gsx$schoolname.$t
-        };
-      });
-    console.log(processed, 'check allSchoolsData spreadsheet');
-    return processed;
+    const processed = raw.feed.entry.filter((school) => school.gsx$schoolname.$t).map((school) => school.gsx$schoolname.$t);
+    // var result = Object.keys(processed).map((key) => [processed[key].school_name][0]);
+    return Array.from(processed);
   }
 }
+
+export const resultArray = allSchoolsBackend.parseAllSchoolsSheet();
 
 export const testSchoolsArray = [
   'ABSS Early College at ACC',
   'Alexander Wilson Elementary',
   'Altamahaw-Ossipee Elementary',
-  'Broadview Middle'
+  'Broadview Middle',
+  'Carrboro Elementary',
+  'Carrboro High',
+  'Chapel Hill High',
+  'McDougle Middle',
+  'Seawell Elementary',
+  'Ephesus Elementary',
+  'Estes Hills Elementary',
+  'East Chapel Hill High',
+  'FPG Elementary',
+  'Glenwood Elementary',
+  'Culbreth Middle',
+  'Phillips Middle',
+  'McDougle Elementary',
+  'UNC Hospital School',
+  'Scroggs Elementary',
+  'Morris Grove Elementary',
+  'Rashkis Elementary',
+  'Smith Middle',
+  'Phoenix Academy High',
+  'Virtual Academy School'
+];
+
+export const CHCCSschools = [
+  'Carrboro Elementary',
+  'Carrboro High',
+  'Chapel Hill High',
+  'McDougle Middle',
+  'Seawell Elementary',
+  'Ephesus Elementary',
+  'Estes Hills Elementary',
+  'East Chapel Hill High',
+  'FPG Elementary',
+  'Glenwood Elementary',
+  'Culbreth Middle',
+  'Phillips Middle',
+  'McDougle Elementary',
+  'UNC Hospital School',
+  'Scroggs Elementary',
+  'Morris Grove Elementary',
+  'Rashkis Elementary',
+  'Smith Middle',
+  'Phoenix Academy High',
+  'Virtual Academy School'
 ];
