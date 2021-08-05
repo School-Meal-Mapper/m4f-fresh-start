@@ -6,13 +6,13 @@ import SponsorLandingPage from '@/views/SponsorLandingPage.vue';
 // import ResultsPage from '@/views/ResultsPage.vue';
 import FAQPage from '@/views/FAQPage.vue';
 // import MapPage from '@/views/MapPage.vue';
-import SponsorNotFoundPage from '@/views/SponsorNotFoundPage.vue';
-import NotFoundPage from '@/views/NotFoundPage.vue';
 import LearnFreeMealsPage from '@/views/LearnFreeMealsPage.vue';
 import MenuAndInfoPage from '@/views/MenuAndInfoPage.vue';
 import SchoolMealsPage from '@/views/SchoolMealsPage.vue';
 import GroceriesPage from '@/views/GroceriesPage.vue';
 import HelpAndConnectPage from '@/views/HelpAndConnectPage.vue';
+import NotFoundPage from '@/views/NotFoundPage.vue';
+import SponsorNotFoundPage from '@/views/SponsorNotFoundPage.vue';
 
 import DataWrapper from '@/views/DataWrapper.vue';
 
@@ -38,36 +38,6 @@ const routes = [
         component: SponsorLandingPage
       },
       {
-        path: ':sponsor/:view(list|map)',
-        name: 'DataWrapper',
-        component: DataWrapper
-      },
-      // {
-      //   path: ':sponsor/results', // maybe I should make results and map into children so then one page can hold all of the meal site data without reloading
-      //   name: 'ResultsPage',
-      //   component: ResultsPage
-      // },
-      {
-        path: ':sponsor/faq',
-        name: 'FAQPage',
-        component: FAQPage
-      },
-      {
-        path: ':sponsornotfound',
-        name: 'SponsorNotFoundPage',
-        component: SponsorNotFoundPage
-      },
-      // {
-      //   path: ':sponsor/map',
-      //   name: 'MapPage',
-      //   component: MapPage
-      // },
-      {
-        path: '*',
-        name: 'NotFound',
-        component: NotFoundPage
-      },
-      {
         path: ':sponsor/freeMeals',
         name: 'LearnFreeMealsPage',
         component: LearnFreeMealsPage
@@ -91,6 +61,36 @@ const routes = [
         path: ':sponsor/helpAndConnect',
         name: 'HelpAndConnectPage',
         component: HelpAndConnectPage
+      },
+      {
+        path: ':sponsor/:view(list|map)',
+        name: 'DataWrapper',
+        component: DataWrapper
+      },
+      // {
+      //   path: ':sponsor/results', // maybe I should make results and map into children so then one page can hold all of the meal site data without reloading
+      //   name: 'ResultsPage',
+      //   component: ResultsPage
+      // },
+      {
+        path: ':sponsor/faq',
+        name: 'FAQPage',
+        component: FAQPage
+      },
+      // {
+      //   path: ':sponsor/map',
+      //   name: 'MapPage',
+      //   component: MapPage
+      // },
+      {
+        path: ':sponsornotfound',
+        name: 'SponsorNotFoundPage',
+        component: SponsorNotFoundPage
+      },
+      {
+        path: '*',
+        name: 'NotFound',
+        component: NotFoundPage
       }
     ]
   }

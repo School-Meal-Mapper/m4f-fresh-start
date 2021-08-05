@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>School meals page</h1>
+  <div class="registerMeals">
+    <h1 class="registerTitle">Register For Free School Meals</h1>
     <h2>USDA Prototype Applications</h2>
     <p>
       USDA offers prototypes (examples) of school meal applications, as well as sample instructional documents intended to assist state and
@@ -25,4 +25,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.registerMeals {
+  text-align: center;
+  flex-grow: 1;
+  margin: 20px;
+  @media (max-width: 768px) {
+    margin: 10px;
+  }
+}
+
+.registerMeals > .registerTitle {
+  margin: 10px auto;
+}
+</style>
