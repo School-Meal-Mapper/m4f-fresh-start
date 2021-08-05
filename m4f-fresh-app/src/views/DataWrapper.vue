@@ -1,6 +1,6 @@
 <template>
   <div id="results-wrapper" class="page">
-    <nav id="results-header">
+    <nav id="results-header" v-show="!detailedResult">
       <div class="results-header-row">
         <div class="results-header-flex">
           <b-link
@@ -27,6 +27,7 @@
       </div>
     </nav>
     <b-spinner v-if="isLoading" label="primary" class="centered" />
+    <p v-if="hasLoadingTimedOut">The site was unable to reach our servers. Try again in a couple seconds and refresh.</p>
     <!-- 
       Here I am letting this component manage the routing of the pages. This does not seem
       like best practices, but I cannot figure out how I would set up index.js to route to these
@@ -34,25 +35,26 @@
       view for the landing page, you must add to the :sponsor/:view route's regex with the name of that path.
       Then, add an v-if below with the view's route.
      -->
-    <results-page v-if="$route.params.view === 'list'" :data="filteredResults" :isLoading="isLoading" />
-    <map-page v-else-if="$route.params.view === 'map'" :data="filteredResults" :isLoading="isLoading" />
+    <results-page v-if="$route.params.view === 'list'" :data="filteredResults" :isLoading="isLoading" @select="displayDetails" />
+    <map-page v-else-if="$route.params.view === 'map'" :data="filteredResults" :isLoading="isLoading" @select="displayDetails" />
+    <details-page v-else-if="$route.params.view === 'details'" :result="detailedResult" />
     <!-- Original setup: <router-view :data="filteredResults" :isLoading="isLoading" /> -->
 
     <div class="view-switcher-spacer" />
-    <b-navbar class="view-switcher">
-      <b-nav pills>
-        <b-nav-item
-          class="view-switcher-link"
-          :to="{ name: DataWrapper, params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'list' } }"
-          >List</b-nav-item
-        >
-        <b-nav-item
-          class="view-switcher-link"
-          :to="{ name: DataWrapper, params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'map' } }"
-          >Map</b-nav-item
-        >
-      </b-nav>
-    </b-navbar>
+    <b-nav pills justified align="center" class="view-switcher">
+      <b-nav-item
+        class="view-switcher-link"
+        :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'list' } }"
+        :disabled="$route.params.view === 'list'"
+        ><span class="view-switcher-border-pos">List</span></b-nav-item
+      >
+      <b-nav-item
+        class="view-switcher-link"
+        :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'map' } }"
+        :disabled="$route.params.view === 'map'"
+        ><span class="view-switcher-border-pos">Map</span></b-nav-item
+      >
+    </b-nav>
   </div>
 </template>
 
@@ -63,11 +65,13 @@ import Backend from '@/backend.js';
 import ResultsFilter from '@/components/results/ResultsFilter.vue';
 import ResultsPage from '@/views/data_views/ResultsPage.vue';
 import MapPage from '@/views/data_views/MapPage.vue';
+import DetailsPage from '@/views/data_views/DetailsPage.vue';
 export default {
   components: {
     ResultsFilter,
     ResultsPage,
-    MapPage
+    MapPage,
+    DetailsPage
   },
   props: {
     initialSearch: String
@@ -82,6 +86,8 @@ export default {
       filteredResults: [],
       tagsSelected: [],
       isLoading: true,
+      hasLoadingTimedOut: false,
+      detailedResult: undefined,
       searchText: ''
     };
   },
@@ -112,6 +118,11 @@ export default {
         });
       });
       return tempRes; // this sends the data to be reacted upon
+    },
+    displayDetails(result) {
+      // pulls up the additional details of each meal site
+      this.detailedResult = result;
+      console.log(result, 'we got them bois');
     }
   },
   watch: {
@@ -120,7 +131,17 @@ export default {
     }
   },
   async mounted() {
-    this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter((site) => site.open_status);
+    try {
+      this.results = (await Backend.getMealSites(this.$route.params.sponsor)).filter((site) => site.open_status);
+    } catch (e) {
+      // executes if cannot reach backend's server
+      this.hasLoadingTimedOut = true;
+      console.error(`Cannot reach the spreadsheet data. Please check backend.js, sponsorIndex.js or the spreadsheet for share permissions.
+      The link to the resource is: ${this.sponsor.data.spreadsheetUrl}`);
+      console.log(`If you click on the link above and it seems like it returns valid json, make sure the problem isn't backend.js throwing
+      an error because a column is formatted incorrectly or missing. If that's the case, try to fix the spreadsheet before
+      changing backend.js`);
+    }
     this.isLoading = false;
     this.filteredResults = this.results;
 
@@ -199,7 +220,7 @@ export default {
   position: fixed;
   bottom: 0;
   align-self: flex-end;
-  height: 3rem;
+  height: 3em;
   width: 100%;
   background-color: white;
   border-top: 1px solid black;
@@ -207,18 +228,20 @@ export default {
 
 .view-switcher-spacer {
   width: 100%;
-  height: 3rem;
-}
-
-.view-switcher ul {
-  justify-content: space-between !important;
-}
-
-.view-switcher li {
-  display: inline-block;
+  height: 3em;
 }
 
 .view-switcher .nav-link {
   color: black;
+}
+
+/** 
+  This shows the border on the span within <b-nav-item>. 
+  The border only shows up if the disabled class is set
+  on the b-nav-item.
+*/
+.view-switcher .disabled .view-switcher-border-pos {
+  border: 1px solid black;
+  padding: 2px 20%;
 }
 </style>

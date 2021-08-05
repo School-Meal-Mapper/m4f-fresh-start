@@ -87,8 +87,8 @@ MealSite Example Structure: {
             state: site.gsx$state.$t,
             zip: site.gsx$zip.$t, // will be a string
             county: site.gsx$county.$t,
-            lat: site.gsx$lat.$t, // will be a string
-            lng: site.gsx$lon.$t // will be a string
+            lat: parseFloat(site.gsx$lat.$t),
+            lng: parseFloat(site.gsx$lon.$t)
           },
           additional_directions: (site.gsx$additionaldirections ?? missing).$t,
           contact: {

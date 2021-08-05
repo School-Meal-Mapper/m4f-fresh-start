@@ -38,7 +38,7 @@ const routes = [
         component: SponsorLandingPage
       },
       {
-        path: ':sponsor/:view(list|map)',
+        path: ':sponsor/:view(list|map|details)',
         name: 'DataWrapper',
         component: DataWrapper
       },
