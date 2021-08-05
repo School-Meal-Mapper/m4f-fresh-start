@@ -8,7 +8,7 @@
       <!-- START vue-bootstrap-typeahead in-dev code -->
       <vue-bootstrap-typeahead
         v-model="query"
-        :data="testSchoolsArray"
+        :data="processed"
         @hit="handleHit"
         id="searchBySchoolInput"
         placeholder="Search by the name of your local school. "
@@ -16,6 +16,7 @@
         aria-describedby="search-addon"
       />
       <!-- END vue-bootstrap-typeahead in-dev code -->
+      <b-button @click="test">test button</b-button>
       <br />
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
@@ -73,8 +74,8 @@
 // @ is an alias to /src
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
-import { testSchoolsArray, CHCCSschools } from '../allSchoolsData';
-// import allSchoolsBackend from '../allSchoolsData';
+import { CHCCSschools } from '../allSchoolsData';
+import allSchoolsBackend from '../allSchoolsData';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 // import Backend from '../backend';
 export default {
@@ -89,9 +90,12 @@ export default {
       selectedState: null,
       selectedDistrict: null,
       sponsor: sponsorData(this.$route.params.sponsor),
-      testSchoolsArray,
-      CHCCSschools
+      CHCCSschools,
+      processed: []
     };
+  },
+  async mounted() {
+    this.processed = await allSchoolsBackend.parseAllSchoolsSheet();
   },
   methods: {
     /* handles selected school option from VueBootstrapTypeahead search bar */
@@ -103,6 +107,9 @@ export default {
       } else {
         this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
       }
+    },
+    async test() {
+      console.log(typeof this.processed);
     },
     checkSponsor(school) {
       if (CHCCSschools.includes(school)) {
