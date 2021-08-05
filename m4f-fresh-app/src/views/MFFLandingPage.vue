@@ -4,20 +4,18 @@
     <b-container>
       <h1>Welcome to M4F!</h1>
       <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
-      <br />
-      <div class="input-group rounded">
-        <b-form-input
-          type="search"
-          id="searchDistrictBySchoolInput"
-          class="form-control rounded"
-          placeholder="Search by the name of your local school. "
-          aria-label="Search"
-          aria-describedby="search-addon"
-        ></b-form-input>
-        <b-button type="submit" class="mffGenButton">
-          <b-icon icon="search"></b-icon>
-        </b-button>
-      </div>
+      <br /><br />
+      <!-- START vue-bootstrap-typeahead in-dev code -->
+      <vue-bootstrap-typeahead
+        v-model="query"
+        :data="testSchoolsArray"
+        @hit="handleHit"
+        id="searchBySchoolInput"
+        placeholder="Search by the name of your local school. "
+        aria-label="Search"
+        aria-describedby="search-addon"
+      />
+      <!-- END vue-bootstrap-typeahead in-dev code -->
       <br />
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
@@ -75,17 +73,44 @@
 // @ is an alias to /src
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
+import { testSchoolsArray, CHCCSschools } from '../allSchoolsData';
+// import allSchoolsBackend from '../allSchoolsData';
+import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
+// import Backend from '../backend';
 export default {
   name: 'MFFLandingPage',
-  components: {},
+  components: {
+    VueBootstrapTypeahead // https://www.npmjs.com/package/vue-bootstrap-typeahead
+  },
   data() {
     return {
       nc: nc,
       districts: districts,
       selectedState: null,
       selectedDistrict: null,
-      sponsor: sponsorData(this.$route.params.sponsor)
+      sponsor: sponsorData(this.$route.params.sponsor),
+      testSchoolsArray,
+      CHCCSschools
     };
+  },
+  methods: {
+    /* handles selected school option from VueBootstrapTypeahead search bar */
+    handleHit(evt) {
+      this.selectedSchool = evt;
+      var found = this.checkSponsor(this.selectedSchool);
+      if (found) {
+        this.$router.push({ name: 'SponsorLandingPage', params: { sponsor: 'chccs', lang: this.$route.params.lang } });
+      } else {
+        this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
+      }
+    },
+    checkSponsor(school) {
+      if (CHCCSschools.includes(school)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
   watch: {
     '$route.params.sponsor'(to, from) {
@@ -106,6 +131,16 @@ export default {
         return [{ value: null, text: 'You must select your state.' }];
       }
     }
+
+    /* commented out - to be deleted once VueBootstrapTypeahead search bar is fully implemented */
+    /* schoolSearchText: function () {
+      return this.testSchoolsArray.filter((school) => {
+        //convert both school and search text to lower case
+        school = school.toLowerCase();
+        return school.match(this.text.toLowerCase());
+      });
+    }
+    */
   }
 };
 </script>

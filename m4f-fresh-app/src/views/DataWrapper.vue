@@ -21,9 +21,9 @@
         </div>
       </div>
       <div class="search-row">
-        <form>
+        <b-form @submit="stopSubmit">
           <b-form-input v-model="searchText" id="searchbar" type="search" placeholder="Enter a location to find closest sites." />
-        </form>
+        </b-form>
       </div>
     </nav>
     <b-spinner v-if="isLoading" label="primary" class="centered" />
@@ -76,9 +76,6 @@ export default {
   props: {
     initialSearch: String
   },
-  created() {
-    this.filteredResults = this.results;
-  },
   data() {
     return {
       sponsor: sponsorData(this.$route.params.sponsor),
@@ -122,7 +119,69 @@ export default {
     displayDetails(result) {
       // pulls up the additional details of each meal site
       this.detailedResult = result;
-      console.log(result, 'we got them bois');
+    },
+    stopSubmit(e) {
+      e.preventDefault();
+      this.searchLoc();
+    },
+    haversineDistance([lat1, lon1], [lat2, lon2], isMiles = false) {
+      const toRadian = (angle) => (Math.PI / 180) * angle;
+      const distance = (a, b) => (Math.PI / 180) * (a - b);
+      const RADIUS_OF_EARTH_IN_KM = 6371;
+
+      const dLat = distance(lat2, lat1);
+      const dLon = distance(lon2, lon1);
+
+      lat1 = toRadian(lat1);
+      lat2 = toRadian(lat2);
+
+      // Haversine Formula
+      const a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+      const c = 2 * Math.asin(Math.sqrt(a));
+
+      let finalDistance = RADIUS_OF_EARTH_IN_KM * c;
+
+      if (isMiles) {
+        finalDistance /= 1.60934;
+      }
+
+      return finalDistance;
+    },
+    sortByDistance(a, b) {
+      if (a.distance < b.distance) {
+        return -1;
+      }
+      if (a.distance > b.distance) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    },
+    searchLoc() {
+      const lowercaseSearch = this.searchText.toLowerCase();
+      this.filteredResults = this.results.filter((site) => {
+        return (
+          lowercaseSearch.includes(site.name.toLowerCase()) ||
+          site.name.toLowerCase().includes(lowercaseSearch) ||
+          lowercaseSearch.includes(site.location.address.toLowerCase()) ||
+          site.location.address.toLowerCase().includes(lowercaseSearch)
+        );
+      });
+      // so after this we should filter by using the API
+      //using the distance to the center lat lng of map (maybe haversinedistance), sort the this.filteredResults in order of distance
+      console.log(this.filteredResults);
+      this.sortedResults = this.filteredResults.filter((site) =>
+        //compares map lat lng with site lat lng
+        this.haversineDistance(
+          [this.sponsor.map.initialMapCenter.lat, this.sponsor.map.initialMapCenter.lng],
+          [site.location.lat, site.location.lng],
+          true
+        )
+      );
+      const checkSort = this.sortedResults.sort(this.sortByDistance);
+      console.log(checkSort);
+      //no difference between this.filteredResults, this.sortedResults, checkSort
     }
   },
   watch: {
@@ -144,8 +203,6 @@ export default {
     }
     this.isLoading = false;
     this.filteredResults = this.results;
-
-    this.searchText = this.$route.query.searchText ?? '';
   }
 };
 </script>
@@ -205,8 +262,10 @@ export default {
   display: inline-block;
 }
 
+/*
 #searchbar {
 }
+*/
 
 .back-link {
   display: inline-block;
