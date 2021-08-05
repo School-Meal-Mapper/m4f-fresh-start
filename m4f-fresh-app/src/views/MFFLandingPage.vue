@@ -17,7 +17,6 @@
       />
       <!-- END vue-bootstrap-typeahead in-dev code -->
       <br />
-      <b-button @click="test">test button</b-button>
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
         <p>
@@ -75,8 +74,9 @@
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
 import { testSchoolsArray, CHCCSschools } from '../allSchoolsData';
-import allSchoolsBackend from '../allSchoolsData';
+// import allSchoolsBackend from '../allSchoolsData';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
+// import Backend from '../backend';
 export default {
   name: 'MFFLandingPage',
   components: {
@@ -94,9 +94,6 @@ export default {
     };
   },
   methods: {
-    async test() {
-      allSchoolsBackend.parseAllSchoolsSheet();
-    },
     /* handles selected school option from VueBootstrapTypeahead search bar */
     handleHit(evt) {
       this.selectedSchool = evt;
