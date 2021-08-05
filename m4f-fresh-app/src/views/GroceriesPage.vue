@@ -1,9 +1,9 @@
 <template>
   <div class="questionsList" role="tablist">
-    <h1 class="grocTitle">Groceries Page</h1>
+    <h1 class="grocTitle">Pandemic Electronic Benefit Transfer (P-EBT)</h1>
     <div class="questionsList" role="tablist">
       <b-card no-body class="mb-1 backgroundless">
-        <b-card-header header-tag="P-EBT" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel1 class="font-weight-bold question"> What is P-EBT? </b-button>
         </b-card-header>
         <b-collapse id="tabpanel1">
@@ -15,7 +15,7 @@
             </b-card-text>
           </b-card-body>
         </b-collapse>
-        <b-card-header header-tag="Eligibility" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel2 class="font-weight-bold question"> How do I know if my child is eligible? </b-button>
         </b-card-header>
         <b-collapse id="tabpanel2">
@@ -42,7 +42,7 @@
             </b-card-text>
           </b-card-body>
         </b-collapse>
-        <b-card-header header-tag="Apply" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel3 class="font-weight-bold question"> How do I apply for P-EBT? </b-button>
         </b-card-header>
         <b-collapse id="tabpanel3">
@@ -54,7 +54,7 @@
             </b-card-text>
           </b-card-body>
         </b-collapse>
-        <b-card-header header-tag="Enroll" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel4 class="font-weight-bold question">
             How do I enroll my child to receive P-EBT benefits?
           </b-button>
@@ -75,7 +75,7 @@
             </b-card-text>
           </b-card-body>
         </b-collapse>
-        <b-card-header header-tag="Payment" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel5 class="font-weight-bold question"> When would I get my P-EBT payment? </b-button>
         </b-card-header>
         <b-collapse id="tabpanel5">
@@ -87,7 +87,7 @@
             </b-card-text>
           </b-card-body>
         </b-collapse>
-        <b-card-header header-tag="Money" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel6 class="font-weight-bold question"> How much money would I receive with P-EBT? </b-button>
         </b-card-header>
         <b-collapse id="tabpanel6">
@@ -95,7 +95,7 @@
             <b-card-text> Answer </b-card-text>
           </b-card-body>
         </b-collapse>
-        <b-card-header header-tag="Activate" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel7 class="font-weight-bold question"> How do I activate my P-EBT card? </b-button>
         </b-card-header>
         <b-collapse id="tabpanel7">
@@ -103,7 +103,7 @@
             <b-card-text> Answer </b-card-text>
           </b-card-body>
         </b-collapse>
-        <b-card-header header-tag="PreviousEBT" class="p-1 backgroundless" role="tab">
+        <b-card-header header-tag="header" class="p-1 backgroundless" role="tab">
           <b-button block v-b-toggle.tabpanel8 class="font-weight-bold question"> What if I already use EBT? </b-button>
         </b-card-header>
         <b-collapse id="tabpanel8">
