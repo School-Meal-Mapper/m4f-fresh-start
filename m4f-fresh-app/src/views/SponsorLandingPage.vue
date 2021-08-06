@@ -21,8 +21,7 @@
         class="find-site"
         :to="{
           name: 'DataWrapper',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang, view: 'list' },
-          query: { searchText: text }
+          params: { ...$route.params, view: 'list', search: text == '' ? null : text }
         }"
         >{{ this.$t('SponsorLanding.findSite') }}
       </b-button>

@@ -15,7 +15,7 @@
         </div>
       </div>
       <p id="emailText" style="border: 2px; border-style: solid; border-color: #ced4da; padding: 1em">
-        Dear {{ $route.params.sponsorname }} Nutrition Team,
+        Dear {{$route.params.sponsorname}.toUpperCase()} Nutrition Team,
         <br />
         I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to
         join their site to make it easier for families in your area to find free meal sites.
@@ -47,8 +47,9 @@ export default {
   }
 };
 </script>
-<style>
-<style lang='scss' > .root {
+
+<style lang="scss">
+.root {
   --primary-color: '#1D6363';
   --banner-light: '#1D6363';
   --banner-dark: '#1B3C65';

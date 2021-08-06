@@ -63,27 +63,18 @@ const routes = [
         component: HelpAndConnectPage
       },
       {
-        path: ':sponsor/:view(list|map)',
+        path: ':sponsor/:view(list|map|details)/:search?',
         name: 'DataWrapper',
-        component: DataWrapper
+        component: DataWrapper,
+        props: (route) => ({ initialSearch: route.params.search })
       },
-      // {
-      //   path: ':sponsor/results', // maybe I should make results and map into children so then one page can hold all of the meal site data without reloading
-      //   name: 'ResultsPage',
-      //   component: ResultsPage
-      // },
       {
         path: ':sponsor/faq',
         name: 'FAQPage',
         component: FAQPage
       },
-      // {
-      //   path: ':sponsor/map',
-      //   name: 'MapPage',
-      //   component: MapPage
-      // },
       {
-        path: ':sponsornotfound',
+        path: 'sponsornotfound/:sponsorname?',
         name: 'SponsorNotFoundPage',
         component: SponsorNotFoundPage
       },
