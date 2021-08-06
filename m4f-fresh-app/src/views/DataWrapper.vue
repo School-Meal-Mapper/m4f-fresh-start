@@ -68,7 +68,7 @@
 <script>
 import sponsorData from '@/sponsorIndex.js';
 import Backend from '@/backend.js';
-import { haversineDistance } from '@/utilities.js';
+//import { haversineDistance } from '@/utilities.js';
 
 import ResultsFilter from '@/components/results/ResultsFilter.vue';
 import ResultsPage from '@/views/data_views/ResultsPage.vue';
@@ -93,16 +93,11 @@ export default {
       isLoading: true,
       hasLoadingTimedOut: false,
       detailedResult: undefined,
-      searchText: ''
+      searchText: '',
+      prevSearchText: this.$route.query.searchText
     };
   },
   methods: {
-    async test() {
-      console.log(this.sponsor.sponsorAbbr);
-      console.log(await Backend.getMealSites(this.$route.params.sponsor));
-      console.log(this.results, 'results passed in');
-      console.log(this.filteredResults, 'self-filtered results');
-    },
     updateTagsSelected() {
       let tempRes = this.results;
       this.tagsSelected.forEach((tag) => {
@@ -144,19 +139,33 @@ export default {
       });
       this.searchLoc();
     },
-    sortByDistance(a, b) {
-      if (a.distance < b.distance) {
-        return -1;
+    deg2rad(deg) {
+      return deg * (Math.PI / 180);
+    },
+    //see notes in utilities.js
+    getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+      var R = 6371; // Radius of the earth in km
+      var dLat = this.deg2rad(lat2 - lat1); // deg2rad below
+      var dLon = this.deg2rad(lon2 - lon1);
+      var a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = R * c; // Distance in km
+      return d;
+    },
+    //takes in coordinates for two points then checks the value of the distance between those 2 points, TODO: decide on a distance range like 10-15 miles
+    //currently checks if meal sites are within 10 miles of searched location
+    closeBy(lat1, lng1, lat2, lng2) {
+      if (this.getDistanceFromLatLonInKm(lat1, lng1, lat2, lng2) > -10 && this.getDistanceFromLatLonInKm(lat1, lng1, lat2, lng2) <= 10) {
+        return true;
       }
-      if (a.distance > b.distance) {
-        return 1;
-      }
-
-      // names must be equal
-      return 0;
+      return false;
     },
     searchLoc() {
+      //makes what user searched (searchText) not case sensitive
       const lowercaseSearch = this.searchText.toLowerCase();
+      //returns meal sites that include what user searched
       this.filteredResults = this.results.filter((site) => {
         return (
           lowercaseSearch.includes(site.name.toLowerCase()) ||
@@ -165,20 +174,40 @@ export default {
           site.location.address.toLowerCase().includes(lowercaseSearch)
         );
       });
-      // so after this we should filter by using the API
-      //using the distance to the center lat lng of map (maybe haversinedistance), sort the this.filteredResults in order of distance
-      console.log(this.filteredResults);
-      this.sortedResults = this.filteredResults.filter((site) =>
-        //compares map lat lng with site lat lng
-        haversineDistance(
-          [this.sponsor.map.initialMapCenter.lat, this.sponsor.map.initialMapCenter.lng],
-          [site.location.lat, site.location.lng],
-          true
-        )
-      );
-      const checkSort = this.sortedResults.sort(this.sortByDistance);
-      console.log(checkSort);
-      //no difference between this.filteredResults, this.sortedResults, checkSort
+      //API: search + reverse --> we should use the API to search user input (searchText), get the list of OSM objects, measure distance of objects to meal sites (within 10 mi?) and return those sites
+      //fetchstring is how we run API searches based on location user enters
+      var fetchString =
+        'https://nominatim.openstreetmap.org/search?key=9Rl2TaZFQpBPsnQmQo6cq79sl3Rf9EfA&q=' + this.searchText + '&format=json';
+      fetch(fetchString)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.length === 0) {
+            alert('Out of Bounds: Try a different address.');
+            return;
+          }
+          //location is going to be the chosen address(es) from running OSM
+          var location = null;
+          var i;
+          for (i = 0; i < data.length; i++) {
+            if (data[i].lat >= 34 && data[i].lat <= 36.21 && data[i].lon <= -75.3 && data[i].lon >= -84.15) {
+              //Making sure result is in NC: OSM objects are not bound in NC so this evaluates OSM objects to see which ones are in NC then sets location to that OSM object
+              location = data[i];
+              break;
+            }
+          }
+          if (location == null) {
+            return;
+          }
+          let sortedResults = this.results;
+          //sortedResults returns meal sites that have a close distance to locations that OSM matched to what the user searched
+          sortedResults = sortedResults.filter((site) => {
+            if (this.closeBy(location.lat, location.lon, site.location.lat, site.location.lng)) {
+              return site;
+            }
+          });
+          this.filteredResults = sortedResults;
+          return this.filteredResults;
+        });
     }
   },
   watch: {
