@@ -26,7 +26,7 @@
             <b-form-select-option :value="null">Please select your state.</b-form-select-option>
           </b-form-select>
           <b-form-select v-model="selectedDistrict" :options="districtOptions" :disabled="this.selectedState !== 'nc'" class="mb-3">
-            <b-form-select-option :value="null">Please select your district.</b-form-select-option>
+            <b-form-select-option :value="null">Please select a meal sponsor.</b-form-select-option>
           </b-form-select>
           <b-button
             class="mffGenButton"
