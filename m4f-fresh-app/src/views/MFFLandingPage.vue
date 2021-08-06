@@ -5,19 +5,21 @@
       <h1>Welcome to M4F!</h1>
       <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
       <br /><br />
-      <!-- START vue-bootstrap-typeahead in-dev code -->
+      <!-- START vue-bootstrap-typeahead searchbar -->
+      <!-- :data is array of all NC schools from Copy of All_NC_Schools_July_2021 spreadsheet, sheet 2, @hit is handlehit, a function which processes the chosen school and takes the user to the corresponding SponsorNotFound page or SponsorLanding page -->
       <vue-bootstrap-typeahead
         v-model="query"
-        :data="testSchoolsArray"
+        :data="processed"
         @hit="handleHit"
         id="searchBySchoolInput"
         placeholder="Search by the name of your local school. "
         aria-label="Search"
         aria-describedby="search-addon"
       />
-      <!-- END vue-bootstrap-typeahead in-dev code -->
+      <!-- END vue-bootstrap-typeahead searchbar -->
       <br />
       <p><strong>OR</strong></p>
+      <!-- START select state and sponsor dropdown menu -->
       <div class="district-buttons" id="mffGenDiv">
         <p>
           <b-form-select v-model="selectedState" :options="nc" class="mb-3">
@@ -37,8 +39,10 @@
           >
         </p>
       </div>
+      <!-- END select state and sponsor dropdown menu -->
       <br />
       <br />
+      <!-- Additional info links at bottom of page -->
       <b-card class="homeLinkCard">
         <b-link class="homeLink" href="https://www.meals4families.community">
           <p>
@@ -73,8 +77,8 @@
 // @ is an alias to /src
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
-import { testSchoolsArray, CHCCSschools } from '../allSchoolsData';
-// import allSchoolsBackend from '../allSchoolsData';
+import { ourSponsors } from '../allSchoolsData';
+import allSchoolsBackend from '../allSchoolsData';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 // import Backend from '../backend';
 export default {
@@ -89,26 +93,54 @@ export default {
       selectedState: null,
       selectedDistrict: null,
       sponsor: sponsorData(this.$route.params.sponsor),
-      testSchoolsArray,
-      CHCCSschools
+      processed: [],
+      processedObj: [],
+      ourSponsors
     };
+  },
+  async mounted() {
+    this.processed = await allSchoolsBackend.parseAllSchoolsSheet();
+    this.processedObj = await allSchoolsBackend.getSchoolObject();
   },
   methods: {
     /* handles selected school option from VueBootstrapTypeahead search bar */
     handleHit(evt) {
       this.selectedSchool = evt;
-      var found = this.checkSponsor(this.selectedSchool);
-      if (found) {
-        this.$router.push({ name: 'SponsorLandingPage', params: { sponsor: 'chccs', lang: this.$route.params.lang } });
+      var Sponsor = this.getSponsor(this.selectedSchool);
+      var ours = this.isSponsorOurs(Sponsor);
+      console.log(this.isSponsorOurs(Sponsor));
+      if (ours) {
+        this.$router.push({
+          name: 'SponsorLandingPage',
+          params: { sponsor: this.getSponsorValue(Sponsor), lang: this.$route.params.lang }
+        });
       } else {
-        this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
+        this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: Sponsor, lang: this.$route.params.lang } });
       }
     },
-    checkSponsor(school) {
-      if (CHCCSschools.includes(school)) {
+    /* returns the sponsor, takes school as param (called in handleHit) */
+    getSponsor(school) {
+      for (let i = 0; i < this.processed.length; i++) {
+        if (this.processedObj[i].schoolName == school) {
+          return this.processedObj[i].sponsorName;
+        }
+      }
+    },
+    /* returns true if sponsor is on M4F, false if sponsor is not on M4F (called in handleHit) */
+    isSponsorOurs(Sponsor) {
+      if (ourSponsors.includes(Sponsor)) {
         return true;
       } else {
         return false;
+      }
+    },
+    /* returns value of sponsor (within districts from districtData.js) (called to direct router to a SponsorLanding page in handleHit) */
+    getSponsorValue(Sponsor) {
+      let ncDistricts = districts['nc'];
+      for (let i = 0; i < ncDistricts.length; i++) {
+        if (ncDistricts[i].text == Sponsor) {
+          return ncDistricts[i].value;
+        }
       }
     }
   },
@@ -131,16 +163,6 @@ export default {
         return [{ value: null, text: 'You must select your state.' }];
       }
     }
-
-    /* commented out - to be deleted once VueBootstrapTypeahead search bar is fully implemented */
-    /* schoolSearchText: function () {
-      return this.testSchoolsArray.filter((school) => {
-        //convert both school and search text to lower case
-        school = school.toLowerCase();
-        return school.match(this.text.toLowerCase());
-      });
-    }
-    */
   }
 };
 </script>

@@ -1,21 +1,21 @@
 <template>
   <div class="page" id="SNFPage">
-    <h1 style="margin: 25px">Looks like [this sponsor] isn't on our site yet.</h1>
+    <h1 style="margin: 25px">
+      Looks like <strong>{{ $route.params.sponsorname }}</strong> isn't on our site yet.
+    </h1>
     <h2>Want to see them on Meals for Families?</h2>
     <br />
     <!-- white rounded container for email text, Your Name input, and Send Email button -->
     <div class="emailContainer">
       <h2 style="color: #000000; padding-top: 10px">Let them know by sending them the email below!</h2>
-      <!--
       <div class="row">
         <div class="col-sm-6 form-group">
           <label for="name" style="color: black"> Your Name:</label>
-          <input type="text" class="form-control" id="yourNameInput" name="name" required />
+          <input type="text" class="form-control" v-model="yourName" />
         </div>
       </div>
-      -->
       <p id="emailText" style="border: 2px; border-style: solid; border-color: #ced4da; padding: 1em">
-        Dear {{$route.params.sponsorname}.toUpperCase()},
+        Dear {{$route.params.sponsorname}.toUpperCase()} Nutrition Team,
         <br />
         I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to
         join their site to make it easier for families in your area to find free meal sites.
@@ -23,11 +23,11 @@
         <br />
         Best,
         <br />
-        [YOUR NAME HERE]
+        {{ yourName }}
       </p>
       <div style="text-align: center">
         <!-- button that opens pre-filled email to send to sponsors -->
-        <b-button class="mffGenButton" :href="emailLink()" style="color: black">Send Email</b-button>
+        <b-button class="mffGenButton" :href="emailLink(yourName)" style="color: black">Send Email</b-button>
       </div>
     </div>
   </div>
@@ -37,6 +37,11 @@ import { emailLink } from '../utilities';
 export default {
   name: 'sponsor-not-found-page',
   components: {},
+  data() {
+    return {
+      yourName: ''
+    };
+  },
   methods: {
     emailLink: emailLink
   }

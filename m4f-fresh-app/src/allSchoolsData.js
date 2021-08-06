@@ -1,6 +1,8 @@
 /* For now - only NC Schools */
+/* Backend for data from all schools. Currently uses only Copy of All_NC_Schools_July_2021 sheet 2 data */
 
 export default class allSchoolsBackend {
+  /* returns array of all NC schools */
   static async parseAllSchoolsSheet() {
     /* json endpoint for Copy of All_NC_Schools_July_2021 page 2 */
     var allSchoolsDataSpreadsheetURL =
@@ -10,59 +12,29 @@ export default class allSchoolsBackend {
 
     const raw = await res.json();
     const processed = raw.feed.entry.filter((school) => school.gsx$schoolname.$t).map((school) => school.gsx$schoolname.$t);
-    // var result = Object.keys(processed).map((key) => [processed[key].school_name][0]);
     return Array.from(processed);
+  }
+
+  /* returns object including each element's schoolName, sponsorName, and isOurSponsor (whether or not sponsor is on M4F (T/F) automatically filled out in sheet w data validation)) */
+  static async getSchoolObject() {
+    var allSchoolsDataSpreadsheetURL =
+      'https://spreadsheets.google.com/feeds/list/1T_hnJz75hGVfVLq8GlkZ20yNe5znKYQJdvEr3OLFhtw/2/public/values?alt=json';
+    const res = await fetch(allSchoolsDataSpreadsheetURL);
+    console.log(res);
+
+    const raw = await res.json();
+    const processedObj = raw.feed.entry
+      .filter((school) => school.gsx$schoolname.$t)
+      .map((school) => {
+        return {
+          schoolName: school.gsx$schoolname.$t,
+          sponsorName: school.gsx$leaname.$t,
+          isOurSponsor: school.gsx$isoursponsor.$t
+        };
+      });
+    return processedObj;
   }
 }
 
-export const resultArray = allSchoolsBackend.parseAllSchoolsSheet();
-
-export const testSchoolsArray = [
-  'ABSS Early College at ACC',
-  'Alexander Wilson Elementary',
-  'Altamahaw-Ossipee Elementary',
-  'Broadview Middle',
-  'Carrboro Elementary',
-  'Carrboro High',
-  'Chapel Hill High',
-  'McDougle Middle',
-  'Seawell Elementary',
-  'Ephesus Elementary',
-  'Estes Hills Elementary',
-  'East Chapel Hill High',
-  'FPG Elementary',
-  'Glenwood Elementary',
-  'Culbreth Middle',
-  'Phillips Middle',
-  'McDougle Elementary',
-  'UNC Hospital School',
-  'Scroggs Elementary',
-  'Morris Grove Elementary',
-  'Rashkis Elementary',
-  'Smith Middle',
-  'Phoenix Academy High',
-  'Virtual Academy School'
-];
-
-export const CHCCSschools = [
-  'Carrboro Elementary',
-  'Carrboro High',
-  'Chapel Hill High',
-  'McDougle Middle',
-  'Seawell Elementary',
-  'Ephesus Elementary',
-  'Estes Hills Elementary',
-  'East Chapel Hill High',
-  'FPG Elementary',
-  'Glenwood Elementary',
-  'Culbreth Middle',
-  'Phillips Middle',
-  'McDougle Elementary',
-  'UNC Hospital School',
-  'Scroggs Elementary',
-  'Morris Grove Elementary',
-  'Rashkis Elementary',
-  'Smith Middle',
-  'Phoenix Academy High',
-  'Virtual Academy School'
-];
+/* Array with full names of all of our sponsors. Used in typeahead searchbar on MFFLandingPage w .includes to determine if a sponsor is on M4F */
+export const ourSponsors = ['Chapel Hill-Carrboro City Schools'];
