@@ -6,8 +6,11 @@ export function emailLink() {
   subject += '&body=';
   /* assign body text to var (will be dynamic based on Sponsor, Sponsor email, Your Name input, and whether user is student/parent/guardian) */
   /* body text should be made to include personalized input, such as name, from SNF page form */
+  var sponsorName = this.$route.params.sponsorname;
   var body =
-    'Dear [this sponsor], \n \n I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to join their site to make it easier for families in your area to find free meal sites. \n \n Best, \n [YOUR NAME HERE]';
+    'Dear ' +
+    sponsorName +
+    'Nutrition Team, \n \n I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to join their site to make it easier for families in your area to find free meal sites. \n \n Best, \n [YOUR NAME HERE]';
   body = encodeURI(body);
   return mailto + subject + body;
 }

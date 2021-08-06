@@ -1,6 +1,8 @@
 <template>
   <div class="page" id="SNFPage">
-    <h1 style="margin: 25px">Looks like [this sponsor] isn't on our site yet.</h1>
+    <h1 style="margin: 25px">
+      Looks like <strong>{{ $route.params.sponsorname }}</strong> isn't on our site yet.
+    </h1>
     <h2>Want to see them on Meals for Families?</h2>
     <br />
     <!-- white rounded container for email text, Your Name input, and Send Email button -->
@@ -15,7 +17,7 @@
       </div>
       -->
       <p id="emailText" style="border: 2px; border-style: solid; border-color: #ced4da; padding: 1em">
-        Dear [this sponsor],
+        Dear {{ $route.params.sponsorname }} Nutrition Team,
         <br />
         I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to
         join their site to make it easier for families in your area to find free meal sites.

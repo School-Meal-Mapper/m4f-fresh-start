@@ -16,8 +16,6 @@
         aria-describedby="search-addon"
       />
       <!-- END vue-bootstrap-typeahead in-dev code -->
-      <b-button @click="getSponsor('Chapel Hill High')">test button</b-button>
-      <p>{{ isSponsorOurs(getSponsor('Chapel Hill High')) }}</p>
       <br />
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
@@ -108,9 +106,12 @@ export default {
       var ours = this.isSponsorOurs(Sponsor);
       console.log(this.isSponsorOurs(Sponsor));
       if (ours) {
-        this.$router.push({ name: 'SponsorLandingPage', params: { sponsor: 'chccs', lang: this.$route.params.lang } });
+        this.$router.push({
+          name: 'SponsorLandingPage',
+          params: { sponsor: this.getSponsorValue(Sponsor), lang: this.$route.params.lang }
+        });
       } else {
-        this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
+        this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: Sponsor, lang: this.$route.params.lang } });
       }
     },
     async test() {
@@ -129,16 +130,15 @@ export default {
       } else {
         return false;
       }
-    }
-    /*
-    checkSponsor(school) {
-      if (CHCCSschools.includes(school)) {
-        return true;
-      } else {
-        return false;
+    },
+    getSponsorValue(Sponsor) {
+      let ncDistricts = districts['nc'];
+      for (let i = 0; i < ncDistricts.length; i++) {
+        if (ncDistricts[i].text == Sponsor) {
+          return ncDistricts[i].value;
+        }
       }
     }
-    */
   },
   watch: {
     '$route.params.sponsor'(to, from) {
