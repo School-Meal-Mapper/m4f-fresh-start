@@ -45,6 +45,36 @@ export function haversineDistance([lat1, lon1], [lat2, lon2], isMiles = false) {
   if (isMiles) {
     finalDistance /= 1.60934;
   }
-
+  console.log(finalDistance);
   return finalDistance;
+}
+/**
+ *
+ * @param {Number} degree- takes in degree, input is the difference between two latitudes or two longitudes
+ * @returns - equivalent radian value
+ */
+export function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
+/**
+ * can be converted from km to miles in the future
+ * @param {Number} lat1- latitude for point A
+ * @param {Number} lon1- longitude for point A
+ * @param {Number} lat2- latitude for point B
+ * @param {Number} lon2- longitude for point B
+ * @returns - distance between those 2 points in km
+ */
+export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  // R is the radius of the earth in km
+  var R = 6371;
+  var dLat = this.deg2rad(lat2 - lat1);
+  var dLon = this.deg2rad(lon2 - lon1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  //d is distance in km
+  var d = R * c;
+  return d;
 }
