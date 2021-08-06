@@ -20,8 +20,8 @@
       <b-button
         class="find-site"
         :to="{
-          name: 'ResultsPage',
-          params: { sponsor: $route.params.sponsor, lang: $route.params.lang },
+          name: 'DataWrapper',
+          params: { sponsor: $route.params.sponsor, lang: $route.params.lang, view: 'list' },
           query: { searchText: text }
         }"
         >{{ this.$t('SponsorLanding.findSite') }}
@@ -48,20 +48,6 @@
     <b-button
       class="prog-btns"
       :to="{
-        name: 'SchoolMealsPage',
-        params: {
-          sponsor: $route.params.sponsor,
-          lang: $route.params.lang
-        }
-      }"
-    >
-      <b-icon-check2-square class="btnIcon"></b-icon-check2-square>
-      <br />{{ this.$t('SponsorLanding.schoolMeals') }}</b-button
-    >
-    <b-button class="prog-btns">{{ this.$t('SponsorLanding.wrongProvider') }}</b-button>
-    <b-button
-      class="prog-btns"
-      :to="{
         name: 'MenuAndInfoPage',
         params: {
           sponsor: $route.params.sponsor,
@@ -71,6 +57,19 @@
     >
       <b-icon-calendar3 class="btnIcon"></b-icon-calendar3>
       <br />{{ this.$t('SponsorLanding.menuAndInfo') }}</b-button
+    >
+    <b-button
+      class="prog-btns"
+      :to="{
+        name: 'SchoolMealsPage',
+        params: {
+          sponsor: $route.params.sponsor,
+          lang: $route.params.lang
+        }
+      }"
+    >
+      <b-icon-check2-square class="btnIcon"></b-icon-check2-square>
+      <br />{{ this.$t('SponsorLanding.schoolMeals') }}</b-button
     >
     <b-button
       class="prog-btns"
@@ -89,11 +88,18 @@
     <b-button
       class="prog-btns"
       :to="{
-        name: 'HelpAndConnectPage',
-        params: {
-          sponsor: $route.params.sponsor,
-          lang: $route.params.lang
-        }
+        name: 'MFFLandingPage',
+        params: { lang: $route.params.lang }
+      }"
+    >
+      <b-icon-arrow-return-left class="btnIcon"></b-icon-arrow-return-left>
+      <br />{{ this.$t('SponsorLanding.wrongProvider') }}</b-button
+    >
+    <b-button
+      class="prog-btns"
+      :to="{
+        name: 'SponsorNotFoundPage',
+        lang: $route.params.lang
       }"
     >
       <b-icon-chat-text class="btnIcon"></b-icon-chat-text>
@@ -191,7 +197,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .root {
   --primary-color: blue;
   --banner-light: '#E9ECEF';
@@ -258,6 +264,10 @@ export default {
 }
 /*hover state for the 6 buttons*/
 .prog-btns:hover {
+  background-color: var(--banner-light);
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--banner-dark);
+  }
   opacity: 0.5;
 }
 /*changes styling for mobile*/
@@ -273,7 +283,6 @@ export default {
   .prog-btns {
     width: 90%;
     height: 80px;
-    margin: 20px auto 0px;
   }
   .btnIcon {
     font-size: 150%;
