@@ -16,7 +16,8 @@
         aria-describedby="search-addon"
       />
       <!-- END vue-bootstrap-typeahead in-dev code -->
-      <b-button @click="test">test button</b-button>
+      <b-button @click="getSponsor('Chapel Hill High')">test button</b-button>
+      <p>{{ isSponsorOurs(getSponsor('Chapel Hill High')) }}</p>
       <br />
       <p><strong>OR</strong></p>
       <div class="district-buttons" id="mffGenDiv">
@@ -74,7 +75,7 @@
 // @ is an alias to /src
 import { nc, districts } from '../constants';
 import sponsorData from '@/sponsorIndex';
-import { CHCCSschools } from '../allSchoolsData';
+import { ourSponsors } from '../allSchoolsData';
 import allSchoolsBackend from '../allSchoolsData';
 import VueBootstrapTypeahead from 'vue-bootstrap-typeahead';
 // import Backend from '../backend';
@@ -90,27 +91,46 @@ export default {
       selectedState: null,
       selectedDistrict: null,
       sponsor: sponsorData(this.$route.params.sponsor),
-      CHCCSschools,
-      processed: []
+      processed: [],
+      processedObj: [],
+      ourSponsors
     };
   },
   async mounted() {
     this.processed = await allSchoolsBackend.parseAllSchoolsSheet();
+    this.processedObj = await allSchoolsBackend.getSchoolObject();
   },
   methods: {
     /* handles selected school option from VueBootstrapTypeahead search bar */
     handleHit(evt) {
       this.selectedSchool = evt;
-      var found = this.checkSponsor(this.selectedSchool);
-      if (found) {
+      var Sponsor = this.getSponsor(this.selectedSchool);
+      var ours = this.isSponsorOurs(Sponsor);
+      console.log(this.isSponsorOurs(Sponsor));
+      if (ours) {
         this.$router.push({ name: 'SponsorLandingPage', params: { sponsor: 'chccs', lang: this.$route.params.lang } });
       } else {
         this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: this.selectedSchool, lang: this.$route.params.lang } });
       }
     },
     async test() {
-      console.log(typeof this.processed);
+      console.log(ourSponsors[0]);
     },
+    getSponsor(school) {
+      for (let i = 0; i < this.processed.length; i++) {
+        if (this.processedObj[i].schoolName == school) {
+          return this.processedObj[i].sponsorName;
+        }
+      }
+    },
+    isSponsorOurs(Sponsor) {
+      if (ourSponsors.includes(Sponsor)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    /*
     checkSponsor(school) {
       if (CHCCSschools.includes(school)) {
         return true;
@@ -118,6 +138,7 @@ export default {
         return false;
       }
     }
+    */
   },
   watch: {
     '$route.params.sponsor'(to, from) {
@@ -138,16 +159,6 @@ export default {
         return [{ value: null, text: 'You must select your state.' }];
       }
     }
-
-    /* commented out - to be deleted once VueBootstrapTypeahead search bar is fully implemented */
-    /* schoolSearchText: function () {
-      return this.testSchoolsArray.filter((school) => {
-        //convert both school and search text to lower case
-        school = school.toLowerCase();
-        return school.match(this.text.toLowerCase());
-      });
-    }
-    */
   }
 };
 </script>
