@@ -1,6 +1,8 @@
 /* For now - only NC Schools */
+/* Backend for data from all schools. Currently uses only Copy of All_NC_Schools_July_2021 sheet 2 data */
 
 export default class allSchoolsBackend {
+  /* returns array of all NC schools */
   static async parseAllSchoolsSheet() {
     /* json endpoint for Copy of All_NC_Schools_July_2021 page 2 */
     var allSchoolsDataSpreadsheetURL =
@@ -13,6 +15,7 @@ export default class allSchoolsBackend {
     return Array.from(processed);
   }
 
+  /* returns object including each element's schoolName, sponsorName, and isOurSponsor (whether or not sponsor is on M4F (T/F) automatically filled out in sheet w data validation)) */
   static async getSchoolObject() {
     var allSchoolsDataSpreadsheetURL =
       'https://spreadsheets.google.com/feeds/list/1T_hnJz75hGVfVLq8GlkZ20yNe5znKYQJdvEr3OLFhtw/2/public/values?alt=json';
@@ -33,4 +36,5 @@ export default class allSchoolsBackend {
   }
 }
 
+/* Array with full names of all of our sponsors. Used in typeahead searchbar on MFFLandingPage w .includes to determine if a sponsor is on M4F */
 export const ourSponsors = ['Chapel Hill-Carrboro City Schools'];

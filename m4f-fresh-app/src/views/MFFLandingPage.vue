@@ -5,7 +5,8 @@
       <h1>Welcome to M4F!</h1>
       <h2>Connect with a Local Sponsor to Find Free Meal Sites!</h2>
       <br /><br />
-      <!-- START vue-bootstrap-typeahead in-dev code -->
+      <!-- START vue-bootstrap-typeahead searchbar -->
+      <!-- :data is array of all NC schools from Copy of All_NC_Schools_July_2021 spreadsheet, sheet 2, @hit is handlehit, a function which processes the chosen school and takes the user to the corresponding SponsorNotFound page or SponsorLanding page -->
       <vue-bootstrap-typeahead
         v-model="query"
         :data="processed"
@@ -15,9 +16,10 @@
         aria-label="Search"
         aria-describedby="search-addon"
       />
-      <!-- END vue-bootstrap-typeahead in-dev code -->
+      <!-- END vue-bootstrap-typeahead searchbar -->
       <br />
       <p><strong>OR</strong></p>
+      <!-- START select state and sponsor dropdown menu -->
       <div class="district-buttons" id="mffGenDiv">
         <p>
           <b-form-select v-model="selectedState" :options="nc" class="mb-3">
@@ -37,8 +39,10 @@
           >
         </p>
       </div>
+      <!-- END select state and sponsor dropdown menu -->
       <br />
       <br />
+      <!-- Additional info links at bottom of page -->
       <b-card class="homeLinkCard">
         <b-link class="homeLink" href="https://www.meals4families.community">
           <p>
@@ -114,9 +118,7 @@ export default {
         this.$router.push({ name: 'SponsorNotFoundPage', params: { sponsorname: Sponsor, lang: this.$route.params.lang } });
       }
     },
-    async test() {
-      console.log(ourSponsors[0]);
-    },
+    /* returns the sponsor, takes school as param (called in handleHit) */
     getSponsor(school) {
       for (let i = 0; i < this.processed.length; i++) {
         if (this.processedObj[i].schoolName == school) {
@@ -124,6 +126,7 @@ export default {
         }
       }
     },
+    /* returns true if sponsor is on M4F, false if sponsor is not on M4F (called in handleHit) */
     isSponsorOurs(Sponsor) {
       if (ourSponsors.includes(Sponsor)) {
         return true;
@@ -131,6 +134,7 @@ export default {
         return false;
       }
     },
+    /* returns value of sponsor (within districts from districtData.js) (called to direct router to a SponsorLanding page in handleHit) */
     getSponsorValue(Sponsor) {
       let ncDistricts = districts['nc'];
       for (let i = 0; i < ncDistricts.length; i++) {

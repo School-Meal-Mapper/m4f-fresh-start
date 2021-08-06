@@ -1,3 +1,4 @@
+/* takes user's name as param and creates a pre-filled email. Currently addressed to the placeholder sponsor@email.com until we collect all sponsor emails (and likely include them in Copy of All_NC_Schools_July_2021 spreadsheet) */
 export function emailLink(name) {
   /* Create var to link to pre-filled email. subject is intentionally static - does not change by district. */
   const mailto = 'mailto:sponsor@email.com?subject=';
@@ -11,7 +12,8 @@ export function emailLink(name) {
   var body =
     'Dear ' +
     sponsorName +
-    'Nutrition Team, \n \n I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to join their site to make it easier for families in your area to find free meal sites. \n \n Best, \n \n' + userName;
+    ' Nutrition Team, \n \n I am a parent in your area who is interested in finding meal sites near me. I ask that you consider contacting Meals 4 Families to join their site to make it easier for families in your area to find free meal sites. \n \n Best, \n \n' +
+    userName;
   body = encodeURI(body);
   return mailto + subject + body;
 }
