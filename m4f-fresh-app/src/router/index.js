@@ -63,9 +63,10 @@ const routes = [
         component: HelpAndConnectPage
       },
       {
-        path: ':sponsor/:view(list|map|details)',
+        path: ':sponsor/:view(list|map|details)/:search?',
         name: 'DataWrapper',
-        component: DataWrapper
+        component: DataWrapper,
+        props: (route) => ({ initialSearch: route.params.search })
       },
       {
         path: ':sponsor/faq',
@@ -73,7 +74,7 @@ const routes = [
         component: FAQPage
       },
       {
-        path: 'sponsornotfound/:sponsorname',
+        path: 'sponsornotfound/:sponsorname?',
         name: 'SponsorNotFoundPage',
         component: SponsorNotFoundPage
       },

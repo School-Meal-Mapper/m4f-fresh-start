@@ -68,7 +68,7 @@ export default {
       this.$emit('select', site);
       this.$router.push({
         name: 'DataWrapper',
-        params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'details' }
+        params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'details', search: site.name }
       });
     }
   }

@@ -21,6 +21,16 @@ export const supported_languages = [
   { iso: 'ur', name: 'اردو', english_name: 'Urdu' }
 ];
 
+export const daysOfWeek = [
+  { short: 'sun', long: 'Sunday' },
+  { short: 'mon', long: 'Monday' },
+  { short: 'tue', long: 'Tuesday' },
+  { short: 'wed', long: 'Wednesday' },
+  { short: 'thu', long: 'Thursday' },
+  { short: 'fri', long: 'Friday' },
+  { short: 'sat', long: 'Saturday' }
+];
+
 // Below constant allows NC to be the only state shown on the landing page
 export const nc = [{ value: 'nc', text: 'North Carolina' }];
 

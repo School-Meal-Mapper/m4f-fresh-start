@@ -21,7 +21,7 @@ export default {
       this.$emit('select', result);
       this.$router.push({
         name: 'DataWrapper',
-        params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'details' }
+        params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'details', search: result.name }
       });
     }
   }

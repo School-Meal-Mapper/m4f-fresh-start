@@ -8,11 +8,11 @@
       -->
       <l-map
         ref="leafletMiniMap"
-        :zoom="sponsor.map.initialMapZoom"
+        :zoom="14"
         :center="[result.location.lat, result.location.lng]"
-        :options="{ zoomSnap: 0.5, setView: true }"
-        :maxZoom="sponsor.map.maxZoom"
-        :minZoom="sponsor.map.minZoom"
+        :options="{ zoomControl: false, setView: true }"
+        :maxZoom="14"
+        :minZoom="14"
       >
         <!-- this is where the map tiles are, url is the src of the map images -->
         <l-tile-layer
@@ -23,7 +23,7 @@
       </l-map>
     </section>
     <b-card id="details" v-if="result" class="details-card">
-      <div id="result-details-title">
+      <div class="result-details-title">
         <h1>{{ result.name }}</h1>
         <a class="share-button"><i class="fas fa-share-alt" /></a>
       </div>
@@ -43,7 +43,9 @@
         </template>
       </b-card-text>
       <hr />
-      <b-card-text class="result-card-text"
+
+      <!-- Hours -->
+      <b-card-text class="result-card-text has-dropdown" v-b-toggle.collapse-hours
         ><i class="far fa-clock" />
         {{ icon_spacing }}
         <span v-if="checkOpen(result)">
@@ -53,14 +55,30 @@
           <b><span class="closed-indicator">Closed </span>now. </b>
           Opens at {{ getTomorrowsTime(result) }}
         </span>
+        <i class="fas fa-caret-down fa-lg details-page-dropdown" />
       </b-card-text>
+      <b-collapse id="collapse-hours">
+        <b-card-text>
+          <b>Hours:</b>
+          <table>
+            <tr v-for="(day, index) in days" v-bind:key="index">
+              <td>{{ day.long }}</td>
+              <td>{{ result.hours[day.short] == '0' ? 'Closed' : result.hours[day.short] }}</td>
+            </tr>
+          </table>
+        </b-card-text>
+      </b-collapse>
       <hr />
+      <!-- Phone -->
       <b-card-text class="result-card-text"> <i class="fas fa-phone" />{{ icon_spacing + result.contact.phone }} </b-card-text>
       <b-card-text class="result-card-text"> <i class="fas fa-comments" />{{ icon_spacing + 'English, Spanish' }} </b-card-text>
       <hr />
+      <!-- Website/Menu -->
       <b-card-text class="result-card-text" v-if="result.web_link">
         <i class="fas fa-globe" />{{ icon_spacing + result.weblink }}
       </b-card-text>
+      <hr />
+      <!-- Notes/Description -->
       <b-card-text class="result-card-text" v-if="result.notes">{{ result.notes }} </b-card-text>
     </b-card>
     <div v-else>
@@ -71,7 +89,7 @@
 
 <script>
 import sponsorData from '@/sponsorIndex.js';
-
+import { daysOfWeek } from '@/constants.js';
 import TagsList from '@/components/TagsList.vue';
 
 import leafletDefaultIcon from 'leaflet/dist/images/marker-icon.png';
@@ -89,6 +107,7 @@ export default {
       iconUrl: leafletDefaultIcon,
       iconAnchor: [16, 37]
     }); // this is temporary, this information and the imports associated should be moved to a minimap component, or in a constant js library
+    this.days = daysOfWeek; // for iteration only
   },
   data() {
     return {
@@ -120,6 +139,25 @@ export default {
 #minimap {
   height: 300px;
   min-width: 100%;
+}
+
+.result-details-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-details-title i {
+  font-size: 1.7em;
+}
+
+.has-dropdown {
+  position: relative;
+}
+
+.details-page-dropdown {
+  position: absolute;
+  right: 0;
 }
 
 .details-card {

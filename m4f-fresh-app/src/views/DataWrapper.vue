@@ -1,6 +1,6 @@
 <template>
   <div id="results-wrapper" class="page">
-    <nav id="results-header" v-show="!detailedResult">
+    <nav id="results-header" v-show="$route.params.view != 'details'">
       <div class="results-header-row">
         <div class="results-header-flex">
           <b-link
@@ -22,7 +22,14 @@
       </div>
       <div class="search-row">
         <b-form @submit="stopSubmit">
-          <b-form-input v-model="searchText" id="searchbar" type="search" placeholder="Enter a location to find closest sites." />
+          <b-form-input
+            @blur="searchBarSubmission"
+            v-model="searchText"
+            ref="address-searchbar"
+            id="searchbar"
+            type="search"
+            placeholder="Enter your address to find closest sites."
+          />
         </b-form>
       </div>
     </nav>
@@ -44,13 +51,13 @@
     <b-nav pills justified align="center" class="view-switcher">
       <b-nav-item
         class="view-switcher-link"
-        :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'list' } }"
+        :to="{ name: 'DataWrapper', params: { ...$route.params, view: 'list' } }"
         :disabled="$route.params.view === 'list'"
         ><span class="view-switcher-border-pos">List</span></b-nav-item
       >
       <b-nav-item
         class="view-switcher-link"
-        :to="{ name: 'DataWrapper', params: { lang: this.$route.params.lang, sponsor: this.$route.params.sponsor, view: 'map' } }"
+        :to="{ name: 'DataWrapper', params: { ...$route.params, view: 'map' } }"
         :disabled="$route.params.view === 'map'"
         ><span class="view-switcher-border-pos">Map</span></b-nav-item
       >
@@ -61,6 +68,7 @@
 <script>
 import sponsorData from '@/sponsorIndex.js';
 import Backend from '@/backend.js';
+import { haversineDistance } from '@/utilities.js';
 
 import ResultsFilter from '@/components/results/ResultsFilter.vue';
 import ResultsPage from '@/views/data_views/ResultsPage.vue';
@@ -121,31 +129,20 @@ export default {
       this.detailedResult = result;
     },
     stopSubmit(e) {
+      // when user presses Enter, it will blur (lose focus) the search bar, which will then call searchBarSubmission
       e.preventDefault();
-      this.searchLoc();
+      this.$refs['address-searchbar'].blur();
     },
-    haversineDistance([lat1, lon1], [lat2, lon2], isMiles = false) {
-      const toRadian = (angle) => (Math.PI / 180) * angle;
-      const distance = (a, b) => (Math.PI / 180) * (a - b);
-      const RADIUS_OF_EARTH_IN_KM = 6371;
-
-      const dLat = distance(lat2, lat1);
-      const dLon = distance(lon2, lon1);
-
-      lat1 = toRadian(lat1);
-      lat2 = toRadian(lat2);
-
-      // Haversine Formula
-      const a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
-      const c = 2 * Math.asin(Math.sqrt(a));
-
-      let finalDistance = RADIUS_OF_EARTH_IN_KM * c;
-
-      if (isMiles) {
-        finalDistance /= 1.60934;
-      }
-
-      return finalDistance;
+    searchBarSubmission() {
+      // changes URL and activates search-filtering function
+      this.$router.replace({
+        name: 'DataWrapper',
+        params: {
+          ...this.$route.params,
+          search: this.searchText == '' ? null : this.searchText
+        }
+      });
+      this.searchLoc();
     },
     sortByDistance(a, b) {
       if (a.distance < b.distance) {
@@ -173,7 +170,7 @@ export default {
       console.log(this.filteredResults);
       this.sortedResults = this.filteredResults.filter((site) =>
         //compares map lat lng with site lat lng
-        this.haversineDistance(
+        haversineDistance(
           [this.sponsor.map.initialMapCenter.lat, this.sponsor.map.initialMapCenter.lng],
           [site.location.lat, site.location.lng],
           true
@@ -201,8 +198,18 @@ export default {
       an error because a column is formatted incorrectly or missing. If that's the case, try to fix the spreadsheet before
       changing backend.js`);
     }
+
     this.isLoading = false;
     this.filteredResults = this.results;
+
+    // lookups
+    this.searchText = this.initialSearch;
+    if (this.searchText) {
+      this.searchLoc(); // basically 'presses enter' if the input bar had text on creation
+    }
+    if (this.$route.params.view === 'details' && this.filteredResults.length == 1) {
+      this.detailedResult = this.filteredResults[0]; // if the search param on details page matches only 1 site, display that site's details
+    }
   }
 };
 </script>
