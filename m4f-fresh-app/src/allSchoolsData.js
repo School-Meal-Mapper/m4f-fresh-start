@@ -1,7 +1,7 @@
 /* For now - only NC Schools */
 /* Backend for data from all schools. Currently uses only Copy of All_NC_Schools_July_2021 sheet 2 data */
 
-import { fetchCSV } from "./utilities";
+import { fetchCSV } from './utilities';
 
 export default class allSchoolsBackend {
   /* returns array of all NC schools */
