@@ -17,11 +17,8 @@
 </template>
 
 <script>
-import { districtData } from '@/districtData';
 import sponsorData from '@/sponsorIndex.js';
 //import Backend from '@/backend.js';
-document.documentElement.style.setProperty('--banner-light', districtData.colors.bannerColor);
-document.documentElement.style.setProperty('--banner-dark', districtData.colors.bannerColorDark);
 export default {
   name: 'MenuAndInfoPage',
   components: {},

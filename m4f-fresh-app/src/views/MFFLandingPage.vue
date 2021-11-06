@@ -134,7 +134,7 @@ export default {
         return false;
       }
     },
-    /* returns value of sponsor (within districts from districtData.js) (called to direct router to a SponsorLanding page in handleHit) */
+    /* returns value of sponsor (called to direct router to a SponsorLanding page in handleHit) */
     getSponsorValue(Sponsor) {
       let ncDistricts = districts['nc'];
       for (let i = 0; i < ncDistricts.length; i++) {

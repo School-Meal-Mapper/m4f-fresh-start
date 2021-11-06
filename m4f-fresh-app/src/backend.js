@@ -1,6 +1,6 @@
 import sponsorData from '@/sponsorIndex.js';
 import { supported_languages } from '@/constants.js';
-
+import { fetchCSV } from '@/utilities';
 /**
  * Backend class - an object containing a whole bunch of functions
  * for getting meal site data from a backend.
@@ -70,57 +70,56 @@ MealSite Example Structure: {
    */
   static async getMealSites(abbr) {
     const spreadsheetUrl = sponsorData(abbr).data.spreadsheetUrl;
-    const res = await fetch(spreadsheetUrl);
-    const raw = await res.json();
-    const missing = { $t: 'N/A' }; // this should really be replaced with optional chaining ( .? operator, see https://www.youtube.com/watch?v=v2tJ3nzXh8I)
-    const processed = raw.feed.entry
-      .filter((site) => site.gsx$mealsitename.$t)
+    const raw = await fetchCSV(spreadsheetUrl);
+    const missing = 'N/A'; // this should really be replaced with optional chaining ( .? operator, see https://www.youtube.com/watch?v=v2tJ3nzXh8I)
+    const processed = raw
+      .filter((site) => site.meal_site_name)
       .map((site) => {
         return {
-          name: site.gsx$mealsitename.$t,
-          school_district: site.gsx$schooldistrict.$t,
-          open_status: site.gsx$mealsitestatus.$t.toLowerCase() == 'open',
+          name: site.meal_site_name,
+          school_district: site.school_district,
+          open_status: site.meal_site_status.toLowerCase() == 'open',
           location: {
-            address: site.gsx$mealsiteaddress1.$t,
-            address_2: site.gsx$mealsiteaddress2.$t,
-            city: site.gsx$city.$t,
-            state: site.gsx$state.$t,
-            zip: site.gsx$zip.$t, // will be a string
-            county: site.gsx$county.$t,
-            lat: parseFloat(site.gsx$lat.$t),
-            lng: parseFloat(site.gsx$lon.$t)
+            address: site.meal_site_address_1,
+            address_2: site.meal_site_address_2,
+            city: site.city,
+            state: site.state,
+            zip: site.zip, // will be a string
+            county: site.county,
+            lat: parseFloat(site.lat),
+            lng: parseFloat(site.lon)
           },
-          additional_directions: (site.gsx$additionaldirections ?? missing).$t,
+          additional_directions: site.additional_directions ?? missing,
           contact: {
-            name: (site.gsx$contactname ?? missing).$t,
-            phone: (site.gsx$contactphone ?? missing).$t
+            name: site.contact_name ?? missing,
+            phone: site.contact_phone ?? missing
           },
-          notes: site.gsx$notes.$t,
-          web_link: site.gsx$weblink.$t,
-          redirect_link: site.gsx$redirectlink.$t,
+          notes: site.notes,
+          web_link: site.web_link,
+          redirect_link: site.redirect_link,
           hours: {
-            sun: site.gsx$sun.$t,
-            mon: site.gsx$mon.$t,
-            tue: site.gsx$tues.$t,
-            wed: site.gsx$wed.$t,
-            thu: site.gsx$thr.$t,
-            fri: site.gsx$fri.$t,
-            sat: site.gsx$sat.$t
+            sun: site.sun,
+            mon: site.mon,
+            tue: site.tues,
+            wed: site.wed,
+            thu: site.thr,
+            fri: site.fri,
+            sat: site.sat
           },
           dates: {
-            start: site.gsx$startdate.$t,
-            end: site.gsx$enddate.$t
+            start: site.start_date,
+            end: site.end_date
           },
           update_info: {
-            person: site.gsx$updatedby.$t,
-            date: site.gsx$lastupdate.$t
+            person: site.updated_by,
+            date: site.last_update
           },
           tags: {
-            transitfriendly: (site.gsx$transitfriendly ?? missing).$t == 'TRUE',
-            foodpantry: (site.gsx$foodpantry ?? missing).$t == 'TRUE',
-            prepackagedmealsavailable: (site.gsx$prepackagedmealsavailable ?? missing).$t == 'TRUE',
-            dietaryoptionsoffered: (site.gsx$dietaryoptionsoffered ?? missing).$t.toLowerCase().split(', '),
-            hotmealsavailable: (site.gsx$hotmealsavailable ?? missing).$t == 'TRUE'
+            transitfriendly: site.transit_friendly ?? missing == 'TRUE',
+            foodpantry: site.food_pantry ?? missing == 'TRUE',
+            prepackagedmealsavailable: site.prepackaged_meals_available ?? missing == 'TRUE',
+            dietaryoptionsoffered: (site.dietary_options_offered ?? missing).toLowerCase().split(', '),
+            hotmealsavailable: site.hot_meals_available ?? missing == 'TRUE'
           }
         };
       });
@@ -130,18 +129,15 @@ MealSite Example Structure: {
   static async getFaq(abbr) {
     // currently only works with chapel hill, please change spreadsheet headers to "full-language-name_question/answer"
     const faqUrl = sponsorData(abbr).data.faqUrl;
-    const res = await fetch(faqUrl);
-    const raw = await res.json();
-    console.log(raw, 'gs json');
-
-    const langsInSheet = supported_languages.filter((lang) => raw.feed.entry[0][`gsx$${lang.english_name.toLowerCase()}question`]); // filters what language headers are in the sheet, but only if it is supported in constants.js
-    const processed = raw.feed.entry
-      .filter((question) => question.gsx$englishquestion.$t) // check to make sure rows must have english question text
+    const raw = await fetchCSV(faqUrl);
+    const langsInSheet = supported_languages.filter((lang) => raw[0][`${lang.english_name.toLowerCase()}_question`]); // filters what language headers are in the sheet, but only if it is supported in constants.js
+    const processed = raw
+      .filter((question) => question.english_question) // check to make sure rows must have english question text
       .map((row) => {
         const qna = {};
         langsInSheet.forEach((lang) => {
-          qna[`${lang.iso}_question`] = row[`gsx$${lang.english_name.toLowerCase()}question`].$t;
-          qna[`${lang.iso}_answer`] = row[`gsx$${lang.english_name.toLowerCase()}answer`].$t;
+          qna[`${lang.iso}_question`] = row[`${lang.english_name.toLowerCase()}_question`];
+          qna[`${lang.iso}_answer`] = row[`${lang.english_name.toLowerCase()}_answer`];
         });
         return qna;
       });
@@ -150,21 +146,20 @@ MealSite Example Structure: {
 
   static async getProviderInfo(abbr) {
     const metaUrl = sponsorData(abbr).data.providerinfoUrl;
-    const res = await fetch(metaUrl);
-    const raw = await res.json();
-    const row = raw.feed.entry[0];
+    const raw = await fetchCSV(metaUrl);
+    const row = raw[0];
     return {
-      state: row.gsx$state.$t,
-      county: row.gsx$county.$t,
-      provider_name: row.gsx$providername.$t,
-      sponsor_site: row.gsx$weblink.$t,
-      sponsor_redirect: row.gsx$redirectlink.$t,
-      menu_site: row.gsx$menulink.$t,
-      twitter: row.gsx$twitter.$t,
-      instagram: row.gsx$instagram.$t,
-      facebook: row.gsx$facebook.$t,
-      phone: row.gsx$contactphone.$t,
-      person: row.gsx$contactname.$t
+      state: row.state,
+      county: row.county,
+      provider_name: row.provider_name,
+      sponsor_site: row.web_link,
+      sponsor_redirect: row.redirect_link,
+      menu_site: row.menu_link,
+      twitter: row.twitter,
+      instagram: row.instagram,
+      facebook: row.facebook,
+      phone: row.contact_phone,
+      person: row.contact_name
     };
   }
 }

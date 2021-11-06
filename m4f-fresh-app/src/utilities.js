@@ -78,3 +78,38 @@ export function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   var d = R * c;
   return d;
 }
+
+const csv = require('csvtojson');
+/**
+ * Downloads a CSV from a link and converts it to JSON, assuming that the first row of the table are the column headers.
+ * @param {String} link to the URL of the CSV file
+ * @returns JSON of the CSV with keys being the headers of the CSV
+ *
+ * example table: Student Grades
+ * ```csv
+ *  first row:     name    |     id_num  |    grade   |   <-- column headers
+ * second row:  Robert J.  |    83912    |     B      |   <-- row values
+ *  third row:  Samantha S.|    78241    |     A      |
+ * ```
+ * will produce:
+ * ```js
+ * [
+ *   {
+ *     name: "Robert J.",
+ *     id_num: "83912",
+ *     grade: "B"
+ *   },
+ *   {
+ *     name: "Samantha S.",
+ *     id_num: "78241",
+ *     grade: "A"
+ *   }
+ * ]
+ * ```
+ *
+ *
+ */
+export async function fetchCSV(link) {
+  const csvAsString = await (await fetch(link, { method: 'get', headers: { 'content-type': 'text/csv;charset=UTF-8' } })).text();
+  return await csv().fromString(csvAsString);
+}
